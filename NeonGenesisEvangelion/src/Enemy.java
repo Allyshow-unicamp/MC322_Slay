@@ -2,7 +2,7 @@ public class Enemy {
 
     String name = "Kaworu Nagisa";
     int health = 400;
-    int shield = 0;
+    int ATField = 0; // works identical to the shield attribute
 
     public void takeDamage(int damage) {
         this.health = (health - damage) >= 0 ? health - damage : 0;
@@ -14,9 +14,9 @@ public class Enemy {
         return this.health == 0;
     }
 
-    public Enemy(String name, int health, int shield) {
+    public Enemy(String name, int health, int ATField) {
         this.name = name;
         this.health = health;
-        this.shield = shield;
+        this.ATField = ATField;
     }
 }
