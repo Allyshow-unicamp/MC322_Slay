@@ -1,13 +1,13 @@
 public class Hero {
 
-    String name = "Shinji Ikari";
-    int health = 40;
-    int ATField = 0; // works identical to the shield attribute
+    private String name = "Shinji Ikari";
+    private int health = 40;
+    private int ATField = 20; // works identical to the shield attribute
 
     public void takeDamage(int damage) {
         this.health = (health - damage) >= 0 ? health - damage : 0;
     }
-    public void gainSyncRate(int amount) {
+    public void gainATField(int amount) {
         this.ATField = ATField + amount;
     }
     public boolean isAlive() {

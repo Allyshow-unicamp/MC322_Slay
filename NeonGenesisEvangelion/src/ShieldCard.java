@@ -1,10 +1,10 @@
 public class ShieldCard {
     
-    String name = "ATField Regeneration";
-    int energyCost = 1;
+    private String name = "ATField Regeneration";
+    private int energyCost = 1;
 
-    public void useCard(Hero EVA, int amount) {
-        EVA.ATField += amount;
+    public void useCard(Hero hero, int amount) {
+        hero.gainATField(amount);
     }
 
     public ShieldCard(String name, int energyCost) {

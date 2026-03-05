@@ -1,7 +1,8 @@
 public class DamageCard {
-    String name = "Positron Rifle";
-    int energyCost = 1;
-    int damage = 80;
+    
+    private String name = "Positron Rifle";
+    private int energyCost = 1;
+    private int damage = 80;
 
     public void useCard(Enemy angel, int damage) {
         angel.takeDamage(damage);

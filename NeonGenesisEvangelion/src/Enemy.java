@@ -1,8 +1,8 @@
 public class Enemy {
 
-    String name = "Kaworu Nagisa";
-    int health = 400;
-    int ATField = 0; // works identical to the shield attribute
+    private String name = "Kaworu Nagisa";
+    private int health = 400;
+    private int ATField = 0; // works identical to the shield attribute
 
     public void takeDamage(int damage) {
         this.health = (health - damage) >= 0 ? health - damage : 0;
