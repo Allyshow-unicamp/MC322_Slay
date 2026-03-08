@@ -1,18 +1,25 @@
-## Getting Started
+### Jogo de cartas com temática de Neon Genesis Evangelion
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+<img src="image.png" width="150" height="250" alt="Capa">
 
-## Folder Structure
+## O jogo
 
-The workspace contains two folders by default, where:
+O jogo consiste em um sistema de batalhas via terminal onde o jogador enfrenta um inimigo usando cartas. A cada turno, ele escolhe diferntes armas (cartas de dano) ou cartas que recuperam seu campo AT (escudo), ao custo de sua sincronização (energia). Seu inimigo é um anjo, que ataca ao fim de cada turno e também possui seu próprio campo AT. Vence quem eliminar o outro primeiro.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+## Estrutura do projeto
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- `src`: pasta com as classes .java do projeto, incluindo o App
+- `bin`: pasta com os arquivos compilados
+- `lib`: pasta de dependências
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Compilação e execução do projeto
 
-## Dependency Management
+Para compilar o projeto, basta executar o código abaixo no prompt de comandos:
+```
+javac -d bin $(find src -name "*.java")
+```
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Já para executar, use o comando:
+```
+java -cp bin App
+```
