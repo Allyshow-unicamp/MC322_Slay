@@ -5,7 +5,15 @@ public class Hero {
     private int ATField = 20; // works identical to the shield attribute
 
     public void takeDamage(int damage) {
+        if (this.ATField > 0) {
+            if (damage > ATField) {
+                this.health = (health - (damage - ATField)) >= 0 ? health - (damage - ATField) : 0;
+            }
+            this.ATField = (ATField - damage) >= 0 ? ATField - damage : 0;
+        }
+        else {
         this.health = (health - damage) >= 0 ? health - damage : 0;
+        }
     }
     public void gainATField(int amount) {
         this.ATField = ATField + amount;
