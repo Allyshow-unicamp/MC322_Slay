@@ -9,8 +9,10 @@ public class App {
 
         while (game.isRunning()) {
             game.resetTurn();
-            while (!game.endOfTurn()):
+            while (!game.endOfTurn()) {
                 game.selectOption();
+            }
+            game.enemyAction();
         }
 
         game.results();

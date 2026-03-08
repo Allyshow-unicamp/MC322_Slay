@@ -27,6 +27,15 @@ public class Hero {
     public void resetShield(){
         this.ATField = 0;
     }
+    public String getName(){
+        return this.name;
+    }
+    public int getHealth() {
+        return this.health;
+    }
+    public int getShield() {
+        return this.ATField;
+    }
 
     public Hero(String name, int health, int ATField) {
         this.name = name;

@@ -22,6 +22,18 @@ public class Enemy {
         return this.health == 0;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public int getShield() {
+        return this.ATField;
+    }
+
     public Enemy(String name, int health, int ATField) {
         this.name = name;
         this.health = health;
