@@ -6,6 +6,12 @@ public class ShieldCard {
     public void useCard(Hero hero, int amount) {
         hero.gainATField(amount);
     }
+    public String getName() {
+        return this.name;
+    }
+    public int getCost() {
+        return this.energyCost;
+    }
 
     public ShieldCard(String name, int energyCost) {
         this.energyCost = energyCost;

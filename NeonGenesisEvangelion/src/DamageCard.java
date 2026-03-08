@@ -6,6 +6,12 @@ public class DamageCard {
     public void useCard(Enemy angel, int damage) {
         angel.takeDamage(damage);
     }
+    public String getName() {
+        return this.name;
+    }
+    public int getCost() {
+        return this.energyCost;
+    }
 
     public DamageCard(String name, int energyCost) {
         this.name = name;

@@ -12,14 +12,14 @@ public class Enemy {
             this.ATField = (ATField - damage) >= 0 ? ATField - damage : 0;
         }
         else {
-        this.health = (health - damage) >= 0 ? health - damage : 0;
+            this.health = (health - damage) >= 0 ? health - damage : 0;
         }
     }
     public void attack(Hero hero, int damage) {
         hero.takeDamage(damage);
     }
     public boolean isAlive() {
-        return this.health == 0;
+        return this.health > 0;
     }
 
     public String getName() {

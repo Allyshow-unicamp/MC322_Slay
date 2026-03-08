@@ -86,39 +86,54 @@ public class GameManager {
     }
 
     public void selectOption() {
-        System.out.print("=-=\r\n" + //
-                        "Herói: " + hero.getName() + "vs. Inimigo: " + angel.getName() + "\r\n" + //
+        System.out.print("\n=========================================\r\n" + //
+                        "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
                         "("+ hero.getHealth() +"/40 pontos de vida)   (" + angel.getHealth()+ "/200 pontos de vida)\r\n" + //
-                        syncRate + "/4 de Energia disponível\r\n" + //
+                        "("+ hero.getShield() +" pontos de escudo)    (" + angel.getShield()+ " pontos de escudo)\r\n" + //
+                        "=========================================\r\n" + //
+                        syncRate + "/4 de Energia disponível\r\n \r\n" + //
                         "1 - Usar Carta de Dano\r\n" + //
                         "2 - Usar Carta de Escudo\r\n" + //
                         "3 - Encerrar turno\r\n" + //
-                        "=-= \r\n" + //
-                        "Escolha: ");
+                        "=========================================\r\n");
     
-    int option = Integer.parseInt(scanner.nextLine());
+        int option = 0;
+        System.out.println("Escolha: ");
+        option = Integer.parseInt(scanner.nextLine());
 
-    switch (option) { 
-        case 1:
-            weapon.useCard(angel, 40);
-            break;
-        case 2:
-            ATFieldCard.useCard(hero, 20);
-            break;
-        case 3:
-            syncRate = 0;
-            break;
-        default:
-        }
+        switch (option) { 
+            case 1:
+                int damage = 40;
+                weapon.useCard(angel, damage);
+                syncRate -= weapon.getCost();
+
+                System.out.println("\r\nVocê usa " + weapon.getName() + " contra " + angel.getName() + ", dando " + damage + " de dano.");
+
+                break;
+            case 2:
+                int shield = 20;
+                ATFieldCard.useCard(hero, 20);
+                syncRate -= ATFieldCard.getCost();
+
+                System.out.println("\r\nVocê usa " + ATFieldCard.getName() + ", recebendo " + shield + " de sincronização (escudo).");
+
+                break;
+            case 3:
+                syncRate = 0;
+                break;
+            default:
+            }
     }
 
     public void enemyAction() {
-        hero.takeDamage(10);
+        int damage = 10;
+        angel.attack(hero, damage);
+        System.out.println("\r\nO inimigo " + angel.getName() + " te atacou, dando " + damage + " de dano.");
     }
 
     public void results() {
         if (hero.isAlive()) {
-            System.out.println("O jogador: " + hero.getName() + " venceu!!!");
+            System.out.println("\r\nO jogador " + hero.getName() + " venceu!!!");
         }
         else {
             System.out.print("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n"+
