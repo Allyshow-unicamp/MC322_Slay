@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameManager {
@@ -6,6 +7,7 @@ public class GameManager {
     Enemy angel;
     int syncRate; // works identical to energy attribute
     Scanner scanner;
+    Random random;
     ShieldCard ATFieldCard;
     DamageCard weapon;
 
@@ -16,6 +18,7 @@ public class GameManager {
         this.weapon = new DamageCard("Positron Rifle", 2);
         this.syncRate = 4;
         this.scanner = new Scanner(System.in);
+        this.random = new Random();
     }
 
     public void initialScreen() {
@@ -86,6 +89,11 @@ public class GameManager {
     }
 
     public void selectOption() {
+        try {
+            Thread.sleep(1000);
+        } 
+        catch (Exception e) {}
+
         System.out.print("\n=========================================\r\n" + //
                         "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
                         "("+ hero.getHealth() +"/40 pontos de vida)   (" + angel.getHealth()+ "/200 pontos de vida)\r\n" + //
@@ -98,12 +106,18 @@ public class GameManager {
                         "=========================================\r\n");
     
         int option = 0;
-        System.out.println("Escolha: ");
-        option = Integer.parseInt(scanner.nextLine());
+        while (true) { 
+            try {
+                System.out.println("Escolha: ");
+                option = Integer.parseInt(scanner.nextLine());
+                break;
+            }
+            catch (Exception e) {}
+        }
 
         switch (option) { 
             case 1:
-                int damage = 40;
+                int damage = random.nextInt(41);
                 weapon.useCard(angel, damage);
                 syncRate -= weapon.getCost();
 
@@ -111,8 +125,8 @@ public class GameManager {
 
                 break;
             case 2:
-                int shield = 20;
-                ATFieldCard.useCard(hero, 20);
+                int shield = random.nextInt(41);
+                ATFieldCard.useCard(hero, shield);
                 syncRate -= ATFieldCard.getCost();
 
                 System.out.println("\r\nVocê usa " + ATFieldCard.getName() + ", recebendo " + shield + " de sincronização (escudo).");
@@ -126,12 +140,22 @@ public class GameManager {
     }
 
     public void enemyAction() {
-        int damage = 10;
+        try {
+            Thread.sleep(1000);
+        } 
+        catch (Exception e) {}
+
+        int damage = random.nextInt(41);
         angel.attack(hero, damage);
         System.out.println("\r\nO inimigo " + angel.getName() + " te atacou, dando " + damage + " de dano.");
     }
 
     public void results() {
+        try {
+            Thread.sleep(1000);
+        } 
+        catch (Exception e) {}
+
         if (hero.isAlive()) {
             System.out.println("\r\nO jogador " + hero.getName() + " venceu!!!");
         }
