@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.io.IOException;
 
 public class GameManager {
     
@@ -13,7 +14,7 @@ public class GameManager {
 
     public void start() {
         this.hero = new Hero("", 40, 20);
-        this.angel = new Enemy("Angel 01", 200, 200);
+        this.angel = new Enemy("Sachiel", 200, 200);
         this.ATFieldCard = new ShieldCard("Conexão Neural", 2);
         this.weapon = new DamageCard("Positron Rifle", 2);
         this.syncRate = 4;
@@ -70,8 +71,34 @@ public class GameManager {
     }
 
     public void selectCharacter() {
-        System.out.print("Digite o nome do jogador: ");
-        String name = scanner.nextLine();
+        System.out.print("===============================================\r\n"+
+                        "\r\n1 - Shinji Ikari\r\n" +
+                        "2 - Rei Ayanami\r\n" +
+                        "3 - Asuka Langley Soryu\r\n" +
+                        "\r\n================================================\r\n");
+        int option;
+        String name = "";
+        while (true) { 
+            try {
+                System.out.print("Selecione o piloto de EVA: ");
+                option = Integer.parseInt(scanner.nextLine());
+                if (0 < option && option < 4) {
+                    break;
+                }
+            }
+            catch (Exception e) {}
+        }
+        switch (option) {
+            case 1:
+                name = "Shinji Ikari";
+                break;
+            case 2:
+                name = "Rei Ayanami";
+                break;
+            case 3:
+                name = "Asuka Langley Soryu";
+                break;
+        }
         hero.setName(name);
     }
 
@@ -88,11 +115,20 @@ public class GameManager {
         return !isRunning() || syncRate == 0;
     }
 
+    public void clearScreen() {
+        try {
+            new ProcessBuilder("clear").inheritIO().start().waitFor();
+        } catch (Exception e) {}
+    }
+
+
     public void selectOption() {
         try {
             Thread.sleep(1000);
         } 
         catch (Exception e) {}
+
+        clearScreen();
 
         System.out.print("\n=========================================\r\n" + //
                         "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
@@ -110,7 +146,9 @@ public class GameManager {
             try {
                 System.out.println("Escolha: ");
                 option = Integer.parseInt(scanner.nextLine());
-                break;
+                if (0 < option && option < 4) {
+                    break;
+                }
             }
             catch (Exception e) {}
         }
