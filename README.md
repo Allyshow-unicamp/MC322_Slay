@@ -1,4 +1,4 @@
-### Jogo de cartas com temática de Neon Genesis Evangelion
+# Jogo de cartas com temática de Neon Genesis Evangelion
 
 <img src="image.png" width="150" height="250" alt="Capa">
 

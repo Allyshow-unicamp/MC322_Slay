@@ -58,15 +58,9 @@ public class GameManager {
                         "⠀⠀⠀⡀⠁⠀⠀⢀⠀⠁⠀⠀⠀⠂⢀⠆⢡⠂⠀⠀⠀⠀⢄⠰⠀⡐⣀⢦⡁⠜⣀⠃⡌⢂⡁⠠⠐⠀⠀⠀⠀⠀⣀⢡⡘⢬⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠀⠀⠀⠀⠠⣅⣲⣤⡁⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⠀⠀⢀⠀⠂⠁⠀⢀⠀⠀⠀⠀⠠⠀⠀⠀⠂⠀\r\n" + //
                         "⠀⠄⠀⠀⠀⠀⠄⠀⠀⠀⢀⠀⠁⡀⠎⠨⠄⡀⠄⣡⢞⠨⡐⢂⠁⡐⢋⢋⠑⢢⠐⠌⡄⢃⡐⠠⠀⠀⠀⠀⠀⠐⠌⢷⣛⡖⣃⣀⡀⠀⠀⠀⠀⠀⠂⠀⠀⠀⢀⠀⡄⢶⡞⣟⡿⠗⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠂⠀⠀⠀⠄⠀⠀\r\n" + //
                         "⠂⠀⠀⠀⠐⠀⠀⠀⠀⠄⠀⠀⡐⡈⠌⡑⠠⠀⢀⠢⠌⢂⠅⠂⡐⠈⡔⡈⢌⠂⡜⠐⡐⢂⠄⠡⠀⠀⠀⠀⠀⠀⠀⠈⠳⢿⣿⣷⣿⣖⠀⠀⠀⠀⡁⠀⠀⢰⣮⣿⣿⣿⣾⠏⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠀⢀⠈⠀⠀⠀⠈⠀⠀⠀⠀⠂⠀⠀⠀\r\n" + //
-                        "⠀⠀⡀⠁⠀⠀⠀⠐⠀⠀⠀⢠⠐⡈⠔⡈⠀⠠⠀⢂⠘⠀⢂⠡⢀⠂⡐⠈⡔⠨⣀⠣⠘⠀⠌⠠⢁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠀⠀⠀⠀⢀⠀⠀⠸⠟⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀⠁⠀⠀⡀⠄⠂\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⣤⠤⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢤⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⣿⡤⡼⠃⢚⡗⠛⠆⢰⣞⣳⡆⠀⣞⣳⠂⠀⣾⣓⠂⠀⠛⣷⠀⢀⡞⠛⢶⠀⣷⠚⣷⠀⣴⣛⣷⡀⠀⠀⠀⠀⣴⠛⢲⡇⢸⡆⢸⡆⣰⠟⢺⡇⠀⠠⣏⠀⢠⡞⠓⣾⠀⡷⠀⣷⠀⣶⣛⣶⠀⢻⡖⠻⠄⠀⠀⠀⠀⠚⢿⠛⠀⣰⣞⣳⡄⢰⠞⠛⠆⠀⢨⡇⠀⢠⡞⠳⡷⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⠿⠀⠀⠀⠼⠧⠄⠀⠘⢧⡴⠂⠐⢦⡽⠇⠀⠶⡼⠇⠠⠴⠿⠄⠀⠷⣤⠞⠀⠿⠀⠾⠀⠻⣤⠶⠀⠀⠀⠀⠀⠹⢦⠼⡇⠸⢧⠼⠇⠹⢦⠼⠧⠠⠶⠷⡄⠘⢧⡴⢿⠀⠿⡤⠿⠀⠻⣤⠖⠀⠾⠧⠀⠀⠀⠀⠀⠀⠀⠻⢤⠀⠹⢦⠶⠀⠙⢦⡴⠇⠠⠶⠷⡄⠘⢧⠴⠿⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠇⠀⠀⠀⠀⠀⠀⠰⡗⠀⠀⠀⠀⠀⠀⠀⡶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⡟⠉⢳⢠⡟⠉⣿⠀⢹⡏⠹⠆⡾⠉⢻⠀⠀⠀⠀⠀⠈⢛⡇⠀⢸⡏⢹⡇⠀⠛⣧⠀⢠⡟⠉⠗⠀⠙⣿⠀⢠⡟⠙⣿⠀⢻⡏⠛⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n" + //
-                        "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⡟⠶⠛⠀⠻⠖⠻⠂⠾⠳⠀⠀⠹⠶⠛⠇⠀⠀⠀⠀⠰⠚⠷⠂⠘⠇⠈⠇⠀⠞⠷⠂⠈⠳⠶⠋⠀⠶⠛⠖⠀⠳⠖⠻⠂⠾⠳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+                        "⠀⠀⡀⠁⠀⠀⠀⠐⠀⠀⠀⢠⠐⡈⠔⡈⠀⠠⠀⢂⠘⠀⢂⠡⢀⠂⡐⠈⡔⠨⣀⠣⠘⠀⠌⠠⢁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠀⠀⠀⠀⢀⠀⠀⠸⠟⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀⠁⠀⠀⡀⠄⠂\r\n");
+
+        System.out.println("\r\nPressione qualquer tecla para iniciar.");
 
         scanner.nextLine();
     }
@@ -167,20 +161,22 @@ public class GameManager {
 
         switch (option) { 
             case 1:
-                int damage = random.nextInt(81);
-                weapon.useCard(angel, damage);
-                syncRate -= weapon.getCost();
+                if (syncRate - weapon.getCost() >= 0) {
+                    int damage = random.nextInt(81);
+                    weapon.useCard(angel, damage);
+                    syncRate -= weapon.getCost();
 
-                System.out.println("\r\nVocê usa " + weapon.getName() + " contra " + angel.getName() + ", dando " + damage + " de dano.\r\n");
-
+                    System.out.println("\r\nVocê usa " + weapon.getName() + " contra " + angel.getName() + ", dando " + damage + " de dano.\r\n");
+                } 
                 break;
             case 2:
-                int shield = random.nextInt(81);
-                ATFieldCard.useCard(hero, shield);
-                syncRate -= ATFieldCard.getCost();
+                if (syncRate - ATFieldCard.getCost() >= 0) {
+                    int shield = random.nextInt(81);
+                    ATFieldCard.useCard(hero, shield);
+                    syncRate -= ATFieldCard.getCost();
 
-                System.out.println("\r\nVocê usa " + ATFieldCard.getName() + ", recebendo " + shield + " de Campo AT (escudo).\r\n");
-
+                    System.out.println("\r\nVocê usa " + ATFieldCard.getName() + ", recebendo " + shield + " de Campo AT (escudo).\r\n");
+                }
                 break;
             case 3:
                 syncRate = 0;
