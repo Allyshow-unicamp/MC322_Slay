@@ -15,8 +15,8 @@ public class GameManager {
     public void start() {
         this.hero = new Hero("", 40, 20);
         this.angel = new Enemy("Sachiel", 200, 200);
-        this.ATFieldCard = new ShieldCard("Conexão Neural", 2);
-        this.weapon = new DamageCard("Positron Rifle", 2);
+        this.ATFieldCard = new ShieldCard("Conexão Neural", 2, "");
+        this.weapon = new DamageCard("Positron Rifle", 2, "");
         this.syncRate = 4;
         this.scanner = new Scanner(System.in);
         this.random = new Random();
@@ -192,8 +192,8 @@ public class GameManager {
             } 
             catch (Exception e) {}
 
-            int damage = random.nextInt(41);
-            angel.attack(hero, damage);
+            int damage = angel.attack(hero);
+            
             System.out.println("\r\nO inimigo " + angel.getName() + " te atacou, dando " + damage + " de dano.\r\n");
         }
     }

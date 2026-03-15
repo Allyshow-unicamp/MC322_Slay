@@ -1,19 +1,11 @@
-public class DamageCard {
+public class DamageCard extends Card{
     
-    private String name = "Positron Rifle";
-    private int energyCost = 1;
-
-    public void useCard(Enemy angel, int damage) {
+    @Override
+    public void useCard(Entity angel, int damage) {
         angel.takeDamage(damage);
     }
-    public String getName() {
-        return this.name;
-    }
-    public int getCost() {
-        return this.energyCost;
-    }
 
-    public DamageCard(String name, int energyCost) {
+    public DamageCard(String name, int energyCost, String cardDescription) {
         this.name = name;
         this.energyCost = energyCost;
     }
