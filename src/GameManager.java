@@ -1,23 +1,33 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class GameManager {
+    public static final int nCards = 4;
+    public static final int playerHealth = 40;
+    public static final int playerField = 20;
+    public static final int enemyHealth = 200;
+    public static final int enemyField = 200;
+    public static final int timeSleep = 1000;
+    public static final int initialSync = 4;
     
     Hero hero;
     Enemy angel;
     int syncRate; // works identical to energy attribute
     Scanner scanner;
     Random random;
-    ShieldCard ATFieldCard;
-    DamageCard weapon;
+    PlayerHand hand;
+    Stack<Card> buyPile;
+    Stack<Card> discardPile;
     int turn;
 
     public void start() {
-        this.hero = new Hero("", 40, 20);
-        this.angel = new Enemy("Sachiel", 200, 200);
-        this.ATFieldCard = new ShieldCard("Conexão Neural", 2, "");
-        this.weapon = new DamageCard("Positron Rifle", 2, "");
-        this.syncRate = 4;
+        this.hero = new Hero("", playerHealth, playerField);
+        this.angel = new Enemy("Sachiel", enemyHealth, enemyField);
+        this.hand = new PlayerHand();
+        this.buyPile = new Stack<Card>();
+        this.discardPile = new Stack<Card>();
+        this.syncRate = initialSync;
         this.scanner = new Scanner(System.in);
         this.random = new Random();
         this.turn = 0;
@@ -99,7 +109,7 @@ public class GameManager {
         clearScreen();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(timeSleep);
         } 
         catch (Exception e) {}
 
@@ -112,12 +122,25 @@ public class GameManager {
 
     public void resetTurn(){
         hero.resetShield();
-        syncRate = 4;
+        syncRate = initialSync;
         turn += 1;
     }
 
     public boolean endOfTurn(){
         return !isRunning() || syncRate == 0;
+    }
+
+    public void buyCards() {
+        for (int i = 0; i < nCards; i++) {
+            hand.buyCard(buyPile);
+        }
+
+        System.out.println("Você compra " + nCards + " cartas.");
+
+        try {
+            Thread.sleep(timeSleep);
+        }
+        catch (Exception e) {}
     }
 
     public void clearScreen() {
@@ -128,7 +151,7 @@ public class GameManager {
 
     public void selectOption() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(timeSleep);
         } 
         catch (Exception e) {}
 
@@ -138,19 +161,19 @@ public class GameManager {
                         "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
                         "("+ hero.getHealth() +"/40 pontos de vida)   (" + angel.getHealth()+ "/200 pontos de vida)\r\n" + //
                         "("+ hero.getShield() +" pontos de escudo)    (" + angel.getShield()+ " pontos de escudo)\r\n" + //
-                        "=========================================\r\n\r\n" + //
-                        syncRate + "/4 de Sincronização (Energia) disponível\r\n \r\n" + //
-                        "1 - Usar Carta de Dano (Custo: " + this.weapon.getCost() + " de energia)\r\n" + //
-                        "2 - Usar Carta de Escudo (Custo: " + this.ATFieldCard.getCost() + " de energia)\r\n" + //
-                        "3 - Encerrar turno\r\n" + //
-                        "\r\n=========================================\r\n");
+                        "=========================================\r\n\r\n");
+
+        hand.showHand();
+
+        System.out.println("=========================================\r\n\r\n" + //
+                        syncRate + "/4 de Sincronização (Energia) disponível\r\n \r\n");
     
         int option = 0;
         while (true) { 
             try {
-                System.out.print("Escolha: ");
+                System.out.print("Qual carta deseja usar (-1 para passar o turno): ");
                 option = Integer.parseInt(scanner.nextLine());
-                if (0 < option && option < 4) {
+                if (0 < option && option < hand.nCards()) {
                     break;
                 }
             }
@@ -159,36 +182,36 @@ public class GameManager {
         
         clearScreen();
 
-        switch (option) { 
-            case 1:
-                if (syncRate - weapon.getCost() >= 0) {
+        if (option == -1)
+            syncRate = 0; // end of turn
+        else {
+            Card card = hand.useCard(option);
+
+            if (syncRate - card.getCost() >= 0) {
+                if (card.getClass() == DamageCard.class) {
                     int damage = random.nextInt(81);
-                    weapon.useCard(angel, damage);
-                    syncRate -= weapon.getCost();
-
-                    System.out.println("\r\nVocê usa " + weapon.getName() + " contra " + angel.getName() + ", dando " + damage + " de dano.\r\n");
-                } 
-                break;
-            case 2:
-                if (syncRate - ATFieldCard.getCost() >= 0) {
-                    int shield = random.nextInt(81);
-                    ATFieldCard.useCard(hero, shield);
-                    syncRate -= ATFieldCard.getCost();
-
-                    System.out.println("\r\nVocê usa " + ATFieldCard.getName() + ", recebendo " + shield + " de Campo AT (escudo).\r\n");
+                    card.useCard(angel, damage);
+                    syncRate -= card.getCost();
+                    
+                    System.out.println("\r\nVocê usa " + card.getName() + " contra " + angel.getName() + ", dando " + damage + " de dano.\r\n");
                 }
-                break;
-            case 3:
-                syncRate = 0;
-                break;
-            default:
+                else if (card.getClass() == ShieldCard.class) {
+                    int shield = random.nextInt(81);
+                    card.useCard(hero, shield);
+                    syncRate -= card.getCost();
+
+                    System.out.println("\r\nVocê usa " + card.getName() + ", recebendo " + shield + " de Campo AT (escudo).\r\n");
+                }
             }
+
+            discardPile.add(card);
+        }
     }
 
     public void enemyAction() {
         if (angel.isAlive()) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(timeSleep);
             } 
             catch (Exception e) {}
 
@@ -200,7 +223,7 @@ public class GameManager {
 
     public void results() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(timeSleep);
         } 
         catch (Exception e) {}
 
