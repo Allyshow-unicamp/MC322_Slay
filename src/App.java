@@ -7,6 +7,7 @@ public class App {
         game.selectCharacter();
 
         while (game.isRunning()) {
+            game.buyCards();
             while (!game.endOfTurn()) {
                 game.selectOption();
             }
