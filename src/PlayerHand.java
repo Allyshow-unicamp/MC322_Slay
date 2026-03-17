@@ -22,15 +22,21 @@ public class PlayerHand {
             System.out.println("\r\n\r\n");
         }
     }
-    public void buyCard(Stack<Card> buyPile) {
-        hand.add(buyPile.remove(0));
+    public void buyCard(CardStack buyPile) {
+        hand.add(buyPile.remove());
     }
     public Card useCard(int card) {
         return hand.remove(card);
     }
-    public void discardCards(Stack<Card> discardPile) {
+    public void discardCards(CardStack discardPile) {
         for (int i = 0; i < hand.size(); i++) {
             discardPile.add(hand.remove(0));
+        }
+    }
+    public void restoreCards(CardStack discardPile, CardStack buyPile) {
+        discardPile.shuffle();
+        while(!discardPile.isEmpty()) {
+            buyPile.add(discardPile.remove());
         }
     }
     public int nCards() {
