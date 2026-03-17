@@ -1,6 +1,6 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class GameManager {
     public static final int nCards = 4;
@@ -17,16 +17,28 @@ public class GameManager {
     Scanner scanner;
     Random random;
     PlayerHand hand;
-    Stack<Card> buyPile;
-    Stack<Card> discardPile;
+    CardStack buyPile;
+    CardStack discardPile;
+    ArrayList<Card> deck;
     int turn;
 
+    public void populateDeck() {
+        deck.add(new DamageCard("Lança de Longinus", 10, "Use-a para dar de 100 a 200 de dano"));
+        deck.add(new DamageCard("Lança de Cassius", 8, "Use-a para dar de 80 a 160 de dano"));
+        deck.add(new DamageCard("Rifle Positron", 6, "Use-a para dar de 60 a 120 de dano"));
+        deck.add(new DamageCard("Espada Progressiva", 4, "Use-a para dar de 40 a 80 de dano"));
+        deck.add(new DamageCard("Faca Progressiva", 2, "Use-a para dar de 20 a 40 de dano"));
+    }
+
     public void start() {
+        this.deck = new ArrayList<>();
+        this.populateDeck();
+
         this.hero = new Hero("", playerHealth, playerField);
         this.angel = new Enemy("Sachiel", enemyHealth, enemyField);
         this.hand = new PlayerHand();
-        this.buyPile = new Stack<Card>();
-        this.discardPile = new Stack<Card>();
+        this.buyPile = new CardStack(deck);
+        this.discardPile = new CardStack(new ArrayList<>());
         this.syncRate = initialSync;
         this.scanner = new Scanner(System.in);
         this.random = new Random();
@@ -159,14 +171,14 @@ public class GameManager {
 
         System.out.print("\r\n=========================================\r\n" + //
                         "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
-                        "("+ hero.getHealth() +"/40 pontos de vida)   (" + angel.getHealth()+ "/200 pontos de vida)\r\n" + //
+                        "("+ hero.getHealth() +"/" + playerHealth + " pontos de vida)   (" + angel.getHealth()+ "/" + enemyHealth + " pontos de vida)\r\n" + //
                         "("+ hero.getShield() +" pontos de escudo)    (" + angel.getShield()+ " pontos de escudo)\r\n" + //
                         "=========================================\r\n\r\n");
 
         hand.showHand();
 
         System.out.println("=========================================\r\n\r\n" + //
-                        syncRate + "/4 de Sincronização (Energia) disponível\r\n \r\n");
+                        syncRate + "/" + syncRate + " de Sincronização (Energia) disponível\r\n \r\n");
     
         int option = 0;
         while (true) { 
@@ -189,14 +201,14 @@ public class GameManager {
 
             if (syncRate - card.getCost() >= 0) {
                 if (card.getClass() == DamageCard.class) {
-                    int damage = random.nextInt(81);
+                    int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
                     card.useCard(angel, damage);
                     syncRate -= card.getCost();
                     
                     System.out.println("\r\nVocê usa " + card.getName() + " contra " + angel.getName() + ", dando " + damage + " de dano.\r\n");
                 }
                 else if (card.getClass() == ShieldCard.class) {
-                    int shield = random.nextInt(81);
+                    int shield = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
                     card.useCard(hero, shield);
                     syncRate -= card.getCost();
 

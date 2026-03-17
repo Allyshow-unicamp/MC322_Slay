@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class PlayerHand {
     List<Card> hand;
@@ -33,10 +32,10 @@ public class PlayerHand {
             discardPile.add(hand.remove(0));
         }
     }
-    public void restoreCards(CardStack discardPile, CardStack buyPile) {
+    public void restoreCards(CardStack discardPile, ArrayList<Card> deck) {
         discardPile.shuffle();
         while(!discardPile.isEmpty()) {
-            buyPile.add(discardPile.remove());
+            deck.add(discardPile.remove());
         }
     }
     public int nCards() {
