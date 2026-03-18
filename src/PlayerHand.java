@@ -5,20 +5,19 @@ public class PlayerHand {
     List<Card> hand;
 
     public void showHand() {
-        System.out.println("""
-        ==============\r\n
-        Mão do Jogador\r\n
-        ==============\r\n
-        \r\n""");
+        System.out.print("""
+        ==============
+        Mão do Jogador
+        ==============
+        """);
 
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
 
-            System.out.println("===== Carta " + i + " =====");
-            System.out.println("\r\nNome: " + card.getName());
-            System.out.println("\r\nCusto: " + card.getCost());
-            System.out.println("\r\nDescrição: " + card.getDescription());
-            System.out.println("\r\n\r\n");
+            System.out.println("\r\n===== Carta " + i + " =====");
+            System.out.println("Nome: " + card.getName());
+            System.out.println("Custo: " + card.getCost());
+            System.out.print("Descrição: " + card.getDescription());
         }
     }
     public void buyCard(CardStack buyPile) {
@@ -32,10 +31,10 @@ public class PlayerHand {
             discardPile.add(hand.remove(0));
         }
     }
-    public void restoreCards(CardStack discardPile, ArrayList<Card> deck) {
+    public void restoreCards(CardStack discardPile, CardStack buyPile) {
         discardPile.shuffle();
         while(!discardPile.isEmpty()) {
-            deck.add(discardPile.remove());
+            buyPile.add(discardPile.remove());
         }
     }
     public int nCards() {

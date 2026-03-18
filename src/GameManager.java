@@ -19,30 +19,28 @@ public class GameManager {
     PlayerHand hand;
     CardStack buyPile;
     CardStack discardPile;
-    ArrayList<Card> deck;
     int turn;
 
     public void populateDeck() {
-        deck.add(new DamageCard("Lança de Longinus", 10, "Use-a para dar de 100 a 200 de dano"));
-        deck.add(new DamageCard("Lança de Cassius", 8, "Use-a para dar de 80 a 160 de dano"));
-        deck.add(new DamageCard("Rifle Positron", 6, "Use-a para dar de 60 a 120 de dano"));
-        deck.add(new DamageCard("Espada Progressiva", 4, "Use-a para dar de 40 a 80 de dano"));
-        deck.add(new DamageCard("Faca Progressiva", 2, "Use-a para dar de 20 a 40 de dano"));
+        buyPile.add(new DamageCard("Lança de Longinus", 10, "Use-a para dar de 100 a 200 de dano"));
+        buyPile.add(new DamageCard("Lança de Cassius", 8, "Use-a para dar de 80 a 160 de dano"));
+        buyPile.add(new DamageCard("Rifle Positron", 6, "Use-a para dar de 60 a 120 de dano"));
+        buyPile.add(new DamageCard("Espada Progressiva", 4, "Use-a para dar de 40 a 80 de dano"));
+        buyPile.add(new DamageCard("Faca Progressiva", 2, "Use-a para dar de 20 a 40 de dano"));
     }
 
     public void start() {
-        this.deck = new ArrayList<>();
-        this.populateDeck();
-
         this.hero = new Hero("", playerHealth, playerField);
         this.angel = new Enemy("Sachiel", enemyHealth, enemyField);
         this.hand = new PlayerHand();
-        this.buyPile = new CardStack(deck);
-        this.discardPile = new CardStack(new ArrayList<>());
+        this.buyPile = new CardStack();
+        this.discardPile = new CardStack();
         this.syncRate = initialSync;
         this.scanner = new Scanner(System.in);
         this.random = new Random();
         this.turn = 0;
+
+        this.populateDeck();
     }
 
     public void initialScreen() {

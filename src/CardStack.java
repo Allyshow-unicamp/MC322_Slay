@@ -1,5 +1,4 @@
 import java.util.Stack;
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class CardStack {
@@ -19,10 +18,8 @@ public class CardStack {
     public boolean isEmpty() {
         return cardsStack.empty();
     }
-    public CardStack(ArrayList<Card> cardsList) {
-        this.cardsStack = new Stack<Card>();
-        for (int i = 0; i < cardsList.size(); i++) {
-            cardsStack.push(cardsList.removeFirst());
-        };
+
+    public CardStack() {
+        this.cardsStack = new Stack<>();
     }
 }

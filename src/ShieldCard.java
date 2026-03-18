@@ -8,5 +8,6 @@ public class ShieldCard extends Card{
     public ShieldCard(String name, int energyCost, String cardDescription) {
         this.energyCost = energyCost;
         this.name = name;
+        this.cardDescription = cardDescription;
     }
 }

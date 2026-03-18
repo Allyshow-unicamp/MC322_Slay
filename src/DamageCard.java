@@ -8,5 +8,6 @@ public class DamageCard extends Card{
     public DamageCard(String name, int energyCost, String cardDescription) {
         this.name = name;
         this.energyCost = energyCost;
+        this.cardDescription = cardDescription;
     }
 }

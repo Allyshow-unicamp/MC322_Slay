@@ -12,7 +12,7 @@ public abstract class Card {
     public int getCost() {
         return this.energyCost;
     }
-    public int getDescription() {
-        return this.getDescription();
+    public String getDescription() {
+        return this.cardDescription;
     }
 }
