@@ -9,7 +9,7 @@ public class GameManager {
     public static final int enemyHealth = 200;
     public static final int enemyField = 200;
     public static final int timeSleep = 1000;
-    public static final int initialSync = 4;
+    public static final int initialSync = 10;
     
     Hero hero;
     Enemy angel;
@@ -27,6 +27,8 @@ public class GameManager {
         buyPile.add(new DamageCard("Rifle Positron", 6, "Use-a para dar de 60 a 120 de dano"));
         buyPile.add(new DamageCard("Espada Progressiva", 4, "Use-a para dar de 40 a 80 de dano"));
         buyPile.add(new DamageCard("Faca Progressiva", 2, "Use-a para dar de 20 a 40 de dano"));
+    
+        buyPile.shuffle();
     }
 
     public void start() {
@@ -133,6 +135,7 @@ public class GameManager {
     public void resetTurn(){
         hero.resetShield();
         syncRate = initialSync;
+        hand.discardCards(discardPile);
         turn += 1;
     }
 
@@ -142,7 +145,7 @@ public class GameManager {
 
     public void buyCards() {
         for (int i = 0; i < nCards; i++) {
-            hand.buyCard(buyPile);
+            hand.buyCard(buyPile, discardPile);
         }
 
         System.out.println("Você compra " + nCards + " cartas.");
@@ -175,15 +178,15 @@ public class GameManager {
 
         hand.showHand();
 
-        System.out.println("=========================================\r\n\r\n" + //
-                        syncRate + "/" + syncRate + " de Sincronização (Energia) disponível\r\n \r\n");
+        System.out.println("\r\n\r\n=========================================\r\n" + //
+                        syncRate + "/" + initialSync + " de Sincronização (Energia) disponível\r\n");
     
         int option = 0;
         while (true) { 
             try {
                 System.out.print("Qual carta deseja usar (-1 para passar o turno): ");
                 option = Integer.parseInt(scanner.nextLine());
-                if (0 < option && option < hand.nCards()) {
+                if (0 <= option && option < hand.nCards()) {
                     break;
                 }
             }
@@ -212,9 +215,9 @@ public class GameManager {
 
                     System.out.println("\r\nVocê usa " + card.getName() + ", recebendo " + shield + " de Campo AT (escudo).\r\n");
                 }
-            }
 
-            discardPile.add(card);
+                discardPile.add(card);
+            }
         }
     }
 

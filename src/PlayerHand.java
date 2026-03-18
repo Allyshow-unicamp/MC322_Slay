@@ -5,11 +5,7 @@ public class PlayerHand {
     List<Card> hand;
 
     public void showHand() {
-        System.out.print("""
-        ==============
-        Mão do Jogador
-        ==============
-        """);
+        System.out.println("===== Mão do Jogador =====");
 
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
@@ -20,7 +16,10 @@ public class PlayerHand {
             System.out.print("Descrição: " + card.getDescription());
         }
     }
-    public void buyCard(CardStack buyPile) {
+    public void buyCard(CardStack buyPile, CardStack discardPile) {
+        if (buyPile.isEmpty()) {
+            restoreCards(discardPile, buyPile);
+        }
         hand.add(buyPile.remove());
     }
     public Card useCard(int card) {
