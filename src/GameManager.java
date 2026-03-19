@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -219,6 +218,7 @@ public class GameManager {
     hero.resetShield();
     syncRate = initialSync;
     hand.discardCards(discardPile);
+    System.out.println("Você discarta todas as suas cartas e passa o turno.\r\n");
     turn += 1;
   }
 
@@ -231,7 +231,7 @@ public class GameManager {
       hand.buyCard(buyPile, discardPile);
     }
 
-    System.out.println("Você compra " + nCards + " cartas.");
+    System.out.println("Você compra " + nCards + " cartas.\r\n");
 
     try {
       Thread.sleep(timeSleep);
@@ -252,19 +252,18 @@ public class GameManager {
     } catch (Exception e) {
     }
 
-    System.out.println("========== Turno " + turn + " ==========");
+    System.out.println("=============== Turno " + turn + " ===============");
 
-    System.out.print("\r\n=========================================\r\n" + //
+    System.out.print("" + //
         "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
         "(" + hero.getHealth() + "/" + playerHealth + " pontos de vida)   (" + angel.getHealth()
         + "/" + enemyHealth + " pontos de vida)\r\n" + //
         "(" + hero.getShield() + " pontos de escudo)    (" + angel.getShield()
-        + " pontos de escudo)\r\n" + //
-        "=========================================\r\n\r\n");
+        + " pontos de escudo)\r\n");
 
     hand.showHand();
 
-    System.out.println("\r\n\r\n=========================================\r\n" + //
+    System.out.println("\r\n=========================================\r\n" + //
         syncRate + "/" + initialSync + " de Sincronização (Energia) disponível\r\n");
 
     int option = 0;
@@ -321,7 +320,7 @@ public class GameManager {
       int damage = angel.attack(hero);
 
       System.out.println(
-          "\r\nO inimigo " + angel.getName() + " te atacou, dando " + damage + " de dano.\r\n");
+          "O inimigo " + angel.getName() + " te atacou, dando " + damage + " de dano.\r\n");
     }
   }
 

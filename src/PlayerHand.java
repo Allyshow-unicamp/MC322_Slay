@@ -5,7 +5,10 @@ public class PlayerHand {
     List<Card> hand;
 
     public void showHand() {
-        System.out.println("===== Mão do Jogador =====");
+
+        // sotrs cards by cost, using a compareTo like function to do so
+        // given that the sort function sorts in ascending order, -1 is placed at the beginning so that is simulates a desc order
+        hand.sort((card1, card2) -> { return -1 * (card1.getCost() > card2.getCost() ? 1 : card1.getCost() == card2.getCost() ? 0 : -1); });
 
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
@@ -13,7 +16,7 @@ public class PlayerHand {
             System.out.println("\r\n===== Carta " + i + " =====");
             System.out.println("Nome: " + card.getName());
             System.out.println("Custo: " + card.getCost());
-            System.out.print("Descrição: " + card.getDescription());
+            System.out.println("Descrição: " + card.getDescription());
         }
     }
     public void buyCard(CardStack buyPile, CardStack discardPile) {
