@@ -26,7 +26,7 @@ public class PlayerHand {
         return hand.remove(card);
     }
     public void discardCards(CardStack discardPile) {
-        for (int i = 0; i < hand.size(); i++) {
+        while (!hand.isEmpty()) {
             discardPile.add(hand.remove(0));
         }
     }
@@ -35,6 +35,11 @@ public class PlayerHand {
         while(!discardPile.isEmpty()) {
             buyPile.add(discardPile.remove());
         }
+    }
+    public int seeCardCost(int card) {
+        Card Card = hand.get(card);
+        int cost = Card.getCost();
+        return cost;
     }
     public int nCards() {
         return hand.size();
