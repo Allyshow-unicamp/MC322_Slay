@@ -14,9 +14,7 @@ public class PlayerHand {
             Card card = hand.get(i);
 
             System.out.println("\r\n===== Carta " + i + " =====");
-            System.out.println("Nome: " + card.getName());
-            System.out.println("Custo: " + card.getCost());
-            System.out.println("Descrição: " + card.getDescription());
+            System.out.println("Nome: " + card.getName() + " (Custo: " + card.getCost() + "); Descrição: " + card.getDescription());
         }
     }
     public void buyCard(CardStack buyPile, CardStack discardPile) {

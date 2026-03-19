@@ -2,13 +2,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameManager {
-  public static final int nCards = 4;
-  public static final int playerHealth = 40;
-  public static final int playerField = 40;
-  public static final int enemyHealth = 200;
-  public static final int enemyField = 200;
-  public static final int timeSleep = 1000;
-  public static final int initialSync = 10;
+  static final int nCards = 4;
+  static final int playerHealth = 40;
+  static final int playerField = 40;
+  static final int enemyHealth = 200;
+  static final int enemyField = 200;
+  static final int timeSleep = 1000;
+  static final int initialSync = 10;
 
   Hero hero;
   Enemy angel;
@@ -20,16 +20,17 @@ public class GameManager {
   CardStack discardPile;
   int turn;
 
-  public void populateDeck() {
-    buyPile.add(new DamageCard("Lança de Longinus", 10, "Use-a para dar de 100 a 200 de dano"));
-    buyPile.add(new DamageCard("Lança de Cassius", 8, "Use-a para dar de 80 a 160 de dano"));
-    buyPile.add(new DamageCard("Rifle Positron", 6, "Use-a para dar de 60 a 120 de dano"));
-    buyPile.add(new DamageCard("Espada Progressiva", 4, "Use-a para dar de 40 a 80 de dano"));
-    buyPile.add(new DamageCard("Faca Progressiva", 2, "Use-a para dar de 20 a 40 de dano"));
-    buyPile.add(new DamageCard("Lança de Cassius", 8, "Use-a para dar de 80 a 160 de dano"));
-    buyPile.add(new DamageCard("Rifle Positron", 6, "Use-a para dar de 60 a 120 de dano"));
-    buyPile.add(new DamageCard("Espada Progressiva", 4, "Use-a para dar de 40 a 80 de dano"));
-    buyPile.add(new DamageCard("Faca Progressiva", 2, "Use-a para dar de 20 a 40 de dano"));
+  void populateDeck() {
+    buyPile.add(new DamageCard("Longinus Spear", 10, "Use-a para dar de 100 a 200 de dano"));
+    buyPile.add(new DamageCard("Cassius Spear", 9, "Use-a para dar de 90 a 180 de dano"));
+    buyPile.add(new DamageCard("Positron Sniper Rifle", 8, "Use-a para dar de 80 a 160 de dano"));
+    buyPile.add(new DamageCard("Prog Knife", 7, "Use-a para dar de 70 a 140 de dano"));
+    buyPile.add(new DamageCard("Magokoru Sword", 6, "Use-a para dar de 60 a 120 de dano"));
+    buyPile.add(new DamageCard("Pallet Rifle", 5, "Use-a para dar de 50 a 100 de dano"));
+    buyPile.add(new DamageCard("Azumaterasu", 4, "Use-a para dar de 40 a 80 de dano"));
+    buyPile.add(new DamageCard("Smash Hawk", 3, "Use-a para dar de 30 a 60 de dano"));
+    buyPile.add(new DamageCard("N2 Weapon II", 2, "Use-a para dar de 20 a 40 de dano"));
+    buyPile.add(new DamageCard("N2 Weapon", 1, "Use-a para dar de 10 a 20 de dano"));
     buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 2,
         "Restaura a integridade do Campo AT entre 4 e 8 pontos"));
     buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 4,
@@ -57,6 +58,12 @@ public class GameManager {
 
     this.populateDeck();
   }
+
+  void enemyPlanning() {
+    int damage = this.angel.nextAction();
+
+    System.out.println("\r\nO inimigo " + angel.getName() + " pretende dar " + damage + " de dano ao final do turno");
+  } 
 
   public void initialScreen() {
     System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
@@ -202,10 +209,7 @@ public class GameManager {
 
     clearScreen();
 
-    try {
-      Thread.sleep(timeSleep);
-    } catch (Exception e) {
-    }
+    sleep();
 
     System.out.println(hero.getName() + " selecionado.\r\n");
   }
@@ -219,11 +223,16 @@ public class GameManager {
     syncRate = initialSync;
     hand.discardCards(discardPile);
     System.out.println("Você discarta todas as suas cartas e passa o turno.\r\n");
+    sleep();
     turn += 1;
   }
 
   public boolean endOfTurn() {
-    return !isRunning() || syncRate == 0;
+    boolean end = !isRunning() || syncRate == 0;
+    if (syncRate == 0) {
+      System.out.println("Sua energia acabou.\r\n");
+    }
+    return end;
   }
 
   public void buyCards() {
@@ -233,10 +242,7 @@ public class GameManager {
 
     System.out.println("Você compra " + nCards + " cartas.\r\n");
 
-    try {
-      Thread.sleep(timeSleep);
-    } catch (Exception e) {
-    }
+    sleep();
   }
 
   public void clearScreen() {
@@ -246,11 +252,15 @@ public class GameManager {
     }
   }
 
-  public void selectOption() {
+  void sleep() {
     try {
       Thread.sleep(timeSleep);
     } catch (Exception e) {
     }
+  }
+
+  public int selectOption() {
+    sleep();
 
     System.out.println("=============== Turno " + turn + " ===============");
 
@@ -260,6 +270,8 @@ public class GameManager {
         + "/" + enemyHealth + " pontos de vida)\r\n" + //
         "(" + hero.getShield() + " pontos de escudo)    (" + angel.getShield()
         + " pontos de escudo)\r\n");
+
+    this.enemyPlanning();
 
     hand.showHand();
 
@@ -279,6 +291,12 @@ public class GameManager {
     }
 
     clearScreen();
+
+    return option;
+  }
+
+  public void playerAction(int option) {
+    sleep();
 
     if (option == -1)
       syncRate = 0; // end of turn
@@ -306,16 +324,15 @@ public class GameManager {
       } else {
         System.out.println(
             "\r\nVocê não pode usar esta carta, o custo de energia é muito alto!\r\n");
+
+            sleep();
       }
     }
   }
 
   public void enemyAction() {
     if (angel.isAlive()) {
-      try {
-        Thread.sleep(timeSleep);
-      } catch (Exception e) {
-      }
+      sleep();
 
       int damage = angel.attack(hero);
 
@@ -325,10 +342,14 @@ public class GameManager {
   }
 
   public void results() {
-    try {
-      Thread.sleep(timeSleep);
-    } catch (Exception e) {
-    }
+    sleep();
+
+    System.out.print("" + //
+        "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
+        "(" + hero.getHealth() + "/" + playerHealth + " pontos de vida)   (" + angel.getHealth()
+        + "/" + enemyHealth + " pontos de vida)\r\n" + //
+        "(" + hero.getShield() + " pontos de escudo)    (" + angel.getShield()
+        + " pontos de escudo)\r\n");
 
     if (hero.isAlive()) {
             System.out.println("""
@@ -344,7 +365,7 @@ public class GameManager {
                                                                                                                                                                      
             """);
     } else {
-            System.out.print("""
+      System.out.print("""
                                                                                                                               
   ,ad8888ba,                                                    ,ad8888ba,                                         
  d8"'    `"8b                                                  d8"'    `"8b                                        
