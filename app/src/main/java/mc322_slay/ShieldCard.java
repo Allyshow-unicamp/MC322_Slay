@@ -1,3 +1,4 @@
+package mc322_slay;
 public class ShieldCard extends Card{
 
     @Override

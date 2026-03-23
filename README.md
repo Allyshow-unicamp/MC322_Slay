@@ -16,9 +16,11 @@ Seu inimigo é um anjo, filho de Lilith, que anuncia sua ação no começo de ca
 
 ## Estrutura do projeto
 
-- `src`: pasta com as classes .java do projeto, incluindo o App
-- `bin`: pasta com os arquivos compilados
-- `lib`: pasta de dependências
+O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas consiste em:
+
+- `app/src/main/java`: pasta com as classes .java do projeto, incluindo o App
+- `app/build`: pasta com os arquivos compilados e outros arquivos gerados
+- `gradle`: contém arquivos específicos de versionamento do gradle
 
 ## Sobre as Classes:
 
@@ -34,12 +36,12 @@ Seu inimigo é um anjo, filho de Lilith, que anuncia sua ação no começo de ca
 
 ## Compilação e execução do projeto (em linux)
 
-Para compilar o projeto, basta executar o código abaixo no prompt de comandos:
+Para compilar o projeto, basta executar o código abaixo no prompt de comandos, estando na pasta raiz do mesmo:
 ```
-javac -d bin $(find src -name "*.java")
+gradlew build
 ```
 
 Já para executar, use o comando:
 ```
-java -cp bin App
+gradlew run
 ```

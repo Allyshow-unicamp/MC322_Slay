@@ -1,3 +1,4 @@
+package mc322_slay;
 public abstract class Entity {
     
     protected String name;

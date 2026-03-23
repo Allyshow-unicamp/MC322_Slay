@@ -1,3 +1,4 @@
+package mc322_slay;
 import java.util.Random;
 import java.util.Scanner;
 

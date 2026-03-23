@@ -1,3 +1,4 @@
+package mc322_slay;
 public class DamageCard extends Card{
     
     @Override
