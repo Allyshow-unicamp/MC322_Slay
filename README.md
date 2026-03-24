@@ -1,6 +1,6 @@
 # Jogo de cartas com temática de Neon Genesis Evangelion
 
-<img src="image.png" width="150" height="250" alt="Capa">
+<img src="assets/image.png" width="150" height="250" alt="Capa">
 
 ## O jogo
 
@@ -38,10 +38,10 @@ O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas 
 
 Para compilar o projeto, basta executar o código abaixo no prompt de comandos, estando na pasta raiz do mesmo:
 ```
-gradlew build
+./gradlew build
 ```
 
 Já para executar, use o comando:
 ```
-gradlew run
+./gradlew run
 ```

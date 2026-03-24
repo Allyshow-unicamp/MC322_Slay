@@ -10,3 +10,13 @@ build
 # Java compiled output
 *.class
 *.jar
+
+#vscode default file
+.gitattributes
+
+#personal ssh-key
+repomc322
+repomc322.pub
+
+# Ignore Kotlin plugin data
+.kotlin
