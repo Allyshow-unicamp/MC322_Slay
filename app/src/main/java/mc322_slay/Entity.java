@@ -1,9 +1,13 @@
 package mc322_slay;
+
+import java.util.ArrayList;
+
 public abstract class Entity {
     
     protected String name;
     protected int health;
     protected int ATField; // works identical to the shield attribute
+    protected ArrayList<Effect> effects;
 
     public String getName(){
         return this.name;
@@ -29,6 +33,14 @@ public abstract class Entity {
         }
         else {
             this.health = (health - damage) >= 0 ? health - damage : 0;
+        }
+    }
+    public void applyEffect(Effect effect) {
+        if (effects.contains(effect)) {
+            effects[effects.indexOf(effect)].incrementPoints(effect.getPoints());
+        }
+        else {
+            effects.add(effect);
         }
     }
 }
