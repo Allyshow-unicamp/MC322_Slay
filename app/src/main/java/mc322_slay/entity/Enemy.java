@@ -1,4 +1,5 @@
-package mc322_slay;
+package mc322_slay.entity;
+
 import java.util.Random;
 
 public class Enemy extends Entity{

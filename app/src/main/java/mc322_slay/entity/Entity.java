@@ -1,6 +1,8 @@
-package mc322_slay;
+package mc322_slay.entity;
 
 import java.util.ArrayList;
+
+import mc322_slay.effect.Effect;
 
 public abstract class Entity {
     
@@ -37,7 +39,10 @@ public abstract class Entity {
     }
     public void applyEffect(Effect effect) {
         if (effects.contains(effect)) {
-            effects[effects.indexOf(effect)].incrementPoints(effect.getPoints());
+            int index = effects.indexOf(effect);
+            Effect e = effects.get(index);
+            e.incrementPoints(effect.getPoints());
+            effects.set(index, e);
         }
         else {
             effects.add(effect);

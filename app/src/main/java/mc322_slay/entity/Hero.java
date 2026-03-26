@@ -1,4 +1,5 @@
-package mc322_slay;
+package mc322_slay.entity;
+
 public class Hero extends Entity{
 
     public void setName(String newName) {

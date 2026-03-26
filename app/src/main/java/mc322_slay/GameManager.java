@@ -1,25 +1,61 @@
 package mc322_slay;
+
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameManager {
-  static final int nCards = 4;
-  static final int playerHealth = 40;
-  static final int playerField = 40;
-  static final int enemyHealth = 200;
-  static final int enemyField = 200;
-  static final int timeSleep = 1000;
-  static final int initialSync = 10;
+import mc322_slay.card.Card;
+import mc322_slay.card.CardStack;
+import mc322_slay.card.DamageCard;
+import mc322_slay.card.PlayerHand;
+import mc322_slay.card.ShieldCard;
+import mc322_slay.effect.Effect;
+import mc322_slay.effect.PsychicEffect;
+import mc322_slay.entity.Enemy;
+import mc322_slay.entity.Entity;
+import mc322_slay.entity.Hero;
 
-  Hero hero;
-  Enemy angel;
-  int syncRate; // works identical to energy attribute
-  Scanner scanner;
-  Random random;
-  PlayerHand hand;
-  CardStack buyPile;
-  CardStack discardPile;
-  int turn;
+public class GameManager {
+  static private final int nCards = 4;
+  static private final int playerHealth = 40;
+  static private final int playerField = 40;
+  static private final int enemyHealth = 200;
+  static private final int enemyField = 200;
+  static private final int timeSleep = 1000;
+  static private final int initialSync = 10;
+
+  private Hero hero;
+  private Enemy angel;
+  private int syncRate; // works identical to energy attribute
+  private Scanner scanner;
+  private Random random;
+  private PlayerHand hand;
+  private CardStack buyPile;
+  private CardStack discardPile;
+  private int turn;
+  private ArrayList<Effect> subscribers;
+
+  public void subscribe(Effect effect) {
+    subscribers.add(effect);
+  }
+
+  public void unsubscribe(Effect effect) {
+    subscribers.remove(effect);
+  }
+
+  public void notifySubscribers(EventEnum event, Entity attacker, ArrayList<Entity> receivers) {
+    for (Effect subscriber : this.subscribers) {
+      System.out.print(subscriber.beNotified(event, this, attacker, receivers));
+    }
+  }
+
+  public void heroTakeDamage(int damage) {
+    this.hero.takeDamage(damage);
+  }
+
+  public void enemyTakeDamage(int damage) {
+    this.angel.takeDamage(damage);
+  }
 
   void populateDeck() {
     buyPile.add(new DamageCard("Longinus Spear", 10, "Use-a para dar de 100 a 200 de dano"));
@@ -46,6 +82,11 @@ public class GameManager {
     buyPile.shuffle();
   }
 
+  void subscribeEffects() {
+    subscribe(new PsychicEffect(20));
+    subscribe(new PsychicEffect(30));
+  }
+
   public void start() {
     this.hero = new Hero("", playerHealth, playerField);
     this.angel = new Enemy("Sachiel", enemyHealth, enemyField);
@@ -58,17 +99,18 @@ public class GameManager {
     this.turn = 0;
 
     this.populateDeck();
+    this.subscribeEffects();
   }
 
   void enemyPlanning() {
     int damage = this.angel.nextAction();
 
     System.out.println("\r\nO inimigo " + angel.getName() + " pretende dar " + damage + " de dano ao final do turno");
-  } 
+  }
 
   public void initialScreen() {
     System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-                       + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n"
+        + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n"
         + //
         "⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠠⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀"
         + "⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀⡀⠀⢀⠀⠀\r\n"
@@ -326,7 +368,7 @@ public class GameManager {
         System.out.println(
             "\r\nVocê não pode usar esta carta, o custo de energia é muito alto!\r\n");
 
-            sleep();
+        sleep();
       }
     }
   }
@@ -353,31 +395,32 @@ public class GameManager {
         + " pontos de escudo)\r\n");
 
     if (hero.isAlive()) {
-            System.out.println("""
-                                                                                 
-8b        d8                           I8,        8        ,8I  88               
- Y8,    ,8P                            `8b       d8b       d8'  ""               
-  Y8,  ,8P                              "8,     ,8"8,     ,8"                    
-   "8aa8"  ,adPPYba,   88       88       Y8     8P Y8     8P    88  8b,dPPYba,   
-    `88'  a8"     "8a  88       88       `8b   d8' `8b   d8'    88  88P'   `"8a  
-     88   8b       d8  88       88        `8a a8'   `8a a8'     88  88       88  
-     88   "8a,   ,a8"  "8a,   ,a88         `8a8'     `8a8'      88  88       88  
-     88    `"YbbdP"'    `"YbbdP'Y8          `8'       `8'       88  88       88  
-                                                                                                                                                                     
-            """);
+      System.out.println("""
+
+          8b        d8                           I8,        8        ,8I  88
+           Y8,    ,8P                            `8b       d8b       d8'  ""
+            Y8,  ,8P                              "8,     ,8"8,     ,8"
+             "8aa8"  ,adPPYba,   88       88       Y8     8P Y8     8P    88  8b,dPPYba,
+              `88'  a8"     "8a  88       88       `8b   d8' `8b   d8'    88  88P'   `"8a
+               88   8b       d8  88       88        `8a a8'   `8a a8'     88  88       88
+               88   "8a,   ,a8"  "8a,   ,a88         `8a8'     `8a8'      88  88       88
+               88    `"YbbdP"'    `"YbbdP'Y8          `8'       `8'       88  88       88
+
+                      """);
     } else {
-      System.out.print("""
-                                                                                                                              
-  ,ad8888ba,                                                    ,ad8888ba,                                         
- d8"'    `"8b                                                  d8"'    `"8b                                        
-d8'                                                           d8'        `8b                                       
-88             ,adPPYYba,  88,dPYba,,adPYba,    ,adPPYba,     88          88  8b       d8   ,adPPYba,  8b,dPPYba,  
-88      88888  ""     `Y8  88P'   "88"    "8a  a8P_____88     88          88  `8b     d8'  a8P_____88  88P'   "Y8  
-Y8,        88  ,adPPPPP88  88      88      88  8PP\"\"\"\"\"\"\"     Y8,        ,8P   `8b   d8'   8PP\"\"\"\"\"\"\"  88          
- Y8a.    .a88  88,    ,88  88      88      88  "8b,   ,aa      Y8a.    .a8P     `8b,d8'    "8b,   ,aa  88          
-  `"Y88888P"   `"8bbdP"Y8  88      88      88   `"Ybbd8"'       `"Y8888Y"'        "8"       `"Ybbd8"'  88          
-                                                                                                                   
-            """);                                                                                                          
+      System.out.print(
+          """
+
+                ,ad8888ba,                                                    ,ad8888ba,
+               d8"'    `"8b                                                  d8"'    `"8b
+              d8'                                                           d8'        `8b
+              88             ,adPPYYba,  88,dPYba,,adPYba,    ,adPPYba,     88          88  8b       d8   ,adPPYba,  8b,dPPYba,
+              88      88888  ""     `Y8  88P'   "88"    "8a  a8P_____88     88          88  `8b     d8'  a8P_____88  88P'   "Y8
+              Y8,        88  ,adPPPPP88  88      88      88  8PP\"\"\"\"\"\"\"     Y8,        ,8P   `8b   d8'   8PP\"\"\"\"\"\"\"  88
+               Y8a.    .a88  88,    ,88  88      88      88  "8b,   ,aa      Y8a.    .a8P     `8b,d8'    "8b,   ,aa  88
+                `"Y88888P"   `"8bbdP"Y8  88      88      88   `"Ybbd8"'       `"Y8888Y"'        "8"       `"Ybbd8"'  88
+
+                          """);
     }
   }
 }

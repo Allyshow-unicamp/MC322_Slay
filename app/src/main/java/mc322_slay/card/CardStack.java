@@ -1,6 +1,7 @@
-package mc322_slay;
-import java.util.Stack;
+package mc322_slay.card;
+
 import java.util.Collections;
+import java.util.Stack;
 
 public class CardStack {
     
