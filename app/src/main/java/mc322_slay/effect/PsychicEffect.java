@@ -9,27 +9,30 @@ import mc322_slay.entity.Entity;
 
 public class PsychicEffect extends Effect {
 
+    private int damage;
+
     public String getString() {
-        return name + ": " + points + " de acúmulo";
+        return name + ": " + points + " turnos restantes";
     }
     @Override
     public String beNotified(EventEnum event, GameManager gameManager, Entity attacker, ArrayList<Entity> receivers) {
         if (event == EventEnum.playerEndOfTurn) {
             if (attacker.getClass() == Enemy.class) {
-                gameManager.heroTakeDamage(points);
-                return "\r\nVocê leva " + points + " de dano devido a " + name + ".";
+                receivers.get(0).takeDamage(damage);
+                return "\r\nVocê leva " + damage + " de dano devido a " + name + ".";
             }
             else {
                 for (Entity receiver : receivers) {
-                    gameManager.enemyTakeDamage(points);
-                    return "\r\n" + receiver.getName() + " leva " + points + "de dano devido a " + name + ".";
+                    receiver.takeDamage(damage);
+                    return "\r\n" + receiver.getName() + " leva " + damage + "de dano devido a " + name + ".";
                 }
             }
         }
         return "";
     }
 
-    public PsychicEffect(int points) {
-        this.incrementPoints(points);
+    public PsychicEffect(int damage, int turns) {
+        this.damage = damage;
+        this.incrementPoints(turns);
     }
 }

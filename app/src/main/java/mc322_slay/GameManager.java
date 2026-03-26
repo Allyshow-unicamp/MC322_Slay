@@ -49,14 +49,6 @@ public class GameManager {
     }
   }
 
-  public void heroTakeDamage(int damage) {
-    this.hero.takeDamage(damage);
-  }
-
-  public void enemyTakeDamage(int damage) {
-    this.angel.takeDamage(damage);
-  }
-
   void populateDeck() {
     buyPile.add(new DamageCard("Longinus Spear", 10, "Use-a para dar de 100 a 200 de dano"));
     buyPile.add(new DamageCard("Cassius Spear", 9, "Use-a para dar de 90 a 180 de dano"));
@@ -83,8 +75,8 @@ public class GameManager {
   }
 
   void subscribeEffects() {
-    subscribe(new PsychicEffect(20));
-    subscribe(new PsychicEffect(30));
+    subscribe(new PsychicEffect(10, 3));
+    subscribe(new PsychicEffect(30, 3));
   }
 
   public void start() {
