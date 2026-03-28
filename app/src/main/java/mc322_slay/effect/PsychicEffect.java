@@ -15,40 +15,40 @@ public class PsychicEffect extends Effect {
     @Override
     public void beNotified(EventEnum event, GameManager gameManager) {
         if (event == EventEnum.playerEndOfTurn || event == EventEnum.enemyEndOfTurn) {
-            if (event == EventEnum.playerEndOfTurn && gameManager.getHero().getEffects().contains(this)) {
+            if (event == EventEnum.playerEndOfTurn) {
                 // damage inflicted to player at the end of his turn, if it is under this effect
 
-                Hero hero = gameManager.getHero();
+                if (this.owner.getClass() == Hero.class) {
+                    this.owner.takeDamage(damage);
+                    System.out.println("\r\nVocê leva " + damage + " de dano devido a " + name + ".");
 
-                hero.takeDamage(damage);
-                System.out.println("\r\nVocê leva " + damage + " de dano devido a " + name + ".");
-
-                this.points -= 1;
-                if (this.points == 0) { // effect is over
-                    gameManager.unsubscribe(this);
-                    hero.removeEffect(this);
+                    this.points -= 1;
+                    if (this.points == 0) { // effect is over
+                        gameManager.unsubscribe(this);
+                        owner.removeEffect(this);
+                    }
                 }
             }
             else {
                 // damage inflicted to first enemy at the end of their turn
 
-                Enemy enemy = gameManager.getAngels().get(0);
-                if (enemy.getEffects().contains(this)) {
-                    enemy.takeDamage(damage);
-                    System.out.println("\r\n" + enemy.getName() + " leva " + damage + "de dano devido a " + name + ".");
-                }
+                if (owner.getClass() == Enemy.class) {
+                    owner.takeDamage(damage);
+                    System.out.println("\r\n" + owner.getName() + " leva " + damage + "de dano devido a " + name + ".");
 
-                this.points -= 1;
-                if (this.points == 0) { // effect is over
-                    gameManager.unsubscribe(this);
-                    enemy.removeEffect(this);
+                    this.points -= 1;
+                    if (this.points == 0) { // effect is over
+                        gameManager.unsubscribe(this);
+                        owner.removeEffect(this);
+                    }
                 }
             }
         }
     }
 
-    public PsychicEffect(int damage, int turns) {
+    public PsychicEffect(String name, int damage, int turns) {
+        this.name = name;
         this.damage = damage;
-        this.incrementPoints(turns);
+        this.points = turns;
     }
 }

@@ -71,9 +71,9 @@ public class GameManager {
 		buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 10,
 				"Restaura a integridade do Campo AT entre 20 e 40 pontos"));
 		buyPile.add(new EffectCard("Dano psicológico 1", 3,
-				"Use-a para dar 20 de dano por 3 turnos", new PsychicEffect(20, 3)));
+				"Use-a para dar 20 de dano por 3 turnos", new PsychicEffect("Dano psicológico 1", 20, 3)));
 		buyPile.add(new EffectCard("Dano psicológico 2", 6,
-				"Use-a para dar 40 de dano por 3 turnos", new PsychicEffect(40, 3)));
+				"Use-a para dar 40 de dano por 3 turnos", new PsychicEffect("Dano psicológico 2", 40, 3)));
 
 		buyPile.shuffle();
 	}
@@ -92,13 +92,6 @@ public class GameManager {
 		this.subscribers = new ArrayList<>();
 
 		this.populateDeck();
-	}
-
-	public Hero getHero() {
-		return hero;
-	}
-	public ArrayList<Enemy> getAngels() {
-		return angels;
 	}
 
 	void enemyPlanning() {

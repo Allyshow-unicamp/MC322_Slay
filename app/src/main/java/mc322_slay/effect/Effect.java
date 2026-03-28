@@ -18,6 +18,9 @@ public abstract class Effect {
     public String getName() {
         return this.name;
     }
+    public void setOwner(Entity owner) {
+        this.owner = owner;
+    }
 
     public abstract String getString();
 

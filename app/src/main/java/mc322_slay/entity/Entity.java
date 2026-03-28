@@ -40,7 +40,7 @@ public abstract class Entity {
             this.health = (health - damage) >= 0 ? health - damage : 0;
         }
     }
-    public String applyEffect(Effect effect) {
+    public void applyEffect(Effect effect) {
         if (effects.contains(effect)) {
             int index = effects.indexOf(effect);
             Effect e = effects.get(index);
@@ -50,12 +50,14 @@ public abstract class Entity {
         else {
             effects.add(effect);
         }
-        return "\r\n" + this.name + " está sob efeito de " + effect.getString();
+        effect.setOwner(this);
+
+        System.out.println("\r\n" + this.name + " está sob efeito de " + effect.getString());
     }
     public String removeEffect(Effect effect) {
         boolean result = effects.remove(effect);
         if (result)
-            return "\r\n" + this.name + " não está mais sob efeito de " + effect.getString();
+            System.out.println("\r\n" + this.name + " não está mais sob efeito de " + effect.getString());
         return "";
     }
 }
