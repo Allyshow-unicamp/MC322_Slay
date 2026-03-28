@@ -36,7 +36,14 @@ O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas 
 
 ## Compilação e execução do projeto (em linux)
 
-Para compilar o projeto, basta executar o código abaixo no prompt de comandos, estando na pasta raiz do mesmo:
+Certifique-se que você está na pasta raiz do projeto no prompt de comandos.
+
+Inicialmente, execute o comando abaixo para dar permissão de execução ao gradlew:
+```
+chmod +x gradlew
+```
+
+Para compilar o projeto, basta executar o código abaixo:
 ```
 ./gradlew build
 ```
