@@ -11,6 +11,9 @@ build
 *.class
 *.jar
 
+# keep jar
+!gradle-wrapper.jar
+
 #vscode default file
 .gitattributes
 
