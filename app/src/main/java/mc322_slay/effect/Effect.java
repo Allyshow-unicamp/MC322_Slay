@@ -1,7 +1,5 @@
 package mc322_slay.effect;
 
-import java.util.ArrayList;
-
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
 import mc322_slay.entity.Entity;
@@ -23,5 +21,5 @@ public abstract class Effect {
 
     public abstract String getString();
 
-    public abstract String beNotified(EventEnum event, GameManager gameManager, Entity attacker, ArrayList<Entity> receivers);
+    public abstract void beNotified(EventEnum event, GameManager gameManager);
 }

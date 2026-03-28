@@ -1,6 +1,8 @@
 package mc322_slay.entity;
 
-public class Hero extends Entity{
+import java.util.ArrayList;
+
+public class Hero extends Entity {
 
     public void setName(String newName) {
         this.name = newName;
@@ -12,6 +14,7 @@ public class Hero extends Entity{
         this.name = name;
         this.health = health;
         this.ATField = ATField;
+        this.effects = new ArrayList<>();
     }
 
 }

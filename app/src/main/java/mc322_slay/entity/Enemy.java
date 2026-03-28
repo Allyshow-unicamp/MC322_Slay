@@ -1,8 +1,9 @@
 package mc322_slay.entity;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-public class Enemy extends Entity{
+public class Enemy extends Entity {
 
     public Random random = new Random();
     int damage = 0;
@@ -20,5 +21,6 @@ public class Enemy extends Entity{
         this.health = health;
         this.ATField = ATField;
         this.damage = 0;
+        this.effects = new ArrayList<>();
     }
 }

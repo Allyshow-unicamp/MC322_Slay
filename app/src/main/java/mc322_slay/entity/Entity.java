@@ -20,6 +20,9 @@ public abstract class Entity {
     public int getShield() {
         return this.ATField;
     }
+    public ArrayList<Effect> getEffects() {
+        return this.effects;
+    }
     public boolean isAlive() {
         return this.health > 0;
     }
@@ -47,9 +50,12 @@ public abstract class Entity {
         else {
             effects.add(effect);
         }
-        return "\r\n" + this.name + " agora está sob efeito de " + effect.getName();
+        return "\r\n" + this.name + " está sob efeito de " + effect.getString();
     }
     public String removeEffect(Effect effect) {
-        return "\r\n" + this.name + " agora não está mais sob efeito de " + effect.getName();
+        boolean result = effects.remove(effect);
+        if (result)
+            return "\r\n" + this.name + " não está mais sob efeito de " + effect.getString();
+        return "";
     }
 }

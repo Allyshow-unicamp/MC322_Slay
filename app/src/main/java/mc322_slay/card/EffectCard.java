@@ -9,7 +9,10 @@ public class EffectCard extends Card{
     
     @Override
     public void useCard(Entity angel, int x) {
-        angel.applyEffect(effect);
+        System.out.println(angel.applyEffect(effect));
+    }
+    public Effect getEffect() {
+        return effect;
     }
 
     public EffectCard(String name, int energyCost, String cardDescription, Effect effect) {
