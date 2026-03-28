@@ -91,6 +91,7 @@ public class GameManager {
         this.random = new Random();
         this.turn = 0;
         this.subscribers = new ArrayList<>();
+        this.screen = new Interface();
 
         this.populateDeck();
     }
@@ -194,7 +195,7 @@ public class GameManager {
 
         System.out.println("=============== Turno " + turn + " ===============");
 
-        screen.printTurnInfo(hero, angel, playerHealth, enemyHealth);
+        screen.printTurnInfo(hero, angels.get(0), playerHealth, enemyHealth);
 
         this.enemyPlanning();
 
@@ -283,7 +284,7 @@ public class GameManager {
     public void results() {
         sleep();
 
-        screen.printTurnInfo(hero, angel, playerHealth, enemyHealth);
+        screen.printTurnInfo(hero, angels.get(0), playerHealth, enemyHealth);
 
         if (hero.isAlive()) {
             screen.printFile("youWin.txt");
