@@ -68,7 +68,7 @@ public class GameManager {
   } 
 
   public void initialScreen() {
-    screen.initialScreen();
+    screen.printFile("initialScreenArt.txt");
 
     System.out.println("\r\nPressione qualquer tecla para iniciar.");
 
@@ -76,11 +76,7 @@ public class GameManager {
   }
 
   public void selectCharacter() {
-    System.out.print("===============================================\r\n"
-        + "\r\n1 - Shinji Ikari\r\n"
-        + "2 - Rei Ayanami\r\n"
-        + "3 - Asuka Langley Soryu\r\n"
-        + "\r\n================================================\r\n");
+    screen.printFile("selectCharacter.txt");
     int option;
     String name = "";
     while (true) {
@@ -163,12 +159,7 @@ public class GameManager {
 
     System.out.println("=============== Turno " + turn + " ===============");
 
-    System.out.print("" + //
-        "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
-        "(" + hero.getHealth() + "/" + playerHealth + " pontos de vida)   (" + angel.getHealth()
-        + "/" + enemyHealth + " pontos de vida)\r\n" + //
-        "(" + hero.getShield() + " pontos de escudo)    (" + angel.getShield()
-        + " pontos de escudo)\r\n");
+    screen.printTurnInfo(hero, angel, playerHealth, enemyHealth);
 
     this.enemyPlanning();
 
@@ -243,17 +234,12 @@ public class GameManager {
   public void results() {
     sleep();
 
-    System.out.print("" + //
-        "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
-        "(" + hero.getHealth() + "/" + playerHealth + " pontos de vida)   (" + angel.getHealth()
-        + "/" + enemyHealth + " pontos de vida)\r\n" + //
-        "(" + hero.getShield() + " pontos de escudo)    (" + angel.getShield()
-        + " pontos de escudo)\r\n");
+    screen.printTurnInfo(hero, angel, playerHealth, enemyHealth);
 
     if (hero.isAlive()) {
-      screen.youWin();
+      screen.printFile("youWin.txt");
     } else {
-      screen.gameOver();                                                                                                         
+      screen.printFile("gameOver.txt");                                                                                                         
     }
   }
 }

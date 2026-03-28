@@ -6,40 +6,25 @@ import java.io.IOException;
 
 public class Interface {
     
-    private String folderPath = "MC322_Slay/assets";
+    private static String root = "MC322_Slay";
+    private static String folder = "assets";
 
-    public void initialScreen() {
+    public void printFile(String text) {
 
-        Path filePath = Path.of(folderPath, "initialScreenArt.txt");
+        Path filePath = Path.of(root, folder, text);
         
         try {
             Files.lines(filePath).forEach(System.out::println);
-            
         } 
         catch (IOException e) {
         }
     }
-
-    public void gameOver() {
-
-        Path filePath = Path.of(folderPath, "gameOver.txt");
-        
-        try {
-            Files.lines(filePath).forEach(System.out::println);
-            
-        } 
-        catch (IOException e) {
-        }
-    }
-
-    public void youWin() {
-        Path filePath = Path.of(folderPath, "youwin.txt");
-        
-        try {
-            Files.lines(filePath).forEach(System.out::println);
-            
-        } 
-        catch (IOException e) {
-        }
+    public void printTurnInfo(Hero hero, Enemy angel, int playerHealth, int enemyHealth) {
+        System.out.print("" + //
+        "Herói: " + hero.getName() + " vs. Inimigo: " + angel.getName() + "\r\n" + //
+        "(" + hero.getHealth() + "/" + playerHealth + " pontos de vida)   (" + angel.getHealth()
+        + "/" + enemyHealth + " pontos de vida)\r\n" + //
+        "(" + hero.getShield() + " pontos de escudo)    (" + angel.getShield()
+        + " pontos de escudo)\r\n");
     }
     }
