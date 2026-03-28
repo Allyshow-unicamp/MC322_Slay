@@ -1,4 +1,7 @@
-package mc322_slay;
+package mc322_slay.card;
+
+import mc322_slay.entity.Entity;
+
 public class DamageCard extends Card{
     
     @Override

@@ -1,4 +1,5 @@
-package mc322_slay;
+package mc322_slay.card;
+
 import java.util.ArrayList;
 import java.util.List;
 
