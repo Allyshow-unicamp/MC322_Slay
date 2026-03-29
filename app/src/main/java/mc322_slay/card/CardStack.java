@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class CardStack {
     
-    Stack<Card> cardsStack;
+    private Stack<Card> cardsStack;
 
     public void add(Card card) {
         cardsStack.push(card);

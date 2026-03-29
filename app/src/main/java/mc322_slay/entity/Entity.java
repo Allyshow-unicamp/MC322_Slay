@@ -8,8 +8,11 @@ public abstract class Entity {
     
     protected String name;
     protected int health;
+    protected int maxHealth;
     protected int ATField; // works identical to the shield attribute
+    protected int maxATField;
     protected ArrayList<Effect> effects;
+    protected String imageAsset;
 
     public String getName(){
         return this.name;
@@ -17,8 +20,17 @@ public abstract class Entity {
     public int getHealth() {
         return this.health;
     }
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
     public int getShield() {
         return this.ATField;
+    }
+    public int getMaxShield() {
+        return this.maxATField;
+    }
+    public String getImage() {
+        return this.imageAsset;
     }
     public ArrayList<Effect> getEffects() {
         return this.effects;
