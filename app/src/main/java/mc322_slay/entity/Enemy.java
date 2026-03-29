@@ -6,7 +6,7 @@ import java.util.Random;
 public class Enemy extends Entity {
 
     public Random random = new Random();
-    int damage = 0;
+    private int damage = 0;
 
     public int attack(Hero hero) {
         hero.takeDamage(damage);
@@ -16,11 +16,13 @@ public class Enemy extends Entity {
         this.damage = random.nextInt(41);
         return damage;
     }
-    public Enemy(String name, int health, int ATField) {
+    public Enemy(String name, int health, int ATField, String imageAsset) {
         this.name = name;
         this.health = health;
         this.ATField = ATField;
         this.damage = 0;
         this.effects = new ArrayList<>();
+        this.imageAsset = imageAsset;
+        this.maxHealth = health;
     }
 }

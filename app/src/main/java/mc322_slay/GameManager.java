@@ -17,10 +17,6 @@ import mc322_slay.entity.Hero;
 
 public class GameManager {
     static private final int nCards = 4;
-    static private final int playerHealth = 40;
-    static private final int playerField = 40;
-    static private final int enemyHealth = 200;
-    static private final int enemyField = 200;
     static private final int timeSleep = 1000;
     static private final int initialSync = 10;
 
@@ -97,9 +93,9 @@ public class GameManager {
     }
 
     public void start() {
-        this.hero = new Hero("", playerHealth, playerField);
+        this.hero = new Hero("", 40, 40, "eva.txt");
         this.angels = new ArrayList<Enemy>();
-        this.angels.add(new Enemy("Sachiel", enemyHealth, enemyField));
+        this.angels.add(new Enemy("Sachiel", 200, 200, "sachiel.txt"));
         this.hand = new PlayerHand();
         this.buyPile = new CardStack();
         this.discardPile = new CardStack();
@@ -210,14 +206,11 @@ public class GameManager {
     public int selectOption() {
         // // sleep();
 
-        screen.printTurnInfo(turn, hero, angels.get(0), playerHealth, enemyHealth);
+        screen.printTurnInfo(turn, hero, angels.get(0));
 
         this.enemyPlanning();
 
-        hand.showHand();
-
-        System.out.println("\r\n=========================================\r\n" + //
-                syncRate + "/" + initialSync + " de Sincronização (Energia) disponível\r\n");
+        screen.showHand(hand.getHand(), syncRate, initialSync);
 
         int option = 0;
         while (true) {
@@ -300,7 +293,7 @@ public class GameManager {
     public void results() {
         // sleep();
 
-        screen.printTurnInfo(turn, hero, angels.get(0), playerHealth, enemyHealth);
+        screen.printTurnInfo(turn, hero, angels.get(0));
 
         if (hero.isAlive()) {
             screen.printFile("youWin.txt");
