@@ -37,7 +37,8 @@ public class GameManager {
     private Interface screen;
 
     public void subscribe(Effect effect) {
-        subscribers.add(effect);
+        if (!subscribers.contains(effect))
+            subscribers.add(effect);
     }
 
     public void unsubscribe(Effect effect) {
@@ -45,8 +46,15 @@ public class GameManager {
     }
 
     public void notifySubscribers(EventEnum event) {
+        ArrayList<Effect> effects = new ArrayList<>();
         for (Effect subscriber : this.subscribers) {
-            subscriber.beNotified(event, this);
+            // if effect has to be removed
+            if (subscriber.beNotified(event, this))
+                effects.add(subscriber);
+        }
+        // remove effects that are no longer active
+        for (Effect e: effects) {
+            unsubscribe(e);
         }
     }
 
@@ -71,10 +79,19 @@ public class GameManager {
                 "Restaura a integridade do Campo AT entre 16 e 32 pontos"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 10,
                 "Restaura a integridade do Campo AT entre 20 e 40 pontos"));
+        Effect effect1 = new PsychicEffect("Dano psicológico 1", 60, 3);
+        Effect effect2 = new PsychicEffect("Dano psicológico 2", 30, 3);
+        Effect effect3 = new PsychicEffect("Dano psicológico 3", 90, 3);
         buyPile.add(new EffectCard("Dano psicológico 1", 3,
-                "Use-a para dar 20 de dano por 3 turnos", new PsychicEffect("Dano psicológico 1", 20, 3)));
+                "Use-a para dar 30 de dano por 3 turnos", effect1));
+        buyPile.add(new EffectCard("Dano psicológico 1", 3,
+                "Use-a para dar 30 de dano por 3 turnos", effect1));
         buyPile.add(new EffectCard("Dano psicológico 2", 6,
-                "Use-a para dar 40 de dano por 3 turnos", new PsychicEffect("Dano psicológico 2", 40, 3)));
+                "Use-a para dar 60 de dano por 3 turnos", effect2));
+        buyPile.add(new EffectCard("Dano psicológico 2", 6,
+                "Use-a para dar 60 de dano por 3 turnos", effect2));
+        buyPile.add(new EffectCard("Dano psicológico 3", 9,
+                "Use-a para dar 90 de dano por 3 turnos", effect3));
 
         buyPile.shuffle();
     }
@@ -100,7 +117,7 @@ public class GameManager {
         int damage = this.angels.get(0).nextAction();
 
         System.out.println(
-                "\r\nO inimigo " + angels.get(0).getName() + " pretende dar " + damage + " de dano ao final do turno");
+                "O inimigo " + angels.get(0).getName() + " pretende dar " + damage + " de dano ao final do turno\r\n");
     }
 
     public void initialScreen() {
@@ -138,11 +155,11 @@ public class GameManager {
         }
         hero.setName(name);
 
-        clearScreen();
+        // clearScreen();
 
-        sleep();
+        // sleep();
 
-        System.out.println(hero.getName() + " selecionado.\r\n");
+        System.out.println("\r\n" + hero.getName() + " selecionado.\r\n");
     }
 
     public boolean isRunning() {
@@ -154,7 +171,7 @@ public class GameManager {
         syncRate = initialSync;
         hand.discardCards(discardPile);
         System.out.println("Você descarta todas as suas cartas e passa o turno.\r\n");
-        sleep();
+        // sleep();
         turn += 1;
     }
 
@@ -173,7 +190,7 @@ public class GameManager {
 
         System.out.println("Você compra " + nCards + " cartas.\r\n");
 
-        sleep();
+        // sleep();
     }
 
     public void clearScreen() {
@@ -191,11 +208,9 @@ public class GameManager {
     }
 
     public int selectOption() {
-        sleep();
+        // // sleep();
 
-        System.out.println("=============== Turno " + turn + " ===============");
-
-        screen.printTurnInfo(hero, angels.get(0), playerHealth, enemyHealth);
+        screen.printTurnInfo(turn, hero, angels.get(0), playerHealth, enemyHealth);
 
         this.enemyPlanning();
 
@@ -210,67 +225,68 @@ public class GameManager {
                 System.out.print("Qual carta deseja usar (-1 para passar o turno): ");
                 option = Integer.parseInt(scanner.nextLine());
                 if (-1 <= option && option < hand.nCards()) {
-                    break;
+                    if (option == -1)
+                        break;
+                    int cardCost = hand.seeCardCost(option);
+                    if (syncRate - cardCost >= 0) {
+                        break;
+                    } else {
+                        System.out.println("Você não tem energia o suficiente para usar essa carta!");
+                    }
+                } else {
+                    System.out.println("Digite uma opção válida!");
                 }
             } catch (Exception e) {
+                System.out.println("Digite uma opção válida!");
             }
         }
 
-        clearScreen();
+        // clearScreen();
 
         return option;
     }
 
     public void playerAction(int option) {
-        sleep();
+        // sleep();
 
         if (option == -1)
             syncRate = 0; // end of turn
         else {
-            int cardCost = hand.seeCardCost(option);
+            Card card = hand.useCard(option);
+            if (card.getClass() == DamageCard.class) {
 
-            if (syncRate - cardCost >= 0) {
-                Card card = hand.useCard(option);
-                if (card.getClass() == DamageCard.class) {
+                int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
+                card.useCard(angels.get(0), damage);
+                syncRate -= card.getCost();
 
-                    int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
-                    card.useCard(angels.get(0), damage);
-                    syncRate -= card.getCost();
+                System.out.println("\r\nVocê usa " + card.getName() + " contra " + angels.get(0).getName()
+                        + ", dando " + damage + " de dano.\r\n");
 
-                    System.out.println("\r\nVocê usa " + card.getName() + " contra " + angels.get(0).getName()
-                            + ", dando " + damage + " de dano.\r\n");
+            } else if (card.getClass() == ShieldCard.class) {
 
-                } else if (card.getClass() == ShieldCard.class) {
+                int shield = card.getCost() * 2 + random.nextInt(card.getCost() * 2);
+                card.useCard(hero, shield);
+                syncRate -= card.getCost();
 
-                    int shield = card.getCost() * 2 + random.nextInt(card.getCost() * 2);
-                    card.useCard(hero, shield);
-                    syncRate -= card.getCost();
+                System.out.println("\r\nVocê usa " + card.getName() + ", recebendo " + shield
+                        + " de Campo AT (escudo).\r\n");
 
-                    System.out.println("\r\nVocê usa " + card.getName() + ", recebendo " + shield
-                            + " de Campo AT (escudo).\r\n");
+            } else if (card.getClass() == EffectCard.class) {
 
-                } else if (card.getClass() == EffectCard.class) {
+                card.useCard(angels.get(0), ((EffectCard) card).getEffect().getStartPoints());
 
-                    card.useCard(angels.get(0), 0);
+                EffectCard effectCard = (EffectCard) card;
+                subscribe(effectCard.getEffect());
 
-                    EffectCard effectCard = (EffectCard) card;
-                    subscribe(effectCard.getEffect());
-
-                    syncRate -= card.getCost();
-                }
-                discardPile.add(card);
-            } else {
-                System.out.println(
-                        "\r\nVocê não pode usar esta carta, o custo de energia é muito alto!\r\n");
-
-                sleep();
+                syncRate -= card.getCost();
             }
+            discardPile.add(card);
         }
     }
 
     public void enemyAction() {
         if (angels.get(0).isAlive()) {
-            sleep();
+            // sleep();
 
             int damage = angels.get(0).attack(hero);
 
@@ -282,9 +298,9 @@ public class GameManager {
     }
 
     public void results() {
-        sleep();
+        // sleep();
 
-        screen.printTurnInfo(hero, angels.get(0), playerHealth, enemyHealth);
+        screen.printTurnInfo(turn, hero, angels.get(0), playerHealth, enemyHealth);
 
         if (hero.isAlive()) {
             screen.printFile("youWin.txt");
