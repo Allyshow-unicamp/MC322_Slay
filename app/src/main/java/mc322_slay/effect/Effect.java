@@ -8,9 +8,13 @@ public abstract class Effect {
     protected String name;
     protected Entity owner;
     protected int points;
+    protected int startPoints;
 
     public int getPoints() {
         return this.points;    
+    }
+    public int getStartPoints() {
+        return this.startPoints;
     }
     public void incrementPoints(int points) {
         this.points += points;
@@ -18,11 +22,14 @@ public abstract class Effect {
     public String getName() {
         return this.name;
     }
+    public Entity getOwner() {
+        return owner;
+    }
     public void setOwner(Entity owner) {
         this.owner = owner;
     }
 
     public abstract String getString();
 
-    public abstract void beNotified(EventEnum event, GameManager gameManager);
+    public abstract boolean beNotified(EventEnum event, GameManager gameManager);
 }

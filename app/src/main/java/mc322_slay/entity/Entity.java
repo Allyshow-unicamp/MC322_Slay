@@ -8,8 +8,11 @@ public abstract class Entity {
     
     protected String name;
     protected int health;
+    protected int maxHealth;
     protected int ATField; // works identical to the shield attribute
+    protected int maxATField;
     protected ArrayList<Effect> effects;
+    protected String imageAsset;
 
     public String getName(){
         return this.name;
@@ -19,9 +22,17 @@ public abstract class Entity {
     }
     public void gainHealth(int amount) {
         this.health += amount;
+    public int getMaxHealth() {
+        return this.maxHealth;
     }
     public int getShield() {
         return this.ATField;
+    }
+    public int getMaxShield() {
+        return this.maxATField;
+    }
+    public String getImage() {
+        return this.imageAsset;
     }
     public ArrayList<Effect> getEffects() {
         return this.effects;
@@ -46,11 +57,11 @@ public abstract class Entity {
             this.health = (health - damage) >= 0 ? health - damage : 0;
         }
     }
-    public void applyEffect(Effect effect) {
+    public void applyEffect(Effect effect, int points) {
         if (effects.contains(effect)) {
             int index = effects.indexOf(effect);
             Effect e = effects.get(index);
-            e.incrementPoints(effect.getPoints());
+            e.incrementPoints(points);
             effects.set(index, e);
         }
         else {
@@ -58,12 +69,13 @@ public abstract class Entity {
         }
         effect.setOwner(this);
 
-        System.out.println("\r\n" + this.name + " está sob efeito de " + effect.getString());
+        System.out.println("\r\n" + this.name + " está sob efeito de " + effect.getString() + "\r\n");
     }
     public String removeEffect(Effect effect) {
         boolean result = effects.remove(effect);
+        effect.setOwner(null);
         if (result)
-            System.out.println("\r\n" + this.name + " não está mais sob efeito de " + effect.getString());
+            System.out.println(this.name + " não está mais sob efeito de " + effect.getString() + "\r\n");
         return "";
     }
     public boolean hasEffect(Class<? extends Effect> effectX) {

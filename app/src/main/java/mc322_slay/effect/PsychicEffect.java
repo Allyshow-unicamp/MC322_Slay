@@ -11,22 +11,22 @@ public class PsychicEffect extends Effect {
 
     @Override
     public String getString() {
-        return name + ": " + points + " turnos restantes";
+        return name + " (" + points + " turnos restantes)";
     }
     @Override
-    public void beNotified(EventEnum event, GameManager gameManager) {
+    public boolean beNotified(EventEnum event, GameManager gameManager) {
         if (event == EventEnum.playerEndOfTurn || event == EventEnum.enemyEndOfTurn) {
             if (event == EventEnum.playerEndOfTurn) {
                 // damage inflicted to player at the end of his turn, if it is under this effect
 
                 if (this.owner.getClass() == Hero.class) {
                     this.owner.takeDamage(damage);
-                    System.out.println("\r\nVocê leva " + damage + " de dano devido a " + name + ".");
+                    System.out.println("Você leva " + damage + " de dano devido a " + name + ".\r\n");
 
                     this.points -= 1;
                     if (this.points == 0) { // effect is over
-                        gameManager.unsubscribe(this);
                         owner.removeEffect(this);
+                        return true;
                     }
                 }
             }
@@ -35,21 +35,23 @@ public class PsychicEffect extends Effect {
 
                 if (owner.getClass() == Enemy.class) {
                     owner.takeDamage(damage);
-                    System.out.println("\r\n" + owner.getName() + " leva " + damage + "de dano devido a " + name + ".");
+                    System.out.println(owner.getName() + " leva " + damage + " de dano devido a " + name + ".\r\n");
 
                     this.points -= 1;
                     if (this.points == 0) { // effect is over
-                        gameManager.unsubscribe(this);
                         owner.removeEffect(this);
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
 
     public PsychicEffect(String name, int damage, int turns) {
         this.name = name;
         this.damage = damage;
         this.points = turns;
+        this.startPoints = turns;
     }
 }

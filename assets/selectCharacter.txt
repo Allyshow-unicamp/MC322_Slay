@@ -1,7 +1,7 @@
 ===============================================
 
-        1 - Shinji Ikari"
-        2 - Rei Ayanami"
-        3 - Asuka Langley Soryu"
+        1 - Shinji Ikari
+        2 - Rei Ayanami
+        3 - Asuka Langley Soryu
 
 ===============================================
