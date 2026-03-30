@@ -3,8 +3,7 @@ package mc322_slay.entity;
 import java.util.ArrayList;
 import java.util.Random;
 
-import mc322_slay.effect.Effect;
-import mc322_slay.effect.PsychicEffect;
+import mc322_slay.effect.*;
 
 public class Enemy extends Entity {
 
@@ -16,22 +15,21 @@ public class Enemy extends Entity {
         return damage;
     }
     public void useEffect(Hero hero) {
-        PsychicEffect e = new PsychicEffect("Dano psicológico 1", 20, 3);
         int effect = random.nextInt(3);
         switch (effect) { // utilizarei outra branch para criar novos efeitos
-            case 0:
-                
+            case 0: // caso sorteado efeito de dano psicológico
+                PsychicEffect p = new PsychicEffect("Dano psicológico 1", 20, 3);
+                hero.applyEffect(p);
                 break;
             case 1:
-
+                ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT 1", 3);
+                hero.applyEffect(c);
                 break;
-
             case 2:
-                
+                HealthRegeneration h = new HealthRegeneration("Regeneração de vida 1", 20, 3);
+                this.applyEffect(h);
                 break;
         }
-
-        hero.applyEffect(e);
     }
     
     public ArrayList<Integer> nextAction() {

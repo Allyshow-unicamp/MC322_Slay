@@ -9,6 +9,7 @@ public class PsychicEffect extends Effect {
 
     private int damage;
 
+    @Override
     public String getString() {
         return name + ": " + points + " turnos restantes";
     }

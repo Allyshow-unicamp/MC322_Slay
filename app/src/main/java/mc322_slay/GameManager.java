@@ -11,6 +11,9 @@ import mc322_slay.card.EffectCard;
 import mc322_slay.card.PlayerHand;
 import mc322_slay.card.ShieldCard;
 import mc322_slay.effect.Effect;
+import mc322_slay.effect.HighSyncRate;
+import mc322_slay.effect.HealthRegeneration;
+import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.PsychicEffect;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
@@ -76,6 +79,20 @@ public class GameManager {
                 "Use-a para dar 20 de dano por 3 turnos", new PsychicEffect("Dano psicológico 1", 20, 3)));
         buyPile.add(new EffectCard("Dano psicológico 2", 6,
                 "Use-a para dar 40 de dano por 3 turnos", new PsychicEffect("Dano psicológico 2", 40, 3)));
+        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 1", 3,
+                "Use-a para restaurar 20 pontos de vida por 3 turnos", new HealthRegeneration("Restauração Forçada do pulso vital 1", 20, 3)));
+        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 2", 6,
+                "Use-a para restaurar 40 pontos de vida por 3 turnos", new HealthRegeneration("Restauração Forçada do pulso vital 1", 40, 3)));
+        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 3", 9,
+                "Use-a para restaurar 60 pontos de vida por 3 turnos", new HealthRegeneration("Restauração Forçada do pulso vital 1", 60, 3)));
+        buyPile.add(new EffectCard("Alta taxa de sincronização 1", 4,
+                "Use-a para aumentar em 50% o dano causado pelo jogador por 2 turnos", new HighSyncRate("Alta taxa de sincronização 1", 2)));
+        buyPile.add(new EffectCard("Alta taxa de sincronização 1", 4,
+                "Use-a para aumentar em 50% o dano causado pelo jogador por 2 turnos", new HighSyncRate("Alta taxa de sincronização 1", 2)));
+        buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
+                "Use-a para anular o campo at do inimigo por 2 turnos", new ATFieldCorrosion("Corrosão do campo AT 1", 2)));
+        buyPile.add(new EffectCard("Corrosão do campo AT 2", 8,
+                "Use-a para anular o campo at do inimigo por 3 turnos", new ATFieldCorrosion("Corrosão do campo AT 1", 3)));
 
         buyPile.shuffle();
     }
@@ -249,6 +266,8 @@ public class GameManager {
                 if (card.getClass() == DamageCard.class) {
 
                     int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
+                    if (hero.hasEffect(HighSyncRate.class)) {
+                        damage = (int) (1.5*damage); }
                     card.useCard(angels.get(0), damage);
                     syncRate -= card.getCost();
 
@@ -311,7 +330,7 @@ public class GameManager {
                     Effect lastEffect = hero.getLastEffect();
                     subscribe(lastEffect);
                     System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName() + " utilizou o efeito " + lastEffect.getString() +
+                        "\r\nO inimigo " + angels.get(0).getName() + " utilizou o efeito " + lastEffect.getName() +
                             " com duração de " + lastEffect.getPoints() + " turnos.\r\n");
                     break;
             }
