@@ -46,14 +46,14 @@ public class GameManager {
     }
 
     public void notifySubscribers(EventEnum event) {
-        ArrayList<Effect> effects = new ArrayList<>();
+        ArrayList<Effect> effectsToBeRemoved = new ArrayList<>();
         for (Effect subscriber : this.subscribers) {
             // if effect has to be removed
             if (subscriber.beNotified(event, this))
-                effects.add(subscriber);
+                effectsToBeRemoved.add(subscriber);
         }
         // remove effects that are no longer active
-        for (Effect e : effects) {
+        for (Effect e : effectsToBeRemoved) {
             unsubscribe(e);
         }
     }
@@ -308,10 +308,11 @@ public class GameManager {
 
                 if (effectX instanceof HealthRegeneration || effectX instanceof HighSyncRate) {
                     hero.applyEffect(effectX, effectX.getStartPoints());
+                    subscribe(hero.getLastEffect());
                 } else {
                     angels.get(0).applyEffect(effectX, effectX.getStartPoints());
+                    subscribe(angels.get(0).getLastEffect());
                 }
-                subscribe(effectX);
 
                 syncRate -= card.getCost();
             }
@@ -343,8 +344,13 @@ public class GameManager {
                     break;
 
                 case useEffect:
-                    angels.get(0).useEffect(hero);
-                    Effect lastEffect = hero.getLastEffect();
+                    boolean selfInflicted = angels.get(0).useEffect(hero);
+                    Effect lastEffect;
+                    if (!selfInflicted) {
+                        lastEffect = hero.getLastEffect();
+                    } else {
+                        lastEffect = angels.get(0).getLastEffect();
+                    }
                     subscribe(lastEffect);
                     System.out.println(
                             "\r\nO inimigo " + angels.get(0).getName() + " utilizou o efeito " + lastEffect.getName() +

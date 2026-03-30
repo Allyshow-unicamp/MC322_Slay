@@ -2,11 +2,19 @@ package mc322_slay.effect;
 
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
-import mc322_slay.entity.*;
+import mc322_slay.entity.Enemy;
+import mc322_slay.entity.Hero;
 
 public class HealthRegeneration extends Effect {
 
     private int health;
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    public int getHealth() {
+        return health;
+    }
 
     @Override
     public String getString() {
@@ -37,5 +45,13 @@ public class HealthRegeneration extends Effect {
         this.name = name;
         this.health = amount;
         this.points = points;
+    }
+
+    public HealthRegeneration(HealthRegeneration effect) {
+        this.name = effect.name;
+        this.health = effect.health;
+        this.owner = effect.owner;
+        this.points = effect.points;
+        this.startPoints = effect.startPoints;
     }
 }

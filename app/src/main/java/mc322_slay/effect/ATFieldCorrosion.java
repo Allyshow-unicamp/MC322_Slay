@@ -30,4 +30,11 @@ public class ATFieldCorrosion extends Effect {
         this.name = name;
         this.points = turns;
     }
+
+    public ATFieldCorrosion(ATFieldCorrosion effect) {
+        this.name = effect.name;
+        this.owner = effect.owner;
+        this.points = effect.points;
+        this.startPoints = effect.startPoints;
+    }
 }
