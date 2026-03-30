@@ -10,11 +10,12 @@ public class App {
 
         while (game.isRunning()) {
             game.buyCards();
+            int enemyOption = game.enemyPlanning();
             while (!game.endOfTurn()) {
                 int option = game.selectOption();
                 game.playerAction(option);
             }
-            game.enemyAction();
+            game.enemyAction(enemyOption);
             game.resetTurn();
         }
 

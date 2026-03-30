@@ -14,6 +14,7 @@ import mc322_slay.effect.Effect;
 import mc322_slay.effect.PsychicEffect;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.entity.EnemyActions;
 
 public class GameManager {
     static private final int nCards = 4;
@@ -96,11 +97,27 @@ public class GameManager {
         this.populateDeck();
     }
 
-    void enemyPlanning() {
-        int damage = this.angels.get(0).nextAction();
+    int enemyPlanning() {
+        ArrayList<Integer> nextAction = angels.get(0).nextAction();
+        int amount = nextAction.get(0);
+        EnemyActions action = EnemyActions.values()[nextAction.get(1)];
+        switch (action) {
+            case attack:
+                System.out.println(
+                    "\r\nO inimigo " + angels.get(0).getName() + " pretende dar " + (amount%40 +1) + " de dano ao final do turno");
+                break;
 
-        System.out.println(
-                "\r\nO inimigo " + angels.get(0).getName() + " pretende dar " + damage + " de dano ao final do turno");
+            case gainShield:
+                System.out.println(
+                "\r\nO inimigo " + angels.get(0).getName() + " pretende recuperar " + (amount%20 +1) + " de campo AT ao final do turno");
+                break;
+
+            case useEffect:
+                System.out.println(
+                "\r\nO inimigo " + angels.get(0).getName() + " pretende causar utilizar um efeito pela duração de " + (amount % 5 + 1) + " de turnos ao final do turno");
+                break;
+        }
+        return action.getValue();
     }
 
     public void initialScreen() {
@@ -197,8 +214,6 @@ public class GameManager {
 
         screen.printTurnInfo(hero, angels.get(0), playerHealth, enemyHealth);
 
-        this.enemyPlanning();
-
         hand.showHand();
 
         System.out.println("\r\n=========================================\r\n" + //
@@ -215,7 +230,7 @@ public class GameManager {
             } catch (Exception e) {
             }
         }
-
+        
         clearScreen();
 
         return option;
@@ -268,14 +283,38 @@ public class GameManager {
         }
     }
 
-    public void enemyAction() {
+    public void enemyAction(int enemyOption) {        
         if (angels.get(0).isAlive()) {
+            notifySubscribers(EventEnum.enemyStartOfTurn);
             sleep();
+            EnemyActions action = EnemyActions.values()[enemyOption];
+            
+            switch (action) {
+                case attack:
 
-            int damage = angels.get(0).attack(hero);
+                    int damage = angels.get(0).attack(hero);
+                    System.out.println(
+                        "\r\nO inimigo " + angels.get(0).getName() + " te atacou, dando " 
+                            + damage + " de dano.\r\n");
+                    break;
 
-            System.out.println(
-                    "O inimigo " + angels.get(0).getName() + " te atacou, dando " + damage + " de dano.\r\n");
+                case gainShield:
+                    int amount = random.nextInt(20) + 1;
+                    angels.get(0).gainATField(amount);
+                    System.out.println(
+                        "\r\nO inimigo " + angels.get(0).getName() + " recuperou uma quantidade de "
+                            + amount + " de campo AT.\r\n");
+                    break;
+
+                case useEffect:
+                    angels.get(0).useEffect(hero);
+                    Effect lastEffect = hero.getLastEffect();
+                    subscribe(lastEffect);
+                    System.out.println(
+                        "\r\nO inimigo " + angels.get(0).getName() + " utilizou o efeito " + lastEffect.getString() +
+                            " com duração de " + lastEffect.getPoints() + " turnos.\r\n");
+                    break;
+            }
         }
 
         notifySubscribers(EventEnum.enemyEndOfTurn);

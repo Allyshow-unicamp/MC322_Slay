@@ -23,6 +23,9 @@ public abstract class Entity {
     public ArrayList<Effect> getEffects() {
         return this.effects;
     }
+    public Effect getLastEffect() {
+        return this.effects.getLast();
+    }
     public boolean isAlive() {
         return this.health > 0;
     }
