@@ -38,8 +38,12 @@ As ações do inimigo (e seus respectivos valores) também são aleatórias para
 O jogador pode usar cartas que concedem um efeito a ele ou ao inimigo, assim como o inimigo pode usar efeitos no jogador ou nele mesmo.
 
 Os efeitos possíveis no jogo são:
-- Dano psicológico (veneno): inflinge uma quantidade determinada de dano em quem tem o efeito, durante um certo número de turnos. A quantidade de turnos que ele dura é cumulativa (isto é, se uma entidade aplica esse efeito mais de uma vez na outra, o número de turnos que esse efeito durará na entidade que sofre o efeito será somado).
-- Pipipipopopo
+- Dano psicológico (veneno): inflinge uma quantidade determinada de dano em quem tem o efeito, durante um certo número de turnos. 
+- Regeneração de vida: restaura uma quantidade fixa de vida ao detentor do efeito no início de seu turno.
+- Corrosão de campo AT: anula a proteção do campo AT (escudo), fazendo com que todo dano recebido seja aplicado diretamente à vida da entidade.
+- Alta taxa de sincronização: aumenta em 50% o dano causado pelas armas do jogador.
+
+A duração dos efeitos é cumulativa (isto é, se uma entidade aplica um mesmo efeito mais de uma vez na outra, o número de turnos que esse efeito durará na entidade que sofre o efeito será somado). Para o caso de uma entidade receber este efeito em diferentes niveis i.e Dano psicológico 1 e Dano psicológico 2, o maior nível prevalece e o efeito continua ativo pela maior duração entre os dois efeitos.
 
 ### Fim do jogo
 
@@ -56,19 +60,26 @@ O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas 
 ### Sobre os arquivos:
 
 - `App`: classe responsável pelas chamadas de metódos do GameManager responsável pelo fluxo do jogo
-- `GameManager`:  classe que contém os atributos estáticos do jogo e responsável por toda instanciação das classes, impressão dos menus, seleção de ações, delay entre a execução de ações e novos turnos, lógica de seleção de cartas e combate
+- `GameManager`:  classe que contém os atributos estáticos do jogo e responsável por toda instanciação das classes, impressão dos menus, seleção de ações, delay entre a execução de ações e novos turnos, lógica de seleção de cartas e combate.
+    - `enemyAction(int enemyOption)`: executa a ação previamente planejada pelo inimigo (atacar, ganhar escudo ou usar um efeito).
 - `Interface`: classe responsável pela parte visual do projeto no terminal, com formatações relativas a cor, menus e assets
 - `CardStack`: classe que herda as propriedades de um Stack e acrescenta um método de embaralhamento
 - `PlayerHand`: classe que representa a mão do jogador, contendo suas cartas e apresentando métodos para interagir com as pilhas de compra e de descarte
 - `Entity`: classe abstrata que contém os atributos encapsulados presentes nas classes filhas
 - `Hero`: subclasse de Entity que possui método específico de resetar escudo
-- `Enemy`: subclasse de Entity que possui método específico de atacar um héroi
+- `Enemy`: subclasse de Entity que possui métodos para interagir com o herói.
+    - `nextAction()`: sorteia aleatoriamente a próxima ação do inimigo e define o dano base para o turno.
+    - `useEffect(Hero hero)`: aplica um efeito aleatório (Dano Psicológico, Corrosão de Campo AT ou Regeneração de Vida) no herói ou em si mesmo.
+- `EnemyActions`: enum que define as ações possíveis do inimigo (atacar, ganhar escudo ou usar efeito).
 - `Card`: classe abstrata que contém os atributos encapsulados, e o método abstrato para usá-la, presente nas classes filhas 
 - `ShieldCard`: subclasse de Card que permite recuperar o campo AT (escudo) do jogador
 - `DamageCard`: subclasse de Card que permite dar dano ao inimigo
 - `EffectCard`: subclasse de Card que permite usar um efeito definido
 - `Effect`: classe abstrata que permite a implementação de efeitos pelas classes filhas
-- `PsichicEffect`: subclasse de Effect que implementa efetivamente o efeito (nesse caso, de dano psicológico, isto é, veneno)
+- `PsichicEffect`: subclasse de Effect que implementa o efeito de dano psicológico (veneno).
+- `HealthRegeneration`: subclasse de Effect que implementa a regeneração de vida por turno.
+- `ATFieldCorrosion`: subclasse de Effect que implementa a corrosão do campo AT, ignorando o escudo ao receber dano.
+- `HighSyncRate`: subclasse de Effect que implementa o aumento de dano por sincronização.
 - `EventEnum`: enum que define os tipos de evento para serem percebidos pelos efeitos
 
 ## Compilação e execução do projeto (em linux)
