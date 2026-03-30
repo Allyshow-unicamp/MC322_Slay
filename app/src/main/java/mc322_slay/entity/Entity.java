@@ -2,7 +2,7 @@ package mc322_slay.entity;
 
 import java.util.ArrayList;
 
-import mc322_slay.effect.Effect;
+import mc322_slay.effect.*;
 
 public abstract class Entity {
     
@@ -20,6 +20,8 @@ public abstract class Entity {
     public int getHealth() {
         return this.health;
     }
+    public void gainHealth(int amount) {
+        this.health += amount;
     public int getMaxHealth() {
         return this.maxHealth;
     }
@@ -35,6 +37,9 @@ public abstract class Entity {
     public ArrayList<Effect> getEffects() {
         return this.effects;
     }
+    public Effect getLastEffect() {
+        return this.effects.getLast();
+    }
     public boolean isAlive() {
         return this.health > 0;
     }
@@ -42,7 +47,7 @@ public abstract class Entity {
         this.ATField = ATField + amount;
     }
     public void takeDamage(int damage) {
-        if (this.ATField > 0) {
+        if (this.ATField > 0 && !hasEffect(ATFieldCorrosion.class)) {
             if (damage > ATField) {
                 this.health = (health - (damage - ATField)) >= 0 ? health - (damage - ATField) : 0;
             }
@@ -72,5 +77,13 @@ public abstract class Entity {
         if (result)
             System.out.println(this.name + " não está mais sob efeito de " + effect.getString() + "\r\n");
         return "";
+    }
+    public boolean hasEffect(Class<? extends Effect> effectX) {
+        for (Effect effect : this.effects) {
+            if (effectX.isInstance(effect)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
