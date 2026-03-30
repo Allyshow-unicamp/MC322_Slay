@@ -1,8 +1,8 @@
 package mc322_slay.effect;
 
-
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
+import mc322_slay.entity.*;
 
 public class HealthRegeneration extends Effect {
 
@@ -10,25 +10,27 @@ public class HealthRegeneration extends Effect {
 
     @Override
     public String getString() {
-        return (name + ": Regenera " + health + " de vida por turno por " + points + " turnos.");
+        return (name + " (" + points + " turnos restantes)");
     }
 
     @Override
-    public void beNotified(EventEnum event, GameManager gameManager) {
-        if (event == EventEnum.playerStartOfTurn || event == EventEnum.enemyStartOfTurn) {
-            regenerate(gameManager);
-        }
-    }
+    public boolean beNotified(EventEnum event, GameManager gameManager) {
+        if (event == EventEnum.playerStartOfTurn && owner.getClass() == Hero.class ||
+                event == EventEnum.enemyStartOfTurn && owner.getClass() == Enemy.class) {
+            this.points -= 1;
+            owner.gainHealth(health);
+            System.out.println(owner.getName() + " recupera " + health + " de vida, devido a " + name + ".\r\n");
 
-    private void regenerate(GameManager gameManager) {
-        this.points -= 1;
-        owner.gainHealth(health);
-        if (this.points <= 0) {
-            gameManager.unsubscribe(this);
-            owner.removeEffect(this);
-        } else {
-            System.out.println(points + " turnos restantes de "+ name + " sobre " + owner.getName() + ".");
+            if (this.points > 0) {
+                System.out.println(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".\r\n");
+            }
+
+            if (this.points == 0) {
+                owner.removeEffect(this);
+                return true;
+            }
         }
+        return false;
     }
 
     public HealthRegeneration(String name, int amount, int points) {

@@ -21,7 +21,8 @@ public abstract class Entity {
         return this.health;
     }
     public void gainHealth(int amount) {
-        this.health += amount;
+        this.health = (health + amount > maxHealth ? maxHealth : health + amount);
+    }
     public int getMaxHealth() {
         return this.maxHealth;
     }

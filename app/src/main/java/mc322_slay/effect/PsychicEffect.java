@@ -2,8 +2,7 @@ package mc322_slay.effect;
 
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
-import mc322_slay.entity.Enemy;
-import mc322_slay.entity.Hero;
+import mc322_slay.entity.*;
 
 public class PsychicEffect extends Effect {
 
@@ -13,36 +12,22 @@ public class PsychicEffect extends Effect {
     public String getString() {
         return name + " (" + points + " turnos restantes)";
     }
+
     @Override
     public boolean beNotified(EventEnum event, GameManager gameManager) {
-        if (event == EventEnum.playerEndOfTurn || event == EventEnum.enemyEndOfTurn) {
-            if (event == EventEnum.playerEndOfTurn) {
-                // damage inflicted to player at the end of his turn, if it is under this effect
+        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class ||
+                event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
+            // damage inflicted to entity at the end of his turn, if it is under this effect
+            this.owner.takeDamage(damage);
+            System.out.println(owner.getName() + " recebe " + damage + " de dano psicológico.\r\n");
 
-                if (this.owner.getClass() == Hero.class) {
-                    this.owner.takeDamage(damage);
-                    System.out.println("Você leva " + damage + " de dano devido a " + name + ".\r\n");
-
-                    this.points -= 1;
-                    if (this.points == 0) { // effect is over
-                        owner.removeEffect(this);
-                        return true;
-                    }
-                }
+            this.points -= 1;
+            if (this.points > 0) {
+                System.out.println(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".\r\n");
             }
-            else {
-                // damage inflicted to first enemy at the end of their turn
-
-                if (owner.getClass() == Enemy.class) {
-                    owner.takeDamage(damage);
-                    System.out.println(owner.getName() + " leva " + damage + " de dano devido a " + name + ".\r\n");
-
-                    this.points -= 1;
-                    if (this.points == 0) { // effect is over
-                        owner.removeEffect(this);
-                        return true;
-                    }
-                }
+            if (this.points == 0) { // effect is over
+                owner.removeEffect(this);
+                return true;
             }
         }
         return false;

@@ -53,7 +53,7 @@ public class GameManager {
                 effects.add(subscriber);
         }
         // remove effects that are no longer active
-        for (Effect e: effects) {
+        for (Effect e : effects) {
             unsubscribe(e);
         }
     }
@@ -79,8 +79,8 @@ public class GameManager {
                 "Restaura a integridade do Campo AT entre 16 e 32 pontos"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 10,
                 "Restaura a integridade do Campo AT entre 20 e 40 pontos"));
-        Effect effect1 = new PsychicEffect("Dano psicológico 1", 60, 3);
-        Effect effect2 = new PsychicEffect("Dano psicológico 2", 30, 3);
+        Effect effect1 = new PsychicEffect("Dano psicológico 1", 30, 3);
+        Effect effect2 = new PsychicEffect("Dano psicológico 2", 60, 3);
         Effect effect3 = new PsychicEffect("Dano psicológico 3", 90, 3);
         buyPile.add(new EffectCard("Dano psicológico 1", 3,
                 "Use-a para dar 30 de dano por 3 turnos", effect1));
@@ -89,24 +89,29 @@ public class GameManager {
         buyPile.add(new EffectCard("Dano psicológico 2", 6,
                 "Use-a para dar 60 de dano por 3 turnos", effect2));
         buyPile.add(new EffectCard("Dano psicológico 2", 6,
-                "Use-a para dar 40 de dano por 3 turnos", new PsychicEffect("Dano psicológico 2", 40, 3)));
-        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 1", 3,
-                "Use-a para restaurar 20 pontos de vida por 3 turnos", new HealthRegeneration("Restauração Forçada do pulso vital 1", 20, 3)));
-        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 2", 6,
-                "Use-a para restaurar 40 pontos de vida por 3 turnos", new HealthRegeneration("Restauração Forçada do pulso vital 1", 40, 3)));
-        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 3", 9,
-                "Use-a para restaurar 60 pontos de vida por 3 turnos", new HealthRegeneration("Restauração Forçada do pulso vital 1", 60, 3)));
-        buyPile.add(new EffectCard("Alta taxa de sincronização 1", 4,
-                "Use-a para aumentar em 50% o dano causado pelo jogador por 2 turnos", new HighSyncRate("Alta taxa de sincronização 1", 2)));
-        buyPile.add(new EffectCard("Alta taxa de sincronização 1", 4,
-                "Use-a para aumentar em 50% o dano causado pelo jogador por 2 turnos", new HighSyncRate("Alta taxa de sincronização 1", 2)));
-        buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
-                "Use-a para anular o campo at do inimigo por 2 turnos", new ATFieldCorrosion("Corrosão do campo AT 1", 2)));
-        buyPile.add(new EffectCard("Corrosão do campo AT 2", 8,
-                "Use-a para anular o campo at do inimigo por 3 turnos", new ATFieldCorrosion("Corrosão do campo AT 1", 3)));
                 "Use-a para dar 60 de dano por 3 turnos", effect2));
         buyPile.add(new EffectCard("Dano psicológico 3", 9,
                 "Use-a para dar 90 de dano por 3 turnos", effect3));
+        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 1", 3,
+                "Use-a para restaurar 10 pontos de vida por 3 turnos",
+                new HealthRegeneration("Restauração Forçada do pulso vital 1", 10, 3)));
+        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 2", 6,
+                "Use-a para restaurar 20 pontos de vida por 3 turnos",
+                new HealthRegeneration("Restauração Forçada do pulso vital 2", 20, 3)));
+        buyPile.add(new EffectCard("Restauração Forçada do pulso vital 3", 9,
+                "Use-a para restaurar 30 pontos de vida por 3 turnos",
+                new HealthRegeneration("Restauração Forçada do pulso vital 3", 30, 3)));
+        Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2);
+        buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
+                "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
+        buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
+                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos", effect4));
+        buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
+                "Use-a para anular o campo at do inimigo por 2 turnos",
+                new ATFieldCorrosion("Corrosão do campo AT 1", 2)));
+        buyPile.add(new EffectCard("Corrosão do campo AT 2", 8,
+                "Use-a para anular o campo at do inimigo por 3 turnos",
+                new ATFieldCorrosion("Corrosão do campo AT 2", 3)));
 
         buyPile.shuffle();
     }
@@ -129,23 +134,23 @@ public class GameManager {
     }
 
     int enemyPlanning() {
-        ArrayList<Integer> nextAction = angels.get(0).nextAction();
-        int amount = nextAction.get(0);
-        EnemyActions action = EnemyActions.values()[nextAction.get(1)];
+        int actionValue = angels.get(0).nextAction();
+        EnemyActions action = EnemyActions.values()[actionValue];
         switch (action) {
             case attack:
                 System.out.println(
-                    "\r\nO inimigo " + angels.get(0).getName() + " pretende dar " + (amount%40 +1) + " de dano ao final do turno");
+                        "\r\nO inimigo " + angels.get(0).getName() + " pretende causar dano ao final do turno\r\n");
                 break;
 
             case gainShield:
                 System.out.println(
-                "\r\nO inimigo " + angels.get(0).getName() + " pretende recuperar " + (amount%20 +1) + " de campo AT ao final do turno");
+                        "\r\nO inimigo " + angels.get(0).getName() + " pretende recuperar campo AT ao final do turno\r\n");
                 break;
 
             case useEffect:
                 System.out.println(
-                "\r\nO inimigo " + angels.get(0).getName() + " pretende causar utilizar um efeito pela duração de " + (amount % 5 + 1) + " de turnos ao final do turno");
+                        "\r\nO inimigo " + angels.get(0).getName()
+                                + " pretende utilizar um efeito aleatório ao final do turno\r\n");
                 break;
         }
         return action.getValue();
@@ -208,9 +213,6 @@ public class GameManager {
 
     public boolean endOfTurn() {
         boolean end = !isRunning() || syncRate == 0;
-        if (end) {
-            notifySubscribers(EventEnum.playerEndOfTurn);
-        }
         return end;
     }
 
@@ -243,10 +245,7 @@ public class GameManager {
 
         screen.printTurnInfo(turn, hero, angels.get(0));
 
-        hand.showHand();
-
-        System.out.println("\r\n=========================================\r\n" + //
-                syncRate + "/" + initialSync + " de Sincronização (Energia) disponível\r\n");
+        screen.showHand(hand.getHand(), syncRate, initialSync);
 
         int option = 0;
         while (true) {
@@ -277,18 +276,18 @@ public class GameManager {
 
     public void playerAction(int option) {
         // sleep();
-
         if (option == -1)
             syncRate = 0; // end of turn
         else {
             Card card = hand.useCard(option);
             if (card.getClass() == DamageCard.class) {
 
-                    int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
-                    if (hero.hasEffect(HighSyncRate.class)) {
-                        damage = (int) (1.5*damage); }
-                    card.useCard(angels.get(0), damage);
-                    syncRate -= card.getCost();
+                int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
+                if (hero.hasEffect(HighSyncRate.class)) {
+                    damage = (int) (1.5 * damage);
+                }
+                card.useCard(angels.get(0), damage);
+                syncRate -= card.getCost();
 
                 System.out.println("\r\nVocê usa " + card.getName() + " contra " + angels.get(0).getName()
                         + ", dando " + damage + " de dano.\r\n");
@@ -304,10 +303,15 @@ public class GameManager {
 
             } else if (card.getClass() == EffectCard.class) {
 
-                card.useCard(angels.get(0), ((EffectCard) card).getEffect().getStartPoints());
-
                 EffectCard effectCard = (EffectCard) card;
-                subscribe(effectCard.getEffect());
+                Effect effectX = effectCard.getEffect();
+
+                if (effectX instanceof HealthRegeneration || effectX instanceof HighSyncRate) {
+                    hero.applyEffect(effectX, effectX.getStartPoints());
+                } else {
+                    angels.get(0).applyEffect(effectX, effectX.getStartPoints());
+                }
+                subscribe(effectX);
 
                 syncRate -= card.getCost();
             }
@@ -315,27 +319,27 @@ public class GameManager {
         }
     }
 
-    public void enemyAction(int enemyOption) {        
+    public void enemyAction(int enemyOption) {
         if (angels.get(0).isAlive()) {
-            notifySubscribers(EventEnum.enemyStartOfTurn);
+
             sleep();
             EnemyActions action = EnemyActions.values()[enemyOption];
-            
+
             switch (action) {
                 case attack:
 
                     int damage = angels.get(0).attack(hero);
                     System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName() + " te atacou, dando " 
-                            + damage + " de dano.\r\n");
+                            "\r\nO inimigo " + angels.get(0).getName() + " te atacou, dando "
+                                    + damage + " de dano.\r\n");
                     break;
 
                 case gainShield:
                     int amount = random.nextInt(20) + 1;
                     angels.get(0).gainATField(amount);
                     System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName() + " recuperou uma quantidade de "
-                            + amount + " de campo AT.\r\n");
+                            "\r\nO inimigo " + angels.get(0).getName() + " recuperou uma quantidade de "
+                                    + amount + " de campo AT.\r\n");
                     break;
 
                 case useEffect:
@@ -343,13 +347,11 @@ public class GameManager {
                     Effect lastEffect = hero.getLastEffect();
                     subscribe(lastEffect);
                     System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName() + " utilizou o efeito " + lastEffect.getName() +
-                            " com duração de " + lastEffect.getPoints() + " turnos.\r\n");
+                            "\r\nO inimigo " + angels.get(0).getName() + " utilizou o efeito " + lastEffect.getName() +
+                                    " com duração de " + lastEffect.getPoints() + " turnos.\r\n");
                     break;
             }
         }
-
-        notifySubscribers(EventEnum.enemyEndOfTurn);
     }
 
     public void results() {
