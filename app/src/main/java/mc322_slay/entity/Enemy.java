@@ -5,23 +5,33 @@ import java.util.Random;
 
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.HealthRegeneration;
+import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.PsychicEffect;
+import mc322_slay.effect.Weakness;
 
 public class Enemy extends Entity {
 
     public Random random = new Random();
     private int damage;
-    private PsychicEffect p = new PsychicEffect("Dano psicológico 1", 20, 3);
-    private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT 1", 3);
-    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida 1", 20, 3);
+    private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
+    private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 3);
+    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 20, 3);
+    private Weakness w = new Weakness("Fraqueza", 3);
+    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3);
 
     public int attack(Hero hero) {
         hero.takeDamage(this.damage);
         return this.damage;
     }
+    public int getDamage() {
+        return this.damage;
+    }
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
     public boolean useEffect(Hero hero) {
 
-        int effect = random.nextInt(3);
+        int effect = random.nextInt(5);
         boolean selfInflicted = false;
         switch (effect) { // utilizarei outra branch para criar novos efeitos
             case 0: // caso sorteado efeito de dano psicológico
@@ -32,6 +42,13 @@ public class Enemy extends Entity {
                 break;
             case 2:
                 this.applyEffect(h, h.getPoints());
+                selfInflicted = true;
+                break;
+            case 3:
+                hero.applyEffect(w, w.getPoints());
+                break;
+            case 4:
+                this.applyEffect(hs, hs.getPoints());
                 selfInflicted = true;
                 break;
         }

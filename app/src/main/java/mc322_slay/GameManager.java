@@ -15,6 +15,7 @@ import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.PsychicEffect;
+import mc322_slay.effect.Weakness;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.entity.EnemyActions;
@@ -106,6 +107,15 @@ public class GameManager {
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
+        buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
+                "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
+        Effect effect5 = new Weakness("Fraqueza", 2);
+        buyPile.add(new EffectCard("Fraqueza", 4,
+                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
+        buyPile.add(new EffectCard("Fraqueza", 4,
+                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
+        buyPile.add(new EffectCard("Fraqueza", 4,
+                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
         buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
                 "Use-a para anular o campo at do inimigo por 2 turnos",
                 new ATFieldCorrosion("Corrosão do campo AT", 2)));
@@ -286,6 +296,9 @@ public class GameManager {
                 if (hero.hasEffect(HighSyncRate.class)) {
                     damage = (int) (1.5 * damage);
                 }
+                if (hero.hasEffect(Weakness.class)) {
+                    damage = (int) (0.75 * damage);
+                }
                 card.useCard(angels.get(0), damage);
                 syncRate -= card.getCost();
 
@@ -328,7 +341,12 @@ public class GameManager {
 
             switch (action) {
                 case attack:
-
+                    if (angels.get(0).hasEffect(HighSyncRate.class)) {
+                        angels.get(0).setDamage((int) (1.5 * angels.get(0).getDamage()));
+                    }
+                    if (angels.get(0).hasEffect(Weakness.class)) {
+                        angels.get(0).setDamage((int) (0.75 * angels.get(0).getDamage()));
+                    }
                     int damage = angels.get(0).attack(hero);
                     System.out.println(
                             "\r\nO inimigo " + angels.get(0).getName() + " te atacou, dando "
