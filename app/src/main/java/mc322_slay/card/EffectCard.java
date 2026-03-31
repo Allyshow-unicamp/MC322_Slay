@@ -8,8 +8,8 @@ public class EffectCard extends Card{
     private Effect effect;
     
     @Override
-    public void useCard(Entity angel, int points) {
-        angel.applyEffect(effect, points);
+    public void useCard(Entity entity, int points) {
+        entity.applyEffect(effect, points);
     }
     public Effect getEffect() {
         return effect;

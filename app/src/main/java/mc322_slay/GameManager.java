@@ -79,9 +79,9 @@ public class GameManager {
                 "Restaura a integridade do Campo AT entre 16 e 32 pontos"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 10,
                 "Restaura a integridade do Campo AT entre 20 e 40 pontos"));
-        Effect effect1 = new PsychicEffect("Dano psicológico 1", 30, 3);
-        Effect effect2 = new PsychicEffect("Dano psicológico 2", 60, 3);
-        Effect effect3 = new PsychicEffect("Dano psicológico 3", 90, 3);
+        Effect effect1 = new PsychicEffect("Dano psicológico", 30, 3);
+        Effect effect2 = new PsychicEffect("Dano psicológico", 60, 3);
+        Effect effect3 = new PsychicEffect("Dano psicológico", 90, 3);
         buyPile.add(new EffectCard("Dano psicológico 1", 3,
                 "Use-a para dar 30 de dano por 3 turnos", effect1));
         buyPile.add(new EffectCard("Dano psicológico 1", 3,
@@ -94,24 +94,24 @@ public class GameManager {
                 "Use-a para dar 90 de dano por 3 turnos", effect3));
         buyPile.add(new EffectCard("Restauração Forçada do pulso vital 1", 3,
                 "Use-a para restaurar 10 pontos de vida por 3 turnos",
-                new HealthRegeneration("Restauração Forçada do pulso vital 1", 10, 3)));
+                new HealthRegeneration("Restauração Forçada do pulso vital", 10, 3)));
         buyPile.add(new EffectCard("Restauração Forçada do pulso vital 2", 6,
                 "Use-a para restaurar 20 pontos de vida por 3 turnos",
-                new HealthRegeneration("Restauração Forçada do pulso vital 2", 20, 3)));
+                new HealthRegeneration("Restauração Forçada do pulso vital", 20, 3)));
         buyPile.add(new EffectCard("Restauração Forçada do pulso vital 3", 9,
                 "Use-a para restaurar 30 pontos de vida por 3 turnos",
-                new HealthRegeneration("Restauração Forçada do pulso vital 3", 30, 3)));
+                new HealthRegeneration("Restauração Forçada do pulso vital", 30, 3)));
         Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2);
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos", effect4));
+                "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
                 "Use-a para anular o campo at do inimigo por 2 turnos",
-                new ATFieldCorrosion("Corrosão do campo AT 1", 2)));
+                new ATFieldCorrosion("Corrosão do campo AT", 2)));
         buyPile.add(new EffectCard("Corrosão do campo AT 2", 8,
                 "Use-a para anular o campo at do inimigo por 3 turnos",
-                new ATFieldCorrosion("Corrosão do campo AT 2", 3)));
+                new ATFieldCorrosion("Corrosão do campo AT", 3)));
 
         buyPile.shuffle();
     }
@@ -307,13 +307,13 @@ public class GameManager {
                 Effect effectX = effectCard.getEffect();
 
                 if (effectX instanceof HealthRegeneration || effectX instanceof HighSyncRate) {
-                    hero.applyEffect(effectX, effectX.getStartPoints());
+                    card.useCard(hero, effectX.getStartPoints());
                     subscribe(hero.getLastEffect());
                 } else {
-                    angels.get(0).applyEffect(effectX, effectX.getStartPoints());
+                    card.useCard(angels.get(0), effectX.getStartPoints());
                     subscribe(angels.get(0).getLastEffect());
                 }
-
+                
                 syncRate -= card.getCost();
             }
             discardPile.add(card);

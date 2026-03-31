@@ -29,6 +29,7 @@ public class HighSyncRate extends Effect {
     public HighSyncRate(String name, int turns) {
         this.name = name;
         this.points = turns;
+        this.startPoints = turns;
     }
 
     public HighSyncRate(HighSyncRate effect) {

@@ -45,6 +45,7 @@ public class HealthRegeneration extends Effect {
         this.name = name;
         this.health = amount;
         this.points = points;
+        this.startPoints = points;
     }
 
     public HealthRegeneration(HealthRegeneration effect) {

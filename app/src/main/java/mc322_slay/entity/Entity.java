@@ -105,7 +105,6 @@ public abstract class Entity {
             }
             newEffect.setOwner(this);
             effects.add(newEffect);
-            
         }
 
         System.out.println("\r\n" + this.name + " está sob efeito de " + effect.getString() + "\r\n");

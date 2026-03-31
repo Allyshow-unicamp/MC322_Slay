@@ -16,8 +16,8 @@ public abstract class Effect {
     public int getStartPoints() {
         return this.startPoints;
     }
-    public void incrementPoints(int points) {
-        this.points += points;
+    public void incrementPoints(int amount) {
+        this.points += amount;
     } 
     public String getName() {
         return this.name;
