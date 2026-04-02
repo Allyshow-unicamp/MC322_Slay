@@ -3,13 +3,28 @@ package mc322_slay.effect;
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
 
+/**
+ * Efeito que mantém o alvo vulnerável ao ignorar AT Field por alguns turnos.
+ */
 public class ATFieldCorrosion extends Effect {    
     
+    /**
+     * Retorna descrição textual do efeito.
+     *
+     * @return texto com nome e turnos restantes.
+     */
     @Override
     public String getString() {
         return (name + " (" + points + " turnos restantes)");
     }
 
+    /**
+     * Atualiza a duração do efeito no fim do turno do jogador.
+     *
+     * @param event evento do jogo.
+     * @param gameManager gerenciador da partida.
+     * @return {@code true} quando o efeito termina.
+     */
     @Override
     public boolean beNotified(EventEnum event, GameManager gameManager) {
         if (event == EventEnum.playerEndOfTurn) {
@@ -26,6 +41,12 @@ public class ATFieldCorrosion extends Effect {
         return false;
     }
 
+    /**
+     * Cria um efeito de corrosão do AT Field.
+     *
+     * @param name nome do efeito.
+     * @param turns duração em turnos.
+     */
     public ATFieldCorrosion(String name, int turns) {
         this.name = name;
         this.points = turns;

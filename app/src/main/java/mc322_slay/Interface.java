@@ -11,6 +11,9 @@ import mc322_slay.card.Card;
 
 import java.io.IOException;
 
+/**
+ * Camada de apresentação textual do jogo no terminal.
+ */
 public class Interface {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -20,6 +23,11 @@ public class Interface {
 
     private static String folder = "assets";
 
+    /**
+     * Imprime o conteúdo de um arquivo de texto da pasta de assets.
+     *
+     * @param text nome do arquivo a ser exibido.
+     */
     public void printFile(String text) {
 
         Path filePath = Path.of("..", folder, text);
@@ -30,6 +38,12 @@ public class Interface {
         }
     }
 
+    /**
+     * Imprime duas artes ASCII lado a lado.
+     *
+     * @param img1 arquivo da primeira imagem.
+     * @param img2 arquivo da segunda imagem.
+     */
     public void printImagesSideBySide(String img1, String img2) {
         Path pathImg1 = Path.of("..", folder, img1);
         Path pathImg2 = Path.of("..", folder, img2);
@@ -45,6 +59,13 @@ public class Interface {
         }
     }
 
+    /**
+     * Exibe informações de turno, status de entidades e efeitos ativos.
+     *
+     * @param turn número do turno atual.
+     * @param hero herói controlado pelo jogador.
+     * @param angel inimigo atual.
+     */
     public void printTurnInfo(int turn, Hero hero, Enemy angel) {
         System.out.println("=============== Turno " + turn + " ===============");
 
@@ -78,6 +99,13 @@ public class Interface {
         System.out.print(result);
     }
 
+    /**
+     * Exibe as cartas da mão e a energia disponível do jogador.
+     *
+     * @param hand cartas atualmente na mão.
+     * @param syncRate energia disponível no turno.
+     * @param initialSync energia máxima padrão.
+     */
     public void showHand(List<Card> hand, int syncRate, int initialSync) {
         System.out.println("=== Cartas disponíveis ===\r\n");
 

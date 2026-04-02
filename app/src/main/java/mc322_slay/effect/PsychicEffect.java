@@ -4,8 +4,13 @@ import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
 import mc322_slay.entity.*;
 
+/**
+ * Representa um efeito de dano psicológico aplicado a uma entidade.
+ * Este efeito causa dano ao dono no final de seu turno.
+ */
 public class PsychicEffect extends Effect {
 
+    /** Quantidade de dano psicológico causado por turno. */
     private int damage;
 
     @Override
@@ -13,6 +18,13 @@ public class PsychicEffect extends Effect {
         return name + " (" + points + " turnos restantes)";
     }
 
+    /**
+     * Notifica o efeito sobre um evento do jogo.
+     * Causa dano psicológico no final do turno do proprietário.
+     * @param event O evento ocorrido.
+     * @param gameManager O gerenciador do jogo.
+     * @return True se o efeito terminou e deve ser removido, False caso contrário.
+     */
     @Override
     public boolean beNotified(EventEnum event, GameManager gameManager) {
         if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class ||
@@ -33,6 +45,12 @@ public class PsychicEffect extends Effect {
         return false;
     }
 
+    /**
+     * Construtor da classe PsychicEffect.
+     * @param name Nome do efeito.
+     * @param damage Dano causado por turno.
+     * @param turns Duração em turnos.
+     */
     public PsychicEffect(String name, int damage, int turns) {
         this.name = name;
         this.damage = damage;
