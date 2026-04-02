@@ -2,7 +2,8 @@ package mc322_slay.effect;
 
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
-import mc322_slay.entity.*;
+import mc322_slay.entity.Enemy;
+import mc322_slay.entity.Hero;
 
 /**
  * Efeito que restaura vida do alvo no início do turno.
@@ -11,11 +12,13 @@ public class HealthRegeneration extends Effect {
 
     private int health;
 
-    /**
-     * Retorna descrição textual do efeito.
-     *
-     * @return texto com nome e turnos restantes.
-     */
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    public int getHealth() {
+        return health;
+    }
+
     @Override
     public String getString() {
         return (name + " (" + points + " turnos restantes)");
@@ -59,5 +62,14 @@ public class HealthRegeneration extends Effect {
         this.name = name;
         this.health = amount;
         this.points = points;
+        this.startPoints = points;
+    }
+
+    public HealthRegeneration(HealthRegeneration effect) {
+        this.name = effect.name;
+        this.health = effect.health;
+        this.owner = effect.owner;
+        this.points = effect.points;
+        this.startPoints = effect.startPoints;
     }
 }

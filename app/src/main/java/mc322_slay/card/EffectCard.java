@@ -17,8 +17,8 @@ public class EffectCard extends Card{
      * @param points duração ou intensidade do efeito.
      */
     @Override
-    public void useCard(Entity angel, int points) {
-        angel.applyEffect(effect, points);
+    public void useCard(Entity entity, int points) {
+        entity.applyEffect(effect, points);
     }
     /**
      * Retorna o efeito associado à carta.

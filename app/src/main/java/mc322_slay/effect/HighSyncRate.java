@@ -2,7 +2,7 @@ package mc322_slay.effect;
 
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
-import mc322_slay.entity.*;
+import mc322_slay.entity.Hero;
 
 /**
  * Efeito que aumenta temporariamente o dano causado pelo herói.
@@ -50,6 +50,14 @@ public class HighSyncRate extends Effect {
     public HighSyncRate(String name, int turns) {
         this.name = name;
         this.points = turns;
+        this.startPoints = turns;
+    }
+
+    public HighSyncRate(HighSyncRate effect) {
+        this.name = effect.name;
+        this.owner = effect.owner;
+        this.points = effect.points;
+        this.startPoints = effect.startPoints;
     }
 }
 

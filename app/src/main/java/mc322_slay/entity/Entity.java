@@ -2,7 +2,11 @@ package mc322_slay.entity;
 
 import java.util.ArrayList;
 
-import mc322_slay.effect.*;
+import mc322_slay.effect.ATFieldCorrosion;
+import mc322_slay.effect.Effect;
+import mc322_slay.effect.HealthRegeneration;
+import mc322_slay.effect.HighSyncRate;
+import mc322_slay.effect.PsychicEffect;
 
 /**
  * Representa uma entidade base no jogo, podendo ser o herói ou um inimigo.
@@ -142,16 +146,49 @@ public abstract class Entity {
      * @param points A quantidade de pontos/intensidade do efeito.
      */
     public void applyEffect(Effect effect, int points) {
-        if (effects.contains(effect)) {
-            int index = effects.indexOf(effect);
+        Effect thisEffect = effect;
+        boolean contains = false;
+        int index = 0;
+        for (Effect effectX : effects) {
+            if (effectX.getClass() == effect.getClass()) {
+                contains = true;
+                thisEffect = effectX; 
+                break;
+            }
+            index++;
+        }
+        if (contains) {
             Effect e = effects.get(index);
             e.incrementPoints(points);
+            if (e instanceof HealthRegeneration healthRegeneration) {
+                HealthRegeneration hE = healthRegeneration;
+                HealthRegeneration tE = (HealthRegeneration) thisEffect;
+                hE.setHealth(Math.max(hE.getHealth(), tE.getHealth()));
+            }
+            else if (e instanceof PsychicEffect psychicEffect) {
+                PsychicEffect pE = psychicEffect;
+                PsychicEffect tE = (PsychicEffect) thisEffect;
+                pE.setDamage(Math.max(pE.getDamage(), tE.getDamage()));
+            }
             effects.set(index, e);
         }
         else {
-            effects.add(effect);
+            Effect newEffect;
+            if (effect instanceof ATFieldCorrosion aTFieldCorrosion) {
+                newEffect = new ATFieldCorrosion(aTFieldCorrosion);
+            }
+            else if (effect instanceof HealthRegeneration healthRegeneration) {
+                newEffect = new HealthRegeneration(healthRegeneration);
+            }
+            else if (effect instanceof HighSyncRate highSyncRate) {
+                newEffect = new HighSyncRate(highSyncRate);
+            }
+            else {
+                newEffect = new PsychicEffect((PsychicEffect) effect);
+            }
+            newEffect.setOwner(this);
+            effects.add(newEffect);
         }
-        effect.setOwner(this);
 
         System.out.println("\r\n" + this.name + " está sob efeito de " + effect.getString() + "\r\n");
     }

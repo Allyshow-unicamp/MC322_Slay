@@ -50,5 +50,13 @@ public class ATFieldCorrosion extends Effect {
     public ATFieldCorrosion(String name, int turns) {
         this.name = name;
         this.points = turns;
+        this.startPoints = turns;
+    }
+
+    public ATFieldCorrosion(ATFieldCorrosion effect) {
+        this.name = effect.name;
+        this.owner = effect.owner;
+        this.points = effect.points;
+        this.startPoints = effect.startPoints;
     }
 }
