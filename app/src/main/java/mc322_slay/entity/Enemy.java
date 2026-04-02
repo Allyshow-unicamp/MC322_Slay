@@ -37,6 +37,14 @@ public class Enemy extends Entity {
         hero.takeDamage(this.damage);
         return this.damage;
     }
+
+    /**
+     * Escolhe aleatoriamente um efeito e o aplica: dano psicológico ou corrosão de AT Field ao herói,
+     * ou regeneração de vida sobre o próprio inimigo.
+     *
+     * @param hero herói alvo quando o efeito sorteado afeta o jogador.
+     * @return {@code true} se o efeito foi aplicado no inimigo (regeneração); {@code false} caso contrário.
+     */
     public boolean useEffect(Hero hero) {
 
         int effect = random.nextInt(3);

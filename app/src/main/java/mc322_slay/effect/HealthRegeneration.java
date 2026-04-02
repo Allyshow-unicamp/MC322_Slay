@@ -10,15 +10,32 @@ import mc322_slay.entity.Hero;
  */
 public class HealthRegeneration extends Effect {
 
+    /** Vida recuperada a cada ativação do efeito. */
     private int health;
 
+    /**
+     * Define quantidade de vida restaurada por ativação.
+     *
+     * @param health valor recuperado por turno.
+     */
     public void setHealth(int health) {
         this.health = health;
     }
+
+    /**
+     * Retorna a vida restaurada a cada ativação.
+     *
+     * @return valor recuperado por turno.
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * Retorna descrição textual do efeito.
+     *
+     * @return texto com nome e turnos restantes.
+     */
     @Override
     public String getString() {
         return (name + " (" + points + " turnos restantes)");
@@ -65,6 +82,11 @@ public class HealthRegeneration extends Effect {
         this.startPoints = points;
     }
 
+    /**
+     * Cria uma cópia de outro efeito de regeneração (nome, cura, dono e duração).
+     *
+     * @param effect instância a copiar.
+     */
     public HealthRegeneration(HealthRegeneration effect) {
         this.name = effect.name;
         this.health = effect.health;

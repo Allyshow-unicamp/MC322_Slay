@@ -53,6 +53,11 @@ public class HighSyncRate extends Effect {
         this.startPoints = turns;
     }
 
+    /**
+     * Cria uma cópia de outro efeito de alta sincronização (nome, dono e duração).
+     *
+     * @param effect instância a copiar.
+     */
     public HighSyncRate(HighSyncRate effect) {
         this.name = effect.name;
         this.owner = effect.owner;

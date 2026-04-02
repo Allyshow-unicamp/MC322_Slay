@@ -14,14 +14,30 @@ public class PsychicEffect extends Effect {
     /** Quantidade de dano psicológico causado por turno. */
     private int damage;
 
+    /**
+     * Retorna descrição textual do efeito.
+     *
+     * @return texto com nome e turnos restantes.
+     */
     @Override
     public String getString() {
         return name + " (" + points + " turnos restantes)";
     }
 
+    /**
+     * Define o dano psicológico aplicado por turno.
+     *
+     * @param damage valor do dano por ativação.
+     */
     public void setDamage(int damage) {
         this.damage = damage;
     }
+
+    /**
+     * Retorna o dano psicológico aplicado por turno.
+     *
+     * @return valor do dano por ativação.
+     */
     public int getDamage() {
         return damage;
     }
@@ -59,6 +75,11 @@ public class PsychicEffect extends Effect {
         this.startPoints = turns;
     }
 
+    /**
+     * Cria uma cópia superficial de outro efeito psicológico (nome, dano e duração).
+     *
+     * @param effect instância a copiar.
+     */
     public PsychicEffect(PsychicEffect effect) {
         this.name = effect.name;
         this.damage = effect.damage;
