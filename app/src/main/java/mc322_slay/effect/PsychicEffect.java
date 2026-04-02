@@ -5,8 +5,13 @@ import mc322_slay.GameManager;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
+/**
+ * Representa um efeito de dano psicológico aplicado a uma entidade.
+ * Este efeito causa dano ao dono no final de seu turno.
+ */
 public class PsychicEffect extends Effect {
 
+    /** Quantidade de dano psicológico causado por turno. */
     private int damage;
 
     @Override
@@ -41,6 +46,12 @@ public class PsychicEffect extends Effect {
         return false;
     }
 
+    /**
+     * Construtor da classe PsychicEffect.
+     * @param name Nome do efeito.
+     * @param damage Dano causado por turno.
+     * @param turns Duração em turnos.
+     */
     public PsychicEffect(String name, int damage, int turns) {
         this.name = name;
         this.damage = damage;

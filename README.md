@@ -100,3 +100,8 @@ Já para executar, use o comando:
 ```
 ./gradlew run
 ```
+
+## Contribuição de IA Generativa
+
+A documentação das funções do projeto e as descrições dos efeitos presentes neste README foram elaboradas com o auxílio de inteligências artificiais generativas, como Gemini (by Google DeepMind) e Cursor AI (by Anysphere, Inc).
+A inteligência artificial também auxiliou na utilização das bibliotecas `Files`, `Path` e `Paths` para a impressão de arquivos `.txt`.

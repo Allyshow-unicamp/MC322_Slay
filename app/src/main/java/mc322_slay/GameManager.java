@@ -19,6 +19,9 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.entity.EnemyActions;
 
+/**
+ * Orquestra o estado do jogo, incluindo turnos, baralhos, ações e efeitos.
+ */
 public class GameManager {
     static private final int nCards = 4;
     static private final int timeSleep = 1000;
@@ -36,15 +39,30 @@ public class GameManager {
     private ArrayList<Effect> subscribers;
     private Interface screen;
 
+    /**
+     * Registra um efeito para receber notificações de eventos do jogo.
+     *
+     * @param effect efeito a ser inscrito.
+     */
     public void subscribe(Effect effect) {
         if (!subscribers.contains(effect))
             subscribers.add(effect);
     }
 
+    /**
+     * Remove um efeito da lista de inscritos.
+     *
+     * @param effect efeito a ser removido.
+     */
     public void unsubscribe(Effect effect) {
         subscribers.remove(effect);
     }
 
+    /**
+     * Notifica todos os efeitos inscritos sobre um evento.
+     *
+     * @param event evento disparado no ciclo do jogo.
+     */
     public void notifySubscribers(EventEnum event) {
         ArrayList<Effect> effectsToBeRemoved = new ArrayList<>();
         for (Effect subscriber : this.subscribers) {
@@ -58,6 +76,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Preenche o baralho de compra com cartas iniciais da partida.
+     */
     void populateDeck() {
         buyPile.add(new DamageCard("Longinus Spear", 10, "Use-a para dar de 100 a 200 de dano"));
         buyPile.add(new DamageCard("Cassius Spear", 9, "Use-a para dar de 90 a 180 de dano"));
@@ -116,6 +137,9 @@ public class GameManager {
         buyPile.shuffle();
     }
 
+    /**
+     * Inicializa os objetos principais e variáveis de estado da partida.
+     */
     public void start() {
         this.hero = new Hero("", 40, 40, "eva.txt");
         this.angels = new ArrayList<Enemy>();
@@ -133,6 +157,11 @@ public class GameManager {
         this.populateDeck();
     }
 
+    /**
+     * Define e exibe a ação planejada do inimigo para o turno.
+     *
+     * @return valor numérico da ação escolhida.
+     */
     int enemyPlanning() {
         int actionValue = angels.get(0).nextAction();
         EnemyActions action = EnemyActions.values()[actionValue];
@@ -156,6 +185,9 @@ public class GameManager {
         return action.getValue();
     }
 
+    /**
+     * Exibe a tela inicial e aguarda confirmação para começar.
+     */
     public void initialScreen() {
         screen.printFile("initialScreenArt.txt");
 
@@ -164,6 +196,9 @@ public class GameManager {
         scanner.nextLine();
     }
 
+    /**
+     * Permite ao jogador escolher o personagem controlado.
+     */
     public void selectCharacter() {
         screen.printFile("selectCharacter.txt");
         int option;
@@ -198,10 +233,18 @@ public class GameManager {
         System.out.println("\r\n" + hero.getName() + " selecionado.\r\n");
     }
 
+    /**
+     * Verifica se a partida deve continuar.
+     *
+     * @return {@code true} se herói e inimigo estão vivos.
+     */
     public boolean isRunning() {
         return hero.isAlive() && angels.get(0).isAlive();
     }
 
+    /**
+     * Finaliza o turno atual, descarta cartas e restaura energia base.
+     */
     public void resetTurn() {
         hero.resetShield();
         syncRate = initialSync;
@@ -211,11 +254,19 @@ public class GameManager {
         turn += 1;
     }
 
+    /**
+     * Indica se o turno atual chegou ao fim.
+     *
+     * @return {@code true} quando não há energia ou o combate terminou.
+     */
     public boolean endOfTurn() {
         boolean end = !isRunning() || syncRate == 0;
         return end;
     }
 
+    /**
+     * Compra o número padrão de cartas para a mão do jogador.
+     */
     public void buyCards() {
         for (int i = 0; i < nCards; i++) {
             hand.buyCard(buyPile, discardPile);
@@ -226,6 +277,9 @@ public class GameManager {
         // sleep();
     }
 
+    /**
+     * Tenta limpar a tela do terminal.
+     */
     public void clearScreen() {
         try {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
@@ -233,6 +287,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Pausa breve utilizada para dar ritmo à interface textual.
+     */
     void sleep() {
         try {
             Thread.sleep(timeSleep);
@@ -240,6 +297,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * Lê e valida a opção de carta escolhida pelo jogador.
+     *
+     * @return índice da carta selecionada ou {@code -1} para encerrar turno.
+     */
     public int selectOption() {
         // // sleep();
 
@@ -274,6 +336,11 @@ public class GameManager {
         return option;
     }
 
+    /**
+     * Executa a ação do jogador com base na carta escolhida.
+     *
+     * @param option índice da carta na mão ou {@code -1} para passar.
+     */
     public void playerAction(int option) {
         // sleep();
         if (option == -1)
@@ -320,6 +387,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * Executa a ação do inimigo planejada para o fim do turno.
+     *
+     * @param enemyOption valor correspondente à ação do inimigo.
+     */
     public void enemyAction(int enemyOption) {
         if (angels.get(0).isAlive()) {
 
@@ -360,6 +432,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Exibe o resultado final da partida.
+     */
     public void results() {
         // sleep();
 
