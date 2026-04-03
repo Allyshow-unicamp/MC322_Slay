@@ -67,8 +67,6 @@ public class Interface {
      * @param angel inimigo atual.
      */
     public void printTurnInfo(Hero hero, Enemy angel) {
-        System.out.println("=============== Turno " + turn + " ===============");
-
         System.out.println(
                 "Herói: " + ANSI_BLUE + hero.getName() + ANSI_RESET + " vs. Inimigo: " + ANSI_RED + angel.getName()
                         + ANSI_RESET + "\r\n");
