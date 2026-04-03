@@ -23,7 +23,7 @@ public class PsychicEffect extends Effect {
      */
     @Override
     public String getString() {
-        return name + " (" + points + " turnos restantes)";
+        return (name + " (" + points + " turnos restantes) - Causa " + damage + " de dano por turno");
     }
 
     /**
@@ -49,13 +49,14 @@ public class PsychicEffect extends Effect {
         if (event == EventEnum.playerEndOfTurn && this.owner.getClass() == Hero.class ||
                 event == EventEnum.enemyEndOfTurn && this.owner.getClass() == Enemy.class) {
             // damage inflicted to entity at the end of his turn, if it is under this effect
+            Interface.printMessage(owner.getName() + " sofre dano psicológico.", ColorEnum.yellow);
             this.owner.takeDamage(damage);
-            Interface.printMessage(owner.getName() + " recebe " + damage + " de dano psicológico.", ColorEnum.yellow);
 
             this.points -= 1;
             if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".",
-                //         ColorEnum.reset);
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
+                // owner.getName() + ".",
+                // ColorEnum.reset);
             }
             if (this.points == 0) { // effect is over
                 owner.removeEffect(this);

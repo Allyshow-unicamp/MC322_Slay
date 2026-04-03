@@ -17,6 +17,9 @@ import mc322_slay.effect.PsychicEffect;
  */
 public abstract class Entity {
 
+    protected double boost = 1;
+    protected double deboost = 1;
+
     /** Nome da entidade. */
     protected String name;
 
@@ -122,6 +125,22 @@ public abstract class Entity {
         return this.effects.getLast();
     }
 
+    public double getBoost() {
+        return boost;
+    }
+
+    public void setBoost(double boost) {
+        this.boost = boost;
+    }
+
+    public double getDeboost() {
+        return deboost;
+    }
+
+    public void setDeboost(double deboost) {
+        this.deboost = deboost;
+    }
+
     /**
      * Verifica se a entidade ainda está viva (vida > 0).
      * 
@@ -189,13 +208,29 @@ public abstract class Entity {
             Effect e = effects.get(index);
             e.incrementPoints(points);
             if (e instanceof HealthRegeneration healthRegeneration) {
+
                 HealthRegeneration hE = healthRegeneration;
                 HealthRegeneration tE = (HealthRegeneration) thisEffect;
                 hE.setHealth(Math.max(hE.getHealth(), tE.getHealth()));
+
             } else if (e instanceof PsychicEffect psychicEffect) {
+
                 PsychicEffect pE = psychicEffect;
                 PsychicEffect tE = (PsychicEffect) thisEffect;
                 pE.setDamage(Math.max(pE.getDamage(), tE.getDamage()));
+
+            } else if (e instanceof HighSyncRate highSyncRate) {
+
+                HighSyncRate hE = highSyncRate;
+                HighSyncRate tE = (HighSyncRate) thisEffect;
+                hE.setBoost(Math.max(hE.getBoost(), tE.getBoost()));
+    
+            } else if (e instanceof LowSyncRate lowSyncRate) {
+
+                LowSyncRate lE = lowSyncRate;
+                LowSyncRate tE = (LowSyncRate) thisEffect;
+                lE.setDeboost(Math.min(lE.getDeboost(), tE.getDeboost()));
+    
             }
             effects.set(index, e);
         } else {
@@ -206,8 +241,10 @@ public abstract class Entity {
                 newEffect = new HealthRegeneration(healthRegeneration);
             } else if (effect instanceof HighSyncRate highSyncRate) {
                 newEffect = new HighSyncRate(highSyncRate);
+                this.setBoost(highSyncRate.getBoost());
             } else if (effect instanceof LowSyncRate lowSyncRate) {
                 newEffect = new LowSyncRate(lowSyncRate);
+                this.setDeboost(lowSyncRate.getDeboost());
             } else {
                 newEffect = new PsychicEffect((PsychicEffect) effect);
             }

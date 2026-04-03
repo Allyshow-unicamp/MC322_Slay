@@ -62,15 +62,17 @@ public class GameManager {
      * @param event evento disparado no ciclo do jogo.
      */
     public void notifySubscribers(EventEnum event) {
-        ArrayList<Effect> effectsToBeRemoved = new ArrayList<>();
-        for (Effect subscriber : this.subscribers) {
-            // if effect has to be removed
-            if (subscriber.beNotified(event, this))
-                effectsToBeRemoved.add(subscriber);
-        }
-        // remove effects that are no longer active
-        for (Effect e : effectsToBeRemoved) {
-            unsubscribe(e);
+        if (isRunning()) {
+            ArrayList<Effect> effectsToBeRemoved = new ArrayList<>();
+            for (Effect subscriber : this.subscribers) {
+                // if effect has to be removed
+                if (subscriber.beNotified(event, this))
+                    effectsToBeRemoved.add(subscriber);
+            }
+            // remove effects that are no longer active
+            for (Effect e : effectsToBeRemoved) {
+                unsubscribe(e);
+            }
         }
     }
 
@@ -138,14 +140,14 @@ public class GameManager {
         buyPile.add(new EffectCard("Restauração Forçada do pulso vital 3", 9,
                 "Use-a para restaurar 30 pontos de vida por 3 turnos",
                 new HealthRegeneration("Restauração Forçada do pulso vital", 30, 3)));
-        Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2);
+        Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2, 1.5);
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
-        Effect effect5 = new LowSyncRate("Baixa taxa de sincronização", 2);
+        Effect effect5 = new LowSyncRate("Baixa taxa de sincronização", 2, 0.75);
         buyPile.add(new EffectCard("Baixa da taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
         buyPile.add(new EffectCard("Baixa taxa de sincronização", 4,
@@ -153,10 +155,10 @@ public class GameManager {
         buyPile.add(new EffectCard("Baixa taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
         buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
-                "Use-a para anular o campo at do inimigo por 2 turnos",
+                "Use-a para anular o campo AT do inimigo por 2 turnos",
                 new ATFieldCorrosion("Corrosão do campo AT", 2)));
         buyPile.add(new EffectCard("Corrosão do campo AT 2", 8,
-                "Use-a para anular o campo at do inimigo por 3 turnos",
+                "Use-a para anular o campo AT do inimigo por 3 turnos",
                 new ATFieldCorrosion("Corrosão do campo AT", 3)));
 
         buyPile.shuffle();
@@ -167,9 +169,9 @@ public class GameManager {
      * Inicializa os objetos principais e variáveis de estado da partida.
      */
     public void start() {
-        this.hero = new Hero("", 40, 40, "eva.txt");
+        this.hero = new Hero("", 40, 0, "eva.txt");
         this.angels = new ArrayList<Enemy>();
-        this.angels.add(new Enemy("Sachiel", 400, 400, "sachiel.txt"));
+        this.angels.add(new Enemy("Sachiel", 300, 200, "sachiel.txt"));
         this.hand = new PlayerHand();
         this.buyPile = new CardStack();
         this.discardPile = new CardStack();
@@ -231,8 +233,7 @@ public class GameManager {
                 option = Integer.parseInt(scanner.nextLine());
                 if (0 < option && option < 4) {
                     break;
-                }
-                else {
+                } else {
                     Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
                 }
             } catch (Exception e) {
@@ -323,7 +324,8 @@ public class GameManager {
                     if (syncRate - cardCost >= 0) {
                         break;
                     } else {
-                        Interface.printMessage("Você não tem energia o suficiente para usar essa carta!", ColorEnum.yellow);
+                        Interface.printMessage("Você não tem energia o suficiente para usar essa carta!",
+                                ColorEnum.yellow);
                     }
                 } else {
                     Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
@@ -349,17 +351,16 @@ public class GameManager {
         if (option == -1) {
             syncRate = 0; // end of turn
             Interface.printMessage("Você passa o turno.", ColorEnum.blue);
-        }
-        else {
+        } else {
             Card card = hand.useCard(option);
             if (card.getClass() == DamageCard.class) {
 
                 int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
                 if (hero.hasEffect(HighSyncRate.class)) {
-                    damage = (int) (1.5 * damage);
+                    damage = (int) (hero.getBoost() * damage);
                 }
                 if (hero.hasEffect(LowSyncRate.class)) {
-                    damage = (int) (0.75 * damage);
+                    damage = (int) (hero.getDeboost() * damage);
                 }
                 Interface.printMessage(
                         hero.getName() + " usa " + card.getName() + " contra " + angels.get(0).getName() + ".",
@@ -371,7 +372,7 @@ public class GameManager {
 
                 int shield = card.getCost() * 2 + random.nextInt(card.getCost() * 2);
 
-                Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesmo.", ColorEnum.green);
+                Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesm*.", ColorEnum.green);
 
                 card.useCard(hero, shield);
 
@@ -381,7 +382,7 @@ public class GameManager {
                 Effect effectX = effectCard.getEffect();
 
                 if (effectX instanceof HealthRegeneration || effectX instanceof HighSyncRate) {
-                    Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesmo.",
+                    Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesm*.",
                             ColorEnum.green);
 
                     card.useCard(hero, effectX.getStartPoints());
@@ -410,18 +411,12 @@ public class GameManager {
      * @param enemyOption valor correspondente à ação do inimigo.
      */
     public void enemyAction(int enemyOption) {
-        if (angels.get(0).isAlive()) {
+        if (isRunning()) {
 
             EnemyActions action = EnemyActions.values()[enemyOption];
 
             switch (action) {
                 case attack:
-                    if (angels.get(0).hasEffect(HighSyncRate.class)) {
-                        angels.get(0).setDamage((int) (1.5 * angels.get(0).getDamage()));
-                    }
-                    if (angels.get(0).hasEffect(LowSyncRate.class)) {
-                        angels.get(0).setDamage((int) (0.75 * angels.get(0).getDamage()));
-                    }
                     angels.get(0).attack(hero);
                     break;
 

@@ -11,6 +11,16 @@ import mc322_slay.entity.Hero;
  */
 public class HighSyncRate extends Effect {
 
+    private double boost;
+
+    public double getBoost() {
+        return this.boost;
+    }
+
+    public void setBoost(double boost) {
+        this.boost = boost;
+    }
+
     /**
      * Retorna descrição textual do efeito.
      *
@@ -18,7 +28,8 @@ public class HighSyncRate extends Effect {
      */
     @Override
     public String getString() {
-        return (name + " (" + points + " turnos restantes)");
+        return (name + " (" + points + " turnos restantes) - Dano causado é multiplicado por " + boost
+                + " (desconsiderando danos oriundos de efeitos)");
     }
 
     /**
@@ -33,8 +44,9 @@ public class HighSyncRate extends Effect {
         if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
             this.points -= 1;
             if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".",
-                //         ColorEnum.reset);
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
+                // owner.getName() + ".",
+                // ColorEnum.reset);
             }
 
             if (this.points == 0) {
@@ -51,10 +63,11 @@ public class HighSyncRate extends Effect {
      * @param name  nome do efeito.
      * @param turns duração em turnos.
      */
-    public HighSyncRate(String name, int turns) {
+    public HighSyncRate(String name, int turns, double boost) {
         this.name = name;
         this.points = turns;
         this.startPoints = turns;
+        this.boost = boost;
     }
 
     /**
@@ -66,6 +79,7 @@ public class HighSyncRate extends Effect {
         this.name = effect.name;
         this.owner = effect.owner;
         this.points = effect.points;
+        this.boost = effect.boost;
         this.startPoints = effect.startPoints;
     }
 }

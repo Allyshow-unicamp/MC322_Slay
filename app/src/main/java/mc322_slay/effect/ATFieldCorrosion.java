@@ -17,7 +17,7 @@ public class ATFieldCorrosion extends Effect {
      */
     @Override
     public String getString() {
-        return (name + " (" + points + " turnos restantes)");
+        return (name + " (" + points + " turnos restantes) - Escudo é desconsiderado (dano é dado diretamente na entidade)");
     }
 
     /**
@@ -34,8 +34,9 @@ public class ATFieldCorrosion extends Effect {
             // to 0
             this.points -= 1;
             if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".",
-                //         ColorEnum.reset);
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
+                // owner.getName() + ".",
+                // ColorEnum.reset);
             }
 
             if (this.points == 0) {

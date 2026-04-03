@@ -40,7 +40,7 @@ public class HealthRegeneration extends Effect {
      */
     @Override
     public String getString() {
-        return (name + " (" + points + " turnos restantes)");
+        return (name + " (" + points + " turnos restantes) - Recupera " + health + " de saúde por turno");
     }
 
     /**
@@ -55,13 +55,14 @@ public class HealthRegeneration extends Effect {
         if (event == EventEnum.playerStartOfTurn && owner.getClass() == Hero.class ||
                 event == EventEnum.enemyStartOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
-            owner.gainHealth(health);
             Interface.printMessage(owner.getName() + " recupera " + health + " de vida, devido a " + name + ".",
-                    ColorEnum.reset);
+                    ColorEnum.yellow);
+            owner.gainHealth(health);
 
             if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".",
-                //         ColorEnum.reset);
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
+                // owner.getName() + ".",
+                // ColorEnum.reset);
             }
 
             if (this.points == 0) {

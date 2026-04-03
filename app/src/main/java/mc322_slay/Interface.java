@@ -28,6 +28,7 @@ public class Interface {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
     /**
      * Pausa breve utilizada para dar ritmo à interface textual.
      */
@@ -87,7 +88,8 @@ public class Interface {
      */
     public static void printTurnInfo(Hero hero, Enemy angel) {
         System.out.println(
-                "\r\nHerói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor() + " vs. Inimigo: "
+                "\r\nHerói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor()
+                        + " vs. Inimigo: "
                         + ColorEnum.red.getColor() + angel.getName() + ColorEnum.reset.getColor() + "\r\n");
 
         printImagesSideBySide(hero.getImage(), angel.getImage());
@@ -105,15 +107,17 @@ public class Interface {
         String result = "\r\n";
 
         if (!hero.getEffects().isEmpty()) {
-            result += "Efeitos de " + hero.getName() + ": ";
+            result += ColorEnum.yellow.getColor() + "Efeitos de " + ColorEnum.blue.getColor() + hero.getName()
+                    + ColorEnum.reset.getColor() + ": ";
             for (Effect effect : hero.getEffects())
-                result += effect.getString() + "; ";
+                result += "\r\n   " + effect.getString();
             result += "\r\n";
         }
         if (!angel.getEffects().isEmpty()) {
-            result += "Efeitos de " + angel.getName() + ": ";
+            result += ColorEnum.yellow.getColor() + "Efeitos de " + ColorEnum.red.getColor() + angel.getName()
+                    + ColorEnum.reset.getColor() + ": ";
             for (Effect effect : angel.getEffects())
-                result += effect.getString() + "; ";
+                result += "\r\n   " + effect.getString();
             result += "\r\n";
         }
 
@@ -152,7 +156,7 @@ public class Interface {
                     .println(ColorEnum.yellow.getColor() + "" + i + ") " + ColorEnum.blue.getColor() + cardType
                             + ColorEnum.reset.getColor() + ": " + card.getName() +
                             ColorEnum.yellow.getColor() + " (Custo: " + card.getCost() + ")"
-                            + ColorEnum.reset.getColor() + ": "+ card.getDescription());
+                            + ColorEnum.reset.getColor() + ": " + card.getDescription());
         }
 
         System.out.println("\r\n===================\r\n" + //
