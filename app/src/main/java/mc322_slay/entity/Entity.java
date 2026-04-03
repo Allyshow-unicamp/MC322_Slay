@@ -6,6 +6,7 @@ import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.Effect;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
+import mc322_slay.effect.LowSyncRate;
 import mc322_slay.effect.PsychicEffect;
 
 /**
@@ -182,6 +183,9 @@ public abstract class Entity {
             }
             else if (effect instanceof HighSyncRate highSyncRate) {
                 newEffect = new HighSyncRate(highSyncRate);
+            }
+            else if (effect instanceof LowSyncRate lowSyncRate) {
+                newEffect = new LowSyncRate(lowSyncRate);
             }
             else {
                 newEffect = new PsychicEffect((PsychicEffect) effect);

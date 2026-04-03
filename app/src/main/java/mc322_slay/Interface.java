@@ -1,5 +1,6 @@
 package mc322_slay;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,7 +34,7 @@ public class Interface {
         Path filePath = Path.of("..", folder, text);
 
         try {
-            Files.lines(filePath).forEach(System.out::println);
+            Files.lines(filePath, StandardCharsets.UTF_8).forEach(System.out::println);
         } catch (IOException e) {
         }
     }
@@ -49,8 +50,8 @@ public class Interface {
         Path pathImg2 = Path.of("..", folder, img2);
 
         try {
-            List<String> lines1 = Files.readAllLines(Paths.get(pathImg1.toString()));
-            List<String> lines2 = Files.readAllLines(Paths.get(pathImg2.toString()));
+            List<String> lines1 = Files.readAllLines(Paths.get(pathImg1.toString()), StandardCharsets.UTF_8);
+            List<String> lines2 = Files.readAllLines(Paths.get(pathImg2.toString()), StandardCharsets.UTF_8);
 
             for (int i = 0; i < Math.min(lines1.size(), lines2.size()); i++) {
                 System.out.println(lines1.get(i) + lines2.get(i));
@@ -62,11 +63,10 @@ public class Interface {
     /**
      * Exibe informações de turno, status de entidades e efeitos ativos.
      *
-     * @param turn número do turno atual.
      * @param hero herói controlado pelo jogador.
      * @param angel inimigo atual.
      */
-    public void printTurnInfo(int turn, Hero hero, Enemy angel) {
+    public void printTurnInfo(Hero hero, Enemy angel) {
         System.out.println("=============== Turno " + turn + " ===============");
 
         System.out.println(

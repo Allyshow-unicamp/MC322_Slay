@@ -5,7 +5,9 @@ import java.util.Random;
 
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.HealthRegeneration;
+import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.PsychicEffect;
+import mc322_slay.effect.LowSyncRate;
 
 /**
  * Representa um inimigo (Anjo) no jogo.
@@ -18,15 +20,11 @@ public class Enemy extends Entity {
     
     /** Quantidade de dano que o inimigo causará em seu próximo ataque. */
     private int damage;
-    
-    /** Efeito de dano psicológico predefinido. */
-    private PsychicEffect p = new PsychicEffect("Dano psicológico 1", 20, 3);
-    
-    /** Efeito de corrosão de campo AT predefinido. */
-    private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT 1", 3);
-    
-    /** Efeito de regeneração de vida predefinido. */
-    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida 1", 20, 3);
+    private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
+    private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 3);
+    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 50, 3);
+    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3);
+    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3);
 
     /**
      * Realiza um ataque contra o herói.
@@ -36,6 +34,22 @@ public class Enemy extends Entity {
     public int attack(Hero hero) {
         hero.takeDamage(this.damage);
         return this.damage;
+    }
+  
+    /**
+     * Retorna o dano do inimigo.
+     * @return O dano do inimigo.
+     */
+    public int getDamage() {
+        return this.damage;
+    }
+    
+    /**
+     * Atualiza o dano do inimigo.
+     * @param damage O novo dano.
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     /**
@@ -47,7 +61,7 @@ public class Enemy extends Entity {
      */
     public boolean useEffect(Hero hero) {
 
-        int effect = random.nextInt(3);
+        int effect = random.nextInt(5);
         boolean selfInflicted = false;
         switch (effect) { // utilizarei outra branch para criar novos efeitos
             case 0: // caso sorteado efeito de dano psicológico
@@ -58,6 +72,13 @@ public class Enemy extends Entity {
                 break;
             case 2:
                 this.applyEffect(h, h.getPoints());
+                selfInflicted = true;
+                break;
+            case 3:
+                hero.applyEffect(w, w.getPoints());
+                break;
+            case 4:
+                this.applyEffect(hs, hs.getPoints());
                 selfInflicted = true;
                 break;
         }
