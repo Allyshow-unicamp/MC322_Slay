@@ -146,7 +146,7 @@ public class Interface {
 
             String cardType = "";
             if (card instanceof DamageCard)
-                cardType = "Carta de Dano";
+                cardType = "Carta de Dano  ";
             else if (card instanceof ShieldCard)
                 cardType = "Carta de Escudo";
             else

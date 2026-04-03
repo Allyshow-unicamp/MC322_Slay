@@ -264,7 +264,7 @@ public abstract class Entity {
         boolean result = effects.remove(effect);
         effect.setOwner(null);
         if (result)
-            Interface.printMessage(this.name + " está sob efeito de " + effect.getString() + ".", ColorEnum.yellow);
+            Interface.printMessage(this.name + " não está mais sob o efeito de " + effect.getName() + ".", ColorEnum.yellow);
     }
 
     /**

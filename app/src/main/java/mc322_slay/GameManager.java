@@ -90,14 +90,6 @@ public class GameManager {
         buyPile.add(new DamageCard("Smash Hawk", 3, "Use-a para dar de 30 a 60 de dano"));
         buyPile.add(new DamageCard("N2 Weapon II", 2, "Use-a para dar de 20 a 40 de dano"));
         buyPile.add(new DamageCard("N2 Weapon", 1, "Use-a para dar de 10 a 20 de dano"));
-        buyPile.add(new DamageCard("Positron Sniper Rifle", 8, "Use-a para dar de 80 a 160 de dano"));
-        buyPile.add(new DamageCard("Prog Knife", 7, "Use-a para dar de 70 a 140 de dano"));
-        buyPile.add(new DamageCard("Magokoru Sword", 6, "Use-a para dar de 60 a 120 de dano"));
-        buyPile.add(new DamageCard("Pallet Rifle", 5, "Use-a para dar de 50 a 100 de dano"));
-        buyPile.add(new DamageCard("Azumaterasu", 4, "Use-a para dar de 40 a 80 de dano"));
-        buyPile.add(new DamageCard("Smash Hawk", 3, "Use-a para dar de 30 a 60 de dano"));
-        buyPile.add(new DamageCard("N2 Weapon II", 2, "Use-a para dar de 20 a 40 de dano"));
-        buyPile.add(new DamageCard("N2 Weapon", 1, "Use-a para dar de 10 a 20 de dano"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 1,
                 "Restaura a integridade do Campo AT entre 2 e 4 pontos"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 2,
@@ -108,25 +100,21 @@ public class GameManager {
                 "Restaura a integridade do Campo AT entre 8 e 16 pontos"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 5,
                 "Restaura a integridade do Campo AT entre 10 e 20 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 6,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 6", 6,
                 "Restaura a integridade do Campo AT entre 12 e 24 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 7,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 7", 7,
                 "Restaura a integridade do Campo AT entre 14 e 28 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 3", 8,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 8", 8,
                 "Restaura a integridade do Campo AT entre 16 e 32 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 4", 9,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 9", 9,
                 "Restaura a integridade do Campo AT entre 18 e 36 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 10,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 10", 10,
                 "Restaura a integridade do Campo AT entre 20 e 40 pontos"));
         Effect effect1 = new PsychicEffect("Dano psicológico", 30, 3);
         Effect effect2 = new PsychicEffect("Dano psicológico", 60, 3);
         Effect effect3 = new PsychicEffect("Dano psicológico", 90, 3);
         buyPile.add(new EffectCard("Dano psicológico 1", 3,
                 "Use-a para dar 30 de dano por 3 turnos", effect1));
-        buyPile.add(new EffectCard("Dano psicológico 1", 3,
-                "Use-a para dar 30 de dano por 3 turnos", effect1));
-        buyPile.add(new EffectCard("Dano psicológico 2", 6,
-                "Use-a para dar 60 de dano por 3 turnos", effect2));
         buyPile.add(new EffectCard("Dano psicológico 2", 6,
                 "Use-a para dar 60 de dano por 3 turnos", effect2));
         buyPile.add(new EffectCard("Dano psicológico 3", 9,
@@ -142,22 +130,18 @@ public class GameManager {
                 new HealthRegeneration("Restauração Forçada do pulso vital", 30, 3)));
         Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2, 1.5);
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
+                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
-        buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
+                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos", effect4));
         Effect effect5 = new LowSyncRate("Baixa taxa de sincronização", 2, 0.75);
-        buyPile.add(new EffectCard("Baixa da taxa de sincronização", 4,
-                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
         buyPile.add(new EffectCard("Baixa taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
         buyPile.add(new EffectCard("Baixa taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
-        buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
+        buyPile.add(new EffectCard("Corrosão do campo AT 1", 4,
                 "Use-a para anular o campo AT do inimigo por 2 turnos",
                 new ATFieldCorrosion("Corrosão do campo AT", 2)));
-        buyPile.add(new EffectCard("Corrosão do campo AT 2", 8,
+        buyPile.add(new EffectCard("Corrosão do campo AT 2", 6,
                 "Use-a para anular o campo AT do inimigo por 3 turnos",
                 new ATFieldCorrosion("Corrosão do campo AT", 3)));
 

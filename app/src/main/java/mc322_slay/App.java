@@ -37,12 +37,15 @@ public class App {
                 game.playerAction(option);
             }
             game.notifySubscribers(EventEnum.playerEndOfTurn);
-            game.discardCards();
 
-            game.notifySubscribers(EventEnum.enemyStartOfTurn);
-            Interface.printMessage("\r\n=== TURNO DO INIMIGO ===\r\n", ColorEnum.reset);
-            game.enemyAction(enemyOption);
-            game.notifySubscribers(EventEnum.enemyEndOfTurn);
+            if (game.isRunning()) {
+                game.discardCards();
+
+                game.notifySubscribers(EventEnum.enemyStartOfTurn);
+                Interface.printMessage("\r\n=== TURNO DO INIMIGO ===\r\n", ColorEnum.reset);
+                game.enemyAction(enemyOption);
+                game.notifySubscribers(EventEnum.enemyEndOfTurn);
+            }
         }
 
         game.results();
