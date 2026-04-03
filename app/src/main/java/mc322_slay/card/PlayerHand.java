@@ -3,6 +3,9 @@ package mc322_slay.card;
 import java.util.ArrayList;
 import java.util.List;
 
+import mc322_slay.ColorEnum;
+import mc322_slay.Interface;
+
 /**
  * Gerencia a mão de cartas do jogador.
  */
@@ -25,6 +28,7 @@ public class PlayerHand {
      */
     public void buyCard(CardStack buyPile, CardStack discardPile) {
         if (buyPile.isEmpty()) {
+            Interface.printMessage("A pilha de compra acabou!", ColorEnum.blue);
             restoreCards(discardPile, buyPile);
         }
         hand.add(buyPile.remove());
@@ -47,6 +51,7 @@ public class PlayerHand {
         while (!hand.isEmpty()) {
             discardPile.add(hand.remove(0));
         }
+        Interface.printMessage("Você descarta todas as suas cartas e as coloca na pilha de descarte.", ColorEnum.blue);
     }
     /**
      * Move cartas do descarte para a pilha de compra após embaralhar.
@@ -59,6 +64,7 @@ public class PlayerHand {
         while(!discardPile.isEmpty()) {
             buyPile.add(discardPile.remove());
         }
+        Interface.printMessage("A pilha de descarte foi embaralhada e se tornou a nova pilha de compra.", ColorEnum.blue);
     }
     /**
      * Consulta o custo de energia de uma carta da mão.

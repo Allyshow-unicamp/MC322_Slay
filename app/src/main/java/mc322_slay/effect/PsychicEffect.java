@@ -1,7 +1,9 @@
 package mc322_slay.effect;
 
+import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
+import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
@@ -21,7 +23,7 @@ public class PsychicEffect extends Effect {
      */
     @Override
     public String getString() {
-        return name + " (" + points + " turnos restantes)";
+        return (name + " (" + points + " turnos restantes) - Causa " + damage + " de dano por turno");
     }
 
     /**
@@ -47,12 +49,14 @@ public class PsychicEffect extends Effect {
         if (event == EventEnum.playerEndOfTurn && this.owner.getClass() == Hero.class ||
                 event == EventEnum.enemyEndOfTurn && this.owner.getClass() == Enemy.class) {
             // damage inflicted to entity at the end of his turn, if it is under this effect
+            Interface.printMessage(owner.getName() + " sofre dano psicológico.", ColorEnum.yellow);
             this.owner.takeDamage(damage);
-            System.out.println(owner.getName() + " recebe " + damage + " de dano psicológico.\r\n");
 
             this.points -= 1;
             if (this.points > 0) {
-                System.out.println(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".\r\n");
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
+                // owner.getName() + ".",
+                // ColorEnum.reset);
             }
             if (this.points == 0) { // effect is over
                 owner.removeEffect(this);
@@ -64,9 +68,10 @@ public class PsychicEffect extends Effect {
 
     /**
      * Construtor da classe PsychicEffect.
-     * @param name Nome do efeito.
+     * 
+     * @param name   Nome do efeito.
      * @param damage Dano causado por turno.
-     * @param turns Duração em turnos.
+     * @param turns  Duração em turnos.
      */
     public PsychicEffect(String name, int damage, int turns) {
         this.name = name;
@@ -76,7 +81,8 @@ public class PsychicEffect extends Effect {
     }
 
     /**
-     * Cria uma cópia superficial de outro efeito psicológico (nome, dano e duração).
+     * Cria uma cópia superficial de outro efeito psicológico (nome, dano e
+     * duração).
      *
      * @param effect instância a copiar.
      */
