@@ -24,12 +24,14 @@ public class App {
         game.start();
         game.initialScreen();
         game.selectCharacter();
-
+        game.populateDeck();
         while (game.isRunning()) {
-            game.buyCards();
-            int enemyOption = game.enemyPlanning();
             game.notifySubscribers(EventEnum.playerStartOfTurn);
-            Interface.printMessage("Turno do jogador", ColorEnum.yellow);
+            Interface.printMessage("\r\n=== TURNO DO JOGADOR ===\r\n", ColorEnum.reset);
+
+            game.buyCards();
+            game.resetTurn();
+            int enemyOption = game.enemyPlanning();
             while (!game.endOfTurn()) {
                 int option = game.selectOption();
                 game.playerAction(option);
@@ -38,11 +40,9 @@ public class App {
             game.discardCards();
 
             game.notifySubscribers(EventEnum.enemyStartOfTurn);
-            Interface.printMessage("Turno do inimigo", ColorEnum.yellow);
+            Interface.printMessage("\r\n=== TURNO DO INIMIGO ===\r\n", ColorEnum.reset);
             game.enemyAction(enemyOption);
             game.notifySubscribers(EventEnum.enemyEndOfTurn);
-            
-            game.resetTurn();
         }
 
         game.results();

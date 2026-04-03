@@ -13,13 +13,14 @@ import mc322_slay.effect.LowSyncRate;
 
 /**
  * Representa um inimigo (Anjo) no jogo.
- * Estende a classe Entity e define comportamentos específicos de ataque e uso de efeitos.
+ * Estende a classe Entity e define comportamentos específicos de ataque e uso
+ * de efeitos.
  */
 public class Enemy extends Entity {
 
     /** Gerador de números aleatórios para as ações do inimigo. */
     public Random random = new Random();
-    
+
     /** Quantidade de dano que o inimigo causará em seu próximo ataque. */
     private int damage;
     private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
@@ -30,6 +31,7 @@ public class Enemy extends Entity {
 
     /**
      * Realiza um ataque contra o herói.
+     * 
      * @param hero O herói que receberá o dano.
      * @return A quantidade de dano causada.
      */
@@ -38,17 +40,19 @@ public class Enemy extends Entity {
         hero.takeDamage(this.damage);
         return this.damage;
     }
-  
+
     /**
      * Retorna o dano do inimigo.
+     * 
      * @return O dano do inimigo.
      */
     public int getDamage() {
         return this.damage;
     }
-    
+
     /**
      * Atualiza o dano do inimigo.
+     * 
      * @param damage O novo dano.
      */
     public void setDamage(int damage) {
@@ -56,53 +60,67 @@ public class Enemy extends Entity {
     }
 
     /**
-     * Escolhe aleatoriamente um efeito e o aplica: dano psicológico ou corrosão de AT Field ao herói,
+     * Escolhe aleatoriamente um efeito e o aplica: dano psicológico ou corrosão de
+     * AT Field ao herói,
      * ou regeneração de vida sobre o próprio inimigo.
      *
      * @param hero herói alvo quando o efeito sorteado afeta o jogador.
-     * @return {@code true} se o efeito foi aplicado no inimigo (regeneração); {@code false} caso contrário.
+     * @return {@code true} se o efeito foi aplicado no inimigo (regeneração);
+     *         {@code false} caso contrário.
      */
     public boolean useEffect(Hero hero) {
-
         int effect = random.nextInt(5);
+
         boolean selfInflicted = false;
-        switch (effect) { // utilizarei outra branch para criar novos efeitos
-            case 0: // caso sorteado efeito de dano psicológico
+        switch (effect) {
+            case 0:
+                Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + p.getName()
+                        + " com duração de " + p.getPoints() + " turnos.", ColorEnum.red);
                 hero.applyEffect(p, p.getPoints());
                 break;
             case 1:
+                Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + c.getName()
+                        + " com duração de " + c.getPoints() + " turnos.", ColorEnum.red);
                 hero.applyEffect(c, c.getPoints());
                 break;
             case 2:
+                Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + h.getName()
+                        + " com duração de " + h.getPoints() + " turnos.", ColorEnum.red);
                 this.applyEffect(h, h.getPoints());
                 selfInflicted = true;
                 break;
             case 3:
+                Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + w.getName()
+                        + " com duração de " + w.getPoints() + " turnos.", ColorEnum.red);
                 hero.applyEffect(w, w.getPoints());
                 break;
             case 4:
+                Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + hs.getName()
+                        + " com duração de " + hs.getPoints() + " turnos.", ColorEnum.red);
                 this.applyEffect(hs, hs.getPoints());
                 selfInflicted = true;
                 break;
         }
         return selfInflicted;
     }
-    
+
     /**
      * Define a próxima ação do inimigo aleatoriamente.
+     * 
      * @return O valor correspondente à ação sorteada.
      */
     public int nextAction() {
-        this.damage = (random.nextInt(40) +1);
+        this.damage = (random.nextInt(40) + 1);
         int action = random.nextInt(3);
         return action;
     }
 
     /**
      * Construtor da classe Enemy.
-     * @param name Nome do inimigo.
-     * @param health Vida inicial.
-     * @param ATField Valor inicial do escudo (AT Field).
+     * 
+     * @param name       Nome do inimigo.
+     * @param health     Vida inicial.
+     * @param ATField    Valor inicial do escudo (AT Field).
      * @param imageAsset Caminho do recurso de imagem.
      */
     public Enemy(String name, int health, int ATField, String imageAsset) {

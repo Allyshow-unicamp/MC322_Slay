@@ -1,11 +1,13 @@
 package mc322_slay.effect;
 
+import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
+import mc322_slay.Interface;
 import mc322_slay.entity.Hero;
 
 public class LowSyncRate extends Effect {
-    
+
     @Override
     public String getString() {
         return (name + " (" + points + " turnos restantes)");
@@ -13,15 +15,17 @@ public class LowSyncRate extends Effect {
 
     @Override
     public boolean beNotified(EventEnum event, GameManager gameManager) {
-        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class){
+        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
             this.points -= 1;
             if (this.points > 0) {
-                System.out.println(points + " turnos restantes de "+ name + " sobre " + owner.getName() + ".\r\n");}
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".",
+                //         ColorEnum.reset);
+            }
 
             if (this.points == 0) {
                 owner.removeEffect(this);
                 return true;
-            } 
+            }
         }
         return false;
     }
@@ -39,4 +43,3 @@ public class LowSyncRate extends Effect {
         this.startPoints = effect.startPoints;
     }
 }
-

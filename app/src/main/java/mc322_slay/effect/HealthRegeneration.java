@@ -1,7 +1,9 @@
 package mc322_slay.effect;
 
+import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
+import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
@@ -44,7 +46,7 @@ public class HealthRegeneration extends Effect {
     /**
      * Processa a regeneração quando o turno do dono começa.
      *
-     * @param event evento do jogo.
+     * @param event       evento do jogo.
      * @param gameManager gerenciador da partida.
      * @return {@code true} quando o efeito termina.
      */
@@ -54,10 +56,12 @@ public class HealthRegeneration extends Effect {
                 event == EventEnum.enemyStartOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
             owner.gainHealth(health);
-            System.out.println(owner.getName() + " recupera " + health + " de vida, devido a " + name + ".\r\n");
+            Interface.printMessage(owner.getName() + " recupera " + health + " de vida, devido a " + name + ".",
+                    ColorEnum.reset);
 
             if (this.points > 0) {
-                System.out.println(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".\r\n");
+                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " + owner.getName() + ".",
+                //         ColorEnum.reset);
             }
 
             if (this.points == 0) {
@@ -71,7 +75,7 @@ public class HealthRegeneration extends Effect {
     /**
      * Cria um efeito de regeneração de vida.
      *
-     * @param name nome do efeito.
+     * @param name   nome do efeito.
      * @param amount vida recuperada por ativação.
      * @param points duração em turnos.
      */

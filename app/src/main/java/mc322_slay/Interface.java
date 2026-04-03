@@ -19,6 +19,7 @@ import java.io.IOException;
  */
 public class Interface {
     private static String folder = "assets";
+    static private final int timeSleep = 750;
 
     /**
      * Limpa a tela do terminal.
@@ -27,11 +28,19 @@ public class Interface {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+    /**
+     * Pausa breve utilizada para dar ritmo à interface textual.
+     */
+    static void sleep() {
+        try {
+            Thread.sleep(timeSleep);
+        } catch (Exception e) {
+        }
+    }
 
     public static void printMessage(String message, ColorEnum color) {
-        System.out.print(color.getColor());
-        System.out.println(message);
-        System.out.print(ColorEnum.reset.getColor());
+        System.out.println(color.getColor() + message + ColorEnum.reset.getColor());
+        sleep();
     }
 
     /**
@@ -78,7 +87,7 @@ public class Interface {
      */
     public static void printTurnInfo(Hero hero, Enemy angel) {
         System.out.println(
-                "Herói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor() + " vs. Inimigo: "
+                "\r\nHerói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor() + " vs. Inimigo: "
                         + ColorEnum.red.getColor() + angel.getName() + ColorEnum.reset.getColor() + "\r\n");
 
         printImagesSideBySide(hero.getImage(), angel.getImage());
@@ -86,24 +95,26 @@ public class Interface {
         System.out.println(
                 "\r\n(" + ColorEnum.green.getColor() + hero.getHealth() + "/" + hero.getMaxHealth()
                         + ColorEnum.reset.getColor() + " pontos de vida) "
-                        + "(" + ColorEnum.yellow.getColor() + angel.getHealth() + "/" + angel.getMaxHealth()
+                        + "    (" + ColorEnum.yellow.getColor() + angel.getHealth() + "/" + angel.getMaxHealth()
                         + ColorEnum.reset.getColor() + " pontos de vida)\r\n" + //
                         "(" + ColorEnum.green.getColor() + hero.getShield() + ColorEnum.reset.getColor()
                         + " pontos de escudo) " +
-                        " (" + ColorEnum.yellow.getColor() + angel.getShield() + ColorEnum.reset.getColor()
-                        + " pontos de escudo)\r\n");
+                        "     (" + ColorEnum.yellow.getColor() + angel.getShield() + ColorEnum.reset.getColor()
+                        + " pontos de escudo)");
 
-        String result = "";
+        String result = "\r\n";
 
         if (!hero.getEffects().isEmpty()) {
-            result += "\r\nEfeitos de " + hero.getName() + ": ";
+            result += "Efeitos de " + hero.getName() + ": ";
             for (Effect effect : hero.getEffects())
                 result += effect.getString() + "; ";
+            result += "\r\n";
         }
         if (!angel.getEffects().isEmpty()) {
-            result += "\r\nEfeitos de " + angel.getName() + ": ";
+            result += "Efeitos de " + angel.getName() + ": ";
             for (Effect effect : angel.getEffects())
                 result += effect.getString() + "; ";
+            result += "\r\n";
         }
 
         System.out.print(result);
@@ -117,7 +128,7 @@ public class Interface {
      * @param initialSync energia máxima padrão.
      */
     public static void showHand(List<Card> hand, int syncRate, int initialSync) {
-        System.out.println("=== Cartas disponíveis ===\r\n");
+        System.out.println("\r\n===== Sua Mão =====\r\n");
 
         // sotrs cards by cost, using a compareTo like function to do so
         // given that the sort function sorts in ascending order, -1 is placed at the
@@ -144,7 +155,7 @@ public class Interface {
                             + ColorEnum.reset.getColor() + ": "+ card.getDescription());
         }
 
-        System.out.println("\r\n=========================================\r\n" + //
+        System.out.println("\r\n===================\r\n" + //
                 ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
                 + " de Sincronização (Energia) disponível\r\n");
     }

@@ -51,7 +51,7 @@ public class PlayerHand {
         while (!hand.isEmpty()) {
             discardPile.add(hand.remove(0));
         }
-        Interface.printMessage("Você descarta todas as suas cartas.", ColorEnum.blue);
+        Interface.printMessage("Você descarta todas as suas cartas e as coloca na pilha de descarte.", ColorEnum.blue);
     }
     /**
      * Move cartas do descarte para a pilha de compra após embaralhar.

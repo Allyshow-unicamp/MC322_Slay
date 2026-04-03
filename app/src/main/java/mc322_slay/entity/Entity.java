@@ -16,38 +16,43 @@ import mc322_slay.effect.PsychicEffect;
  * Gerencia atributos comuns como vida, escudo (AT Field) e efeitos aplicados.
  */
 public abstract class Entity {
-    
+
     /** Nome da entidade. */
     protected String name;
-    
+
     /** Vida atual da entidade. */
     protected int health;
-    
+
     /** Vida máxima da entidade. */
     protected int maxHealth;
-    
-    /** Valor atual do escudo (AT Field). Funciona de forma idêntica ao atributo de escudo. */
+
+    /**
+     * Valor atual do escudo (AT Field). Funciona de forma idêntica ao atributo de
+     * escudo.
+     */
     protected int ATField;
-    
+
     /** Valor máximo do escudo (AT Field). */
     protected int maxATField;
-    
+
     /** Lista de efeitos aplicados à entidade. */
     protected ArrayList<Effect> effects;
-    
+
     /** Caminho ou nome do recurso de imagem associado à entidade. */
     protected String imageAsset;
 
     /**
      * Obtém o nome da entidade.
+     * 
      * @return O nome da entidade.
      */
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
     /**
      * Obtém a vida atual da entidade.
+     * 
      * @return A vida atual.
      */
     public int getHealth() {
@@ -56,6 +61,7 @@ public abstract class Entity {
 
     /**
      * Aumenta a vida da entidade, respeitando o limite máximo de vida.
+     * 
      * @param amount A quantidade de vida a ser ganha.
      */
     public void gainHealth(int amount) {
@@ -64,6 +70,7 @@ public abstract class Entity {
 
     /**
      * Obtém a vida máxima da entidade.
+     * 
      * @return A vida máxima.
      */
     public int getMaxHealth() {
@@ -72,6 +79,7 @@ public abstract class Entity {
 
     /**
      * Obtém o valor atual do escudo (AT Field).
+     * 
      * @return O valor do escudo.
      */
     public int getShield() {
@@ -80,6 +88,7 @@ public abstract class Entity {
 
     /**
      * Obtém o valor máximo do escudo (AT Field).
+     * 
      * @return O valor máximo do escudo.
      */
     public int getMaxShield() {
@@ -88,6 +97,7 @@ public abstract class Entity {
 
     /**
      * Obtém o caminho ou nome do recurso de imagem associado à entidade.
+     * 
      * @return O recurso de imagem.
      */
     public String getImage() {
@@ -96,6 +106,7 @@ public abstract class Entity {
 
     /**
      * Obtém a lista de efeitos aplicados à entidade.
+     * 
      * @return A lista de efeitos.
      */
     public ArrayList<Effect> getEffects() {
@@ -104,6 +115,7 @@ public abstract class Entity {
 
     /**
      * Obtém o último efeito adicionado à entidade.
+     * 
      * @return O último efeito.
      */
     public Effect getLastEffect() {
@@ -112,6 +124,7 @@ public abstract class Entity {
 
     /**
      * Verifica se a entidade ainda está viva (vida > 0).
+     * 
      * @return True se estiver viva, False caso contrário.
      */
     public boolean isAlive() {
@@ -120,15 +133,18 @@ public abstract class Entity {
 
     /**
      * Aumenta o valor do escudo (AT Field) da entidade.
+     * 
      * @param amount A quantidade de escudo a ser ganha.
      */
     public void gainATField(int amount) {
+        Interface.printMessage(this.getName() + " recuperou " + amount + " de campo AT.", ColorEnum.yellow);
         this.ATField = ATField + amount;
     }
 
     /**
      * Processa o dano recebido pela entidade, considerando o escudo (AT Field)
      * e possíveis efeitos como corrosão de AT Field.
+     * 
      * @param damage A quantidade de dano a ser processada.
      */
     public void takeDamage(int damage) {
@@ -136,24 +152,24 @@ public abstract class Entity {
             if (damage > ATField) {
                 int newHealth = (health - (damage - ATField)) >= 0 ? health - (damage - ATField) : 0;
                 Interface.printMessage(this.name + " leva " + (health - newHealth)
-                                    + " de dano.", ColorEnum.red);
+                        + " de dano.", ColorEnum.yellow);
                 this.health = newHealth;
             }
             int newField = (ATField - damage) >= 0 ? ATField - damage : 0;
             Interface.printMessage("O campo AT (escudo) de " + this.name + " absorve " + (ATField - newField)
-                                    + " de dano.", ColorEnum.red);
+                    + " de dano.", ColorEnum.yellow);
             this.ATField = newField;
-        }
-        else {
+        } else {
             int newHealth = (health - damage) >= 0 ? health - damage : 0;
             Interface.printMessage(this.name + " leva " + (health - newHealth)
-                                    + " de dano.", ColorEnum.red);
+                    + " de dano.", ColorEnum.yellow);
             this.health = newHealth;
         }
     }
 
     /**
      * Aplica um efeito à entidade ou incrementa os pontos se o efeito já existir.
+     * 
      * @param effect O efeito a ser aplicado.
      * @param points A quantidade de pontos/intensidade do efeito.
      */
@@ -164,7 +180,7 @@ public abstract class Entity {
         for (Effect effectX : effects) {
             if (effectX.getClass() == effect.getClass()) {
                 contains = true;
-                thisEffect = effectX; 
+                thisEffect = effectX;
                 break;
             }
             index++;
@@ -176,29 +192,23 @@ public abstract class Entity {
                 HealthRegeneration hE = healthRegeneration;
                 HealthRegeneration tE = (HealthRegeneration) thisEffect;
                 hE.setHealth(Math.max(hE.getHealth(), tE.getHealth()));
-            }
-            else if (e instanceof PsychicEffect psychicEffect) {
+            } else if (e instanceof PsychicEffect psychicEffect) {
                 PsychicEffect pE = psychicEffect;
                 PsychicEffect tE = (PsychicEffect) thisEffect;
                 pE.setDamage(Math.max(pE.getDamage(), tE.getDamage()));
             }
             effects.set(index, e);
-        }
-        else {
+        } else {
             Effect newEffect;
             if (effect instanceof ATFieldCorrosion aTFieldCorrosion) {
                 newEffect = new ATFieldCorrosion(aTFieldCorrosion);
-            }
-            else if (effect instanceof HealthRegeneration healthRegeneration) {
+            } else if (effect instanceof HealthRegeneration healthRegeneration) {
                 newEffect = new HealthRegeneration(healthRegeneration);
-            }
-            else if (effect instanceof HighSyncRate highSyncRate) {
+            } else if (effect instanceof HighSyncRate highSyncRate) {
                 newEffect = new HighSyncRate(highSyncRate);
-            }
-            else if (effect instanceof LowSyncRate lowSyncRate) {
+            } else if (effect instanceof LowSyncRate lowSyncRate) {
                 newEffect = new LowSyncRate(lowSyncRate);
-            }
-            else {
+            } else {
                 newEffect = new PsychicEffect((PsychicEffect) effect);
             }
             newEffect.setOwner(this);
@@ -210,6 +220,7 @@ public abstract class Entity {
 
     /**
      * Remove um efeito da entidade.
+     * 
      * @param effect O efeito a ser removido.
      */
     public void removeEffect(Effect effect) {
@@ -221,6 +232,7 @@ public abstract class Entity {
 
     /**
      * Verifica se a entidade possui um efeito de uma determinada classe.
+     * 
      * @param effectX A classe do efeito a ser verificado.
      * @return True se possuir o efeito, False caso contrário.
      */
