@@ -9,6 +9,8 @@ import mc322_slay.effect.Effect;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.card.Card;
+import mc322_slay.card.DamageCard;
+import mc322_slay.card.ShieldCard;
 
 import java.io.IOException;
 
@@ -16,20 +18,28 @@ import java.io.IOException;
  * Camada de apresentação textual do jogo no terminal.
  */
 public class Interface {
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
-    private static final String ANSI_BLUE = "\u001B[34m";
-
     private static String folder = "assets";
+
+    /**
+     * Limpa a tela do terminal.
+     */
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    public static void printMessage(String message, ColorEnum color) {
+        System.out.print(color.getColor());
+        System.out.println(message);
+        System.out.print(ColorEnum.reset.getColor());
+    }
 
     /**
      * Imprime o conteúdo de um arquivo de texto da pasta de assets.
      *
      * @param text nome do arquivo a ser exibido.
      */
-    public void printFile(String text) {
+    public static void printFile(String text) {
 
         Path filePath = Path.of("..", folder, text);
 
@@ -45,7 +55,7 @@ public class Interface {
      * @param img1 arquivo da primeira imagem.
      * @param img2 arquivo da segunda imagem.
      */
-    public void printImagesSideBySide(String img1, String img2) {
+    public static void printImagesSideBySide(String img1, String img2) {
         Path pathImg1 = Path.of("..", folder, img1);
         Path pathImg2 = Path.of("..", folder, img2);
 
@@ -63,22 +73,25 @@ public class Interface {
     /**
      * Exibe informações de turno, status de entidades e efeitos ativos.
      *
-     * @param hero herói controlado pelo jogador.
+     * @param hero  herói controlado pelo jogador.
      * @param angel inimigo atual.
      */
-    public void printTurnInfo(Hero hero, Enemy angel) {
+    public static void printTurnInfo(Hero hero, Enemy angel) {
         System.out.println(
-                "Herói: " + ANSI_BLUE + hero.getName() + ANSI_RESET + " vs. Inimigo: " + ANSI_RED + angel.getName()
-                        + ANSI_RESET + "\r\n");
+                "Herói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor() + " vs. Inimigo: "
+                        + ColorEnum.red.getColor() + angel.getName() + ColorEnum.reset.getColor() + "\r\n");
 
         printImagesSideBySide(hero.getImage(), angel.getImage());
 
         System.out.println(
-                "\r\n(" + ANSI_GREEN + hero.getHealth() + "/" + hero.getMaxHealth() + ANSI_RESET + " pontos de vida) "
-                        + "(" + ANSI_YELLOW + angel.getHealth() + "/" + angel.getMaxHealth() + ANSI_RESET
-                        + " pontos de vida)\r\n" + //
-                        "(" + ANSI_GREEN + hero.getShield() + ANSI_RESET + " pontos de escudo) " +
-                        " (" + ANSI_YELLOW + angel.getShield() + ANSI_RESET + " pontos de escudo)\r\n");
+                "\r\n(" + ColorEnum.green.getColor() + hero.getHealth() + "/" + hero.getMaxHealth()
+                        + ColorEnum.reset.getColor() + " pontos de vida) "
+                        + "(" + ColorEnum.yellow.getColor() + angel.getHealth() + "/" + angel.getMaxHealth()
+                        + ColorEnum.reset.getColor() + " pontos de vida)\r\n" + //
+                        "(" + ColorEnum.green.getColor() + hero.getShield() + ColorEnum.reset.getColor()
+                        + " pontos de escudo) " +
+                        " (" + ColorEnum.yellow.getColor() + angel.getShield() + ColorEnum.reset.getColor()
+                        + " pontos de escudo)\r\n");
 
         String result = "";
 
@@ -92,7 +105,6 @@ public class Interface {
             for (Effect effect : angel.getEffects())
                 result += effect.getString() + "; ";
         }
-        result += "\r\n=======================================\r\n";
 
         System.out.print(result);
     }
@@ -100,11 +112,11 @@ public class Interface {
     /**
      * Exibe as cartas da mão e a energia disponível do jogador.
      *
-     * @param hand cartas atualmente na mão.
-     * @param syncRate energia disponível no turno.
+     * @param hand        cartas atualmente na mão.
+     * @param syncRate    energia disponível no turno.
      * @param initialSync energia máxima padrão.
      */
-    public void showHand(List<Card> hand, int syncRate, int initialSync) {
+    public static void showHand(List<Card> hand, int syncRate, int initialSync) {
         System.out.println("=== Cartas disponíveis ===\r\n");
 
         // sotrs cards by cost, using a compareTo like function to do so
@@ -117,12 +129,23 @@ public class Interface {
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
 
+            String cardType = "";
+            if (card instanceof DamageCard)
+                cardType = "Carta de Dano";
+            else if (card instanceof ShieldCard)
+                cardType = "Carta de Escudo";
+            else
+                cardType = "Carta de Efeito";
+
             System.out
-                    .println(ANSI_YELLOW + i + ") " + ANSI_RESET + card.getName() +
-                            " (Custo: " + ANSI_YELLOW + card.getCost() + ANSI_RESET + "): " + card.getDescription());
+                    .println(ColorEnum.yellow.getColor() + "" + i + ") " + ColorEnum.blue.getColor() + cardType
+                            + ColorEnum.reset.getColor() + ": " + card.getName() +
+                            ColorEnum.yellow.getColor() + " (Custo: " + card.getCost() + ")"
+                            + ColorEnum.reset.getColor() + ": "+ card.getDescription());
         }
 
         System.out.println("\r\n=========================================\r\n" + //
-                ANSI_YELLOW + syncRate + "/" + initialSync + ANSI_RESET + " de Sincronização (Energia) disponível\r\n");
+                ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
+                + " de Sincronização (Energia) disponível\r\n");
     }
 }

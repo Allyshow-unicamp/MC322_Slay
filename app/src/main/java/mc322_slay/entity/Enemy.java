@@ -3,6 +3,8 @@ package mc322_slay.entity;
 import java.util.ArrayList;
 import java.util.Random;
 
+import mc322_slay.ColorEnum;
+import mc322_slay.Interface;
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
@@ -32,6 +34,7 @@ public class Enemy extends Entity {
      * @return A quantidade de dano causada.
      */
     public int attack(Hero hero) {
+        Interface.printMessage("O inimigo " + name + " ataca " + hero.getName() + ".", ColorEnum.red);
         hero.takeDamage(this.damage);
         return this.damage;
     }

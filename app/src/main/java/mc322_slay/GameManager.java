@@ -36,9 +36,7 @@ public class GameManager {
     private PlayerHand hand;
     private CardStack buyPile;
     private CardStack discardPile;
-    private int turn;
     private ArrayList<Effect> subscribers;
-    private Interface screen;
 
     /**
      * Registra um efeito para receber notificações de eventos do jogo.
@@ -163,6 +161,7 @@ public class GameManager {
                 new ATFieldCorrosion("Corrosão do campo AT", 3)));
 
         buyPile.shuffle();
+        System.out.println("A pilha de compra foi embaralhada!");
     }
 
     /**
@@ -178,9 +177,7 @@ public class GameManager {
         this.syncRate = initialSync;
         this.scanner = new Scanner(System.in);
         this.random = new Random();
-        this.turn = 0;
         this.subscribers = new ArrayList<>();
-        this.screen = new Interface();
 
         this.populateDeck();
     }
@@ -193,23 +190,24 @@ public class GameManager {
     int enemyPlanning() {
         int actionValue = angels.get(0).nextAction();
         EnemyActions action = EnemyActions.values()[actionValue];
+
+        String message = "";
         switch (action) {
             case attack:
-                System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName() + " pretende causar dano ao final do turno\r\n");
+                message = "O inimigo " + angels.get(0).getName() + " pretende causar dano ao final do turno\r\n";
                 break;
 
             case gainShield:
-                System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName() + " pretende recuperar campo AT ao final do turno\r\n");
+                message = "O inimigo " + angels.get(0).getName()
+                        + " pretende recuperar campo AT ao final do turno\r\n";
                 break;
 
             case useEffect:
-                System.out.println(
-                        "\r\nO inimigo " + angels.get(0).getName()
-                                + " pretende utilizar um efeito aleatório ao final do turno\r\n");
+                message = "O inimigo " + angels.get(0).getName()
+                        + " pretende utilizar um efeito aleatório ao final do turno\r\n";
                 break;
         }
+        Interface.printMessage(message, ColorEnum.red);
         return action.getValue();
     }
 
@@ -217,10 +215,9 @@ public class GameManager {
      * Exibe a tela inicial e aguarda confirmação para começar.
      */
     public void initialScreen() {
-        screen.printFile("initialScreenArt.txt");
-
-        System.out.println("\r\nPressione qualquer tecla para iniciar.");
-
+        Interface.clearScreen();
+        Interface.printFile("initialScreenArt.txt");
+        System.out.println("Pressione qualquer tecla para iniciar.");
         scanner.nextLine();
     }
 
@@ -228,7 +225,7 @@ public class GameManager {
      * Permite ao jogador escolher o personagem controlado.
      */
     public void selectCharacter() {
-        screen.printFile("selectCharacter.txt");
+        Interface.printFile("selectCharacter.txt");
         int option;
         String name = "";
         while (true) {
@@ -254,9 +251,9 @@ public class GameManager {
         }
         hero.setName(name);
 
-        // clearScreen();
+        Interface.clearScreen();
 
-        // sleep();
+        sleep();
 
         System.out.println("\r\n" + hero.getName() + " selecionado.\r\n");
     }
@@ -270,16 +267,17 @@ public class GameManager {
         return hero.isAlive() && angels.get(0).isAlive();
     }
 
+    public void discardCards() {
+        hand.discardCards(discardPile);
+    }
+
     /**
      * Finaliza o turno atual, descarta cartas e restaura energia base.
      */
     public void resetTurn() {
         hero.resetShield();
         syncRate = initialSync;
-        hand.discardCards(discardPile);
-        System.out.println("Você descarta todas as suas cartas e passa o turno.\r\n");
-        // sleep();
-        turn += 1;
+        sleep();
     }
 
     /**
@@ -300,19 +298,9 @@ public class GameManager {
             hand.buyCard(buyPile, discardPile);
         }
 
-        System.out.println("Você compra " + nCards + " cartas.\r\n");
+        Interface.printMessage("Você compra " + nCards + " cartas.", ColorEnum.blue);
 
-        // sleep();
-    }
-
-    /**
-     * Tenta limpar a tela do terminal.
-     */
-    public void clearScreen() {
-        try {
-            new ProcessBuilder("clear").inheritIO().start().waitFor();
-        } catch (Exception e) {
-        }
+        sleep();
     }
 
     /**
@@ -331,13 +319,11 @@ public class GameManager {
      * @return índice da carta selecionada ou {@code -1} para encerrar turno.
      */
     public int selectOption() {
-        // // sleep();
+        // sleep();
 
-        System.out.println("=============== Turno " + turn + " ===============");
+        Interface.printTurnInfo(hero, angels.get(0));
 
-        screen.printTurnInfo(hero, angels.get(0));
-
-        screen.showHand(hand.getHand(), syncRate, initialSync);
+        Interface.showHand(hand.getHand(), syncRate, initialSync);
 
         int option = 0;
         while (true) {
@@ -361,7 +347,7 @@ public class GameManager {
             }
         }
 
-        // clearScreen();
+        Interface.clearScreen();
 
         return option;
     }
@@ -372,7 +358,7 @@ public class GameManager {
      * @param option índice da carta na mão ou {@code -1} para passar.
      */
     public void playerAction(int option) {
-        // sleep();
+        sleep();
         if (option == -1)
             syncRate = 0; // end of turn
         else {
@@ -387,19 +373,18 @@ public class GameManager {
                     damage = (int) (0.75 * damage);
                 }
                 card.useCard(angels.get(0), damage);
-                syncRate -= card.getCost();
 
-                System.out.println("\r\nVocê usa " + card.getName() + " contra " + angels.get(0).getName()
-                        + ", dando " + damage + " de dano.\r\n");
+                Interface.printMessage(
+                        hero.getName() + " usa " + card.getName() + " contra " + angels.get(0).getName() + ".",
+                        ColorEnum.green);
 
             } else if (card.getClass() == ShieldCard.class) {
 
                 int shield = card.getCost() * 2 + random.nextInt(card.getCost() * 2);
                 card.useCard(hero, shield);
-                syncRate -= card.getCost();
 
-                System.out.println("\r\nVocê usa " + card.getName() + ", recebendo " + shield
-                        + " de Campo AT (escudo).\r\n");
+                Interface.printMessage(hero.getName() + " usa " + card.getName() + ", recebendo " + shield
+                        + " de Campo AT (escudo).", ColorEnum.green);
 
             } else if (card.getClass() == EffectCard.class) {
 
@@ -409,14 +394,24 @@ public class GameManager {
                 if (effectX instanceof HealthRegeneration || effectX instanceof HighSyncRate) {
                     card.useCard(hero, effectX.getStartPoints());
                     subscribe(hero.getLastEffect());
+
+                    Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesmo.",
+                            ColorEnum.green);
                 } else {
                     card.useCard(angels.get(0), effectX.getStartPoints());
                     subscribe(angels.get(0).getLastEffect());
+
+                    Interface.printMessage(
+                            hero.getName() + " usa " + card.getName() + " contra " + angels.get(0).getName() + ".",
+                            ColorEnum.green);
                 }
-                
-                syncRate -= card.getCost();
             }
+            syncRate -= card.getCost();
             discardPile.add(card);
+
+            if (syncRate == 0) {
+                Interface.printMessage("Sua energia acabou.", ColorEnum.yellow);
+            }
         }
     }
 
@@ -439,10 +434,6 @@ public class GameManager {
                     if (angels.get(0).hasEffect(LowSyncRate.class)) {
                         angels.get(0).setDamage((int) (0.75 * angels.get(0).getDamage()));
                     }
-                    int damage = angels.get(0).attack(hero);
-                    System.out.println(
-                            "\r\nO inimigo " + angels.get(0).getName() + " te atacou, dando "
-                                    + damage + " de dano.\r\n");
                     break;
 
                 case gainShield:
@@ -474,14 +465,14 @@ public class GameManager {
      * Exibe o resultado final da partida.
      */
     public void results() {
-        // sleep();
+        sleep();
 
-        screen.printTurnInfo(hero, angels.get(0));
+        Interface.printTurnInfo(hero, angels.get(0));
 
         if (hero.isAlive()) {
-            screen.printFile("youWin.txt");
+            Interface.printFile("youWin.txt");
         } else {
-            screen.printFile("gameOver.txt");
+            Interface.printFile("gameOver.txt");
         }
     }
 }

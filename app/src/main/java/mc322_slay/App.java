@@ -29,14 +29,19 @@ public class App {
             game.buyCards();
             int enemyOption = game.enemyPlanning();
             game.notifySubscribers(EventEnum.playerStartOfTurn);
+            Interface.printMessage("Turno do jogador", ColorEnum.yellow);
             while (!game.endOfTurn()) {
                 int option = game.selectOption();
                 game.playerAction(option);
             }
             game.notifySubscribers(EventEnum.playerEndOfTurn);
+            game.discardCards();
+
             game.notifySubscribers(EventEnum.enemyStartOfTurn);
+            Interface.printMessage("Turno do inimigo", ColorEnum.yellow);
             game.enemyAction(enemyOption);
             game.notifySubscribers(EventEnum.enemyEndOfTurn);
+            
             game.resetTurn();
         }
 

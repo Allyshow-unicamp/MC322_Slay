@@ -2,6 +2,8 @@ package mc322_slay.entity;
 
 import java.util.ArrayList;
 
+import mc322_slay.ColorEnum;
+import mc322_slay.Interface;
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.Effect;
 import mc322_slay.effect.HealthRegeneration;
@@ -132,12 +134,21 @@ public abstract class Entity {
     public void takeDamage(int damage) {
         if (this.ATField > 0 && !hasEffect(ATFieldCorrosion.class)) {
             if (damage > ATField) {
-                this.health = (health - (damage - ATField)) >= 0 ? health - (damage - ATField) : 0;
+                int newHealth = (health - (damage - ATField)) >= 0 ? health - (damage - ATField) : 0;
+                Interface.printMessage(this.name + " leva " + (health - newHealth)
+                                    + " de dano.", ColorEnum.red);
+                this.health = newHealth;
             }
-            this.ATField = (ATField - damage) >= 0 ? ATField - damage : 0;
+            int newField = (ATField - damage) >= 0 ? ATField - damage : 0;
+            Interface.printMessage("O campo AT (escudo) de " + this.name + " absorve " + (ATField - newField)
+                                    + " de dano.", ColorEnum.red);
+            this.ATField = newField;
         }
         else {
-            this.health = (health - damage) >= 0 ? health - damage : 0;
+            int newHealth = (health - damage) >= 0 ? health - damage : 0;
+            Interface.printMessage(this.name + " leva " + (health - newHealth)
+                                    + " de dano.", ColorEnum.red);
+            this.health = newHealth;
         }
     }
 
@@ -194,20 +205,18 @@ public abstract class Entity {
             effects.add(newEffect);
         }
 
-        System.out.println("\r\n" + this.name + " está sob efeito de " + effect.getString() + "\r\n");
+        Interface.printMessage(this.name + " está sob efeito de " + effect.getString() + ".", ColorEnum.yellow);
     }
 
     /**
      * Remove um efeito da entidade.
      * @param effect O efeito a ser removido.
-     * @return Uma string informativa (atualmente vazia).
      */
-    public String removeEffect(Effect effect) {
+    public void removeEffect(Effect effect) {
         boolean result = effects.remove(effect);
         effect.setOwner(null);
         if (result)
-            System.out.println(this.name + " não está mais sob efeito de " + effect.getString() + "\r\n");
-        return "";
+            Interface.printMessage(this.name + " está sob efeito de " + effect.getString() + ".", ColorEnum.yellow);
     }
 
     /**
