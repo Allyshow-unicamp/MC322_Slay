@@ -61,15 +61,12 @@ O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas 
 
 - `App`: classe responsável pelas chamadas de metódos do GameManager responsável pelo fluxo do jogo
 - `GameManager`:  classe que contém os atributos estáticos do jogo e responsável por toda instanciação das classes, impressão dos menus, seleção de ações, delay entre a execução de ações e novos turnos, lógica de seleção de cartas e combate.
-    - `enemyAction(int enemyOption)`: executa a ação previamente planejada pelo inimigo (atacar, ganhar escudo ou usar um efeito).
 - `Interface`: classe responsável pela parte visual do projeto no terminal, com formatações relativas a cor, menus e assets
 - `CardStack`: classe que herda as propriedades de um Stack e acrescenta um método de embaralhamento
 - `PlayerHand`: classe que representa a mão do jogador, contendo suas cartas e apresentando métodos para interagir com as pilhas de compra e de descarte
 - `Entity`: classe abstrata que contém os atributos encapsulados presentes nas classes filhas
 - `Hero`: subclasse de Entity que possui método específico de resetar escudo
 - `Enemy`: subclasse de Entity que possui métodos para interagir com o herói.
-    - `nextAction()`: sorteia aleatoriamente a próxima ação do inimigo e define o dano base para o turno.
-    - `useEffect(Hero hero)`: aplica um efeito aleatório (Dano Psicológico, Corrosão de Campo AT ou Regeneração de Vida) no herói ou em si mesmo.
 - `EnemyActions`: enum que define as ações possíveis do inimigo (atacar, ganhar escudo ou usar efeito).
 - `Card`: classe abstrata que contém os atributos encapsulados, e o método abstrato para usá-la, presente nas classes filhas 
 - `ShieldCard`: subclasse de Card que permite recuperar o campo AT (escudo) do jogador
@@ -100,3 +97,8 @@ Já para executar, use o comando:
 ```
 ./gradlew run
 ```
+
+## Contribuição de IA Generativa
+
+A documentação das funções do projeto e as descrições dos efeitos presentes neste README foram elaboradas com o auxílio de inteligências artificiais generativas, como Gemini (by Google DeepMind) e Cursor AI (by Anysphere, Inc).
+A inteligência artificial também auxiliou na utilização das bibliotecas `Files`, `Path` e `Paths` para a impressão de arquivos `.txt`.
