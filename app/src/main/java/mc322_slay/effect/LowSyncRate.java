@@ -4,7 +4,7 @@ import mc322_slay.EventEnum;
 import mc322_slay.GameManager;
 import mc322_slay.entity.Hero;
 
-public class Weakness extends Effect {
+public class LowSyncRate extends Effect {
     
     @Override
     public String getString() {
@@ -26,13 +26,13 @@ public class Weakness extends Effect {
         return false;
     }
 
-    public Weakness(String name, int turns) {
+    public LowSyncRate(String name, int turns) {
         this.name = name;
         this.points = turns;
         this.startPoints = turns;
     }
 
-    public Weakness(Weakness effect) {
+    public LowSyncRate(LowSyncRate effect) {
         this.name = effect.name;
         this.owner = effect.owner;
         this.points = effect.points;

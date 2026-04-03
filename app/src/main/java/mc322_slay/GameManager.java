@@ -15,7 +15,7 @@ import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.PsychicEffect;
-import mc322_slay.effect.Weakness;
+import mc322_slay.effect.LowSyncRate;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.entity.EnemyActions;
@@ -70,14 +70,32 @@ public class GameManager {
         buyPile.add(new DamageCard("Smash Hawk", 3, "Use-a para dar de 30 a 60 de dano"));
         buyPile.add(new DamageCard("N2 Weapon II", 2, "Use-a para dar de 20 a 40 de dano"));
         buyPile.add(new DamageCard("N2 Weapon", 1, "Use-a para dar de 10 a 20 de dano"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 2,
+        buyPile.add(new DamageCard("Positron Sniper Rifle", 8, "Use-a para dar de 80 a 160 de dano"));
+        buyPile.add(new DamageCard("Prog Knife", 7, "Use-a para dar de 70 a 140 de dano"));
+        buyPile.add(new DamageCard("Magokoru Sword", 6, "Use-a para dar de 60 a 120 de dano"));
+        buyPile.add(new DamageCard("Pallet Rifle", 5, "Use-a para dar de 50 a 100 de dano"));
+        buyPile.add(new DamageCard("Azumaterasu", 4, "Use-a para dar de 40 a 80 de dano"));
+        buyPile.add(new DamageCard("Smash Hawk", 3, "Use-a para dar de 30 a 60 de dano"));
+        buyPile.add(new DamageCard("N2 Weapon II", 2, "Use-a para dar de 20 a 40 de dano"));
+        buyPile.add(new DamageCard("N2 Weapon", 1, "Use-a para dar de 10 a 20 de dano"));
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 1,
+                "Restaura a integridade do Campo AT entre 2 e 4 pontos"));
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 2,
                 "Restaura a integridade do Campo AT entre 4 e 8 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 4,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 3", 3,
+                "Restaura a integridade do Campo AT entre 6 e 12 pontos"));
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 4", 4,
                 "Restaura a integridade do Campo AT entre 8 e 16 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 3", 6,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 5,
+                "Restaura a integridade do Campo AT entre 10 e 20 pontos"));
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 6,
                 "Restaura a integridade do Campo AT entre 12 e 24 pontos"));
-        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 4", 8,
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 7,
+                "Restaura a integridade do Campo AT entre 14 e 28 pontos"));
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 3", 8,
                 "Restaura a integridade do Campo AT entre 16 e 32 pontos"));
+        buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 4", 9,
+                "Restaura a integridade do Campo AT entre 18 e 36 pontos"));
         buyPile.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 10,
                 "Restaura a integridade do Campo AT entre 20 e 40 pontos"));
         Effect effect1 = new PsychicEffect("Dano psicológico", 30, 3);
@@ -109,12 +127,12 @@ public class GameManager {
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
         buyPile.add(new EffectCard("Alta taxa de sincronização", 4,
                 "Use-a para aumentar em 50% o dano causado pelo armas do jogador por 2 turnos", effect4));
-        Effect effect5 = new Weakness("Fraqueza", 2);
-        buyPile.add(new EffectCard("Fraqueza", 4,
+        Effect effect5 = new LowSyncRate("Baixa taxa de sincronização", 2);
+        buyPile.add(new EffectCard("Baixa da taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
-        buyPile.add(new EffectCard("Fraqueza", 4,
+        buyPile.add(new EffectCard("Baixa taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
-        buyPile.add(new EffectCard("Fraqueza", 4,
+        buyPile.add(new EffectCard("Baixa taxa de sincronização", 4,
                 "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
         buyPile.add(new EffectCard("Corrosão do campo AT 1", 6,
                 "Use-a para anular o campo at do inimigo por 2 turnos",
@@ -129,7 +147,7 @@ public class GameManager {
     public void start() {
         this.hero = new Hero("", 40, 40, "eva.txt");
         this.angels = new ArrayList<Enemy>();
-        this.angels.add(new Enemy("Sachiel", 200, 200, "sachiel.txt"));
+        this.angels.add(new Enemy("Sachiel", 400, 400, "sachiel.txt"));
         this.hand = new PlayerHand();
         this.buyPile = new CardStack();
         this.discardPile = new CardStack();
@@ -253,7 +271,9 @@ public class GameManager {
     public int selectOption() {
         // // sleep();
 
-        screen.printTurnInfo(turn, hero, angels.get(0));
+        System.out.println("=============== Turno " + turn + " ===============");
+
+        screen.printTurnInfo(hero, angels.get(0));
 
         screen.showHand(hand.getHand(), syncRate, initialSync);
 
@@ -296,7 +316,7 @@ public class GameManager {
                 if (hero.hasEffect(HighSyncRate.class)) {
                     damage = (int) (1.5 * damage);
                 }
-                if (hero.hasEffect(Weakness.class)) {
+                if (hero.hasEffect(LowSyncRate.class)) {
                     damage = (int) (0.75 * damage);
                 }
                 card.useCard(angels.get(0), damage);
@@ -344,7 +364,7 @@ public class GameManager {
                     if (angels.get(0).hasEffect(HighSyncRate.class)) {
                         angels.get(0).setDamage((int) (1.5 * angels.get(0).getDamage()));
                     }
-                    if (angels.get(0).hasEffect(Weakness.class)) {
+                    if (angels.get(0).hasEffect(LowSyncRate.class)) {
                         angels.get(0).setDamage((int) (0.75 * angels.get(0).getDamage()));
                     }
                     int damage = angels.get(0).attack(hero);
@@ -354,7 +374,7 @@ public class GameManager {
                     break;
 
                 case gainShield:
-                    int amount = random.nextInt(20) + 1;
+                    int amount = random.nextInt(100) + 1;
                     angels.get(0).gainATField(amount);
                     System.out.println(
                             "\r\nO inimigo " + angels.get(0).getName() + " recuperou uma quantidade de "
@@ -381,7 +401,7 @@ public class GameManager {
     public void results() {
         // sleep();
 
-        screen.printTurnInfo(turn, hero, angels.get(0));
+        screen.printTurnInfo(hero, angels.get(0));
 
         if (hero.isAlive()) {
             screen.printFile("youWin.txt");

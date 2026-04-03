@@ -7,7 +7,7 @@ import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.PsychicEffect;
-import mc322_slay.effect.Weakness;
+import mc322_slay.effect.LowSyncRate;
 
 public class Enemy extends Entity {
 
@@ -15,8 +15,8 @@ public class Enemy extends Entity {
     private int damage;
     private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
     private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 3);
-    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 20, 3);
-    private Weakness w = new Weakness("Fraqueza", 3);
+    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 50, 3);
+    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3);
     private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3);
 
     public int attack(Hero hero) {
