@@ -44,6 +44,9 @@ public class PsychicEffect extends Effect {
         return damage;
     }
 
+    /**
+     * Causa dano ao dono no fim do turno do jogador (se o dono for herói) ou do inimigo (se o dono for anjo).
+     */
     @Override
     public boolean beNotified(EventEnum event, GameManager gameManager) {
         if (event == EventEnum.playerEndOfTurn && this.owner.getClass() == Hero.class ||

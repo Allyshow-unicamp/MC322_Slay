@@ -125,18 +125,34 @@ public abstract class Entity {
         return this.effects.getLast();
     }
 
+    /**
+     * Multiplicador aplicado ao dano causado por esta entidade (ex.: cartas de dano do herói).
+     *
+     * @return fator multiplicativo; padrão {@code 1.0}.
+     */
     public double getBoost() {
         return boost;
     }
 
+    /**
+     * @param boost novo multiplicador de dano causado por esta entidade.
+     */
     public void setBoost(double boost) {
         this.boost = boost;
     }
 
+    /**
+     * Multiplicador aplicado ao dano recebido por esta entidade em ataques diretos.
+     *
+     * @return fator multiplicativo; padrão {@code 1.0}.
+     */
     public double getDeboost() {
         return deboost;
     }
 
+    /**
+     * @param deboost novo multiplicador de dano recebido em ataques diretos.
+     */
     public void setDeboost(double deboost) {
         this.deboost = deboost;
     }

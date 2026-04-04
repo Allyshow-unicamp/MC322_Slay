@@ -39,6 +39,12 @@ public class Interface {
         }
     }
 
+    /**
+     * Exibe uma linha no terminal com a sequência ANSI da cor e uma pausa curta.
+     *
+     * @param message texto a imprimir.
+     * @param color   cor do prefixo ANSI aplicado à mensagem.
+     */
     public static void printMessage(String message, ColorEnum color) {
         System.out.println(color.getColor() + message + ColorEnum.reset.getColor());
         sleep();

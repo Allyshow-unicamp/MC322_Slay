@@ -59,6 +59,11 @@ public class ATFieldCorrosion extends Effect {
         this.startPoints = turns;
     }
 
+    /**
+     * Cópia usada ao empilhar o mesmo tipo de efeito na entidade.
+     *
+     * @param effect protótipo copiado.
+     */
     public ATFieldCorrosion(ATFieldCorrosion effect) {
         this.name = effect.name;
         this.owner = effect.owner;

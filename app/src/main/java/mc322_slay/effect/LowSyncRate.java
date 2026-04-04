@@ -10,10 +10,16 @@ public class LowSyncRate extends Effect {
 
     private double deboost;
 
+    /**
+     * Fator pelo qual o dano de ataque direto contra o dono é multiplicado enquanto o efeito estiver ativo.
+     */
     public double getDeboost() {
         return this.deboost;
     }
 
+    /**
+     * @param deboost novo fator de redução/ampliação do dano recebido em ataques diretos.
+     */
     public void setDeboost(double deboost) {
         this.deboost = deboost;
     }
@@ -24,6 +30,11 @@ public class LowSyncRate extends Effect {
                 + " (desconsiderando danos oriundos de efeitos)");
     }
 
+    /**
+     * Decrementa a duração ao fim do turno do jogador quando o dono é o herói.
+     *
+     * @return {@code true} se o efeito expirou e deve ser removido da lista de inscritos do {@link GameManager}.
+     */
     @Override
     public boolean beNotified(EventEnum event, GameManager gameManager) {
         if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
@@ -42,6 +53,11 @@ public class LowSyncRate extends Effect {
         return false;
     }
 
+    /**
+     * @param name    nome exibido do efeito.
+     * @param turns   duração em turnos do jogador.
+     * @param deboost multiplicador de dano recebido em ataques diretos (ex.: {@code 0.75} para 25% a menos).
+     */
     public LowSyncRate(String name, int turns, double deboost) {
         this.name = name;
         this.points = turns;
@@ -49,6 +65,11 @@ public class LowSyncRate extends Effect {
         this.deboost = deboost;
     }
 
+    /**
+     * Cópia usada ao empilhar o mesmo tipo de efeito na entidade.
+     *
+     * @param effect protótipo copiado.
+     */
     public LowSyncRate(LowSyncRate effect) {
         this.name = effect.name;
         this.owner = effect.owner;

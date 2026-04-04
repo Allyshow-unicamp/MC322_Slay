@@ -251,6 +251,9 @@ public class GameManager {
         return hero.isAlive() && angels.get(0).isAlive();
     }
 
+    /**
+     * Move todas as cartas da mão para a pilha de descarte ao fim do turno do jogador.
+     */
     public void discardCards() {
         hand.discardCards(discardPile);
     }
