@@ -1,7 +1,7 @@
 package mc322_slay.effect;
 
+import mc322_slay.Battle;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
 import mc322_slay.entity.Entity;
 
 /**
@@ -76,5 +76,5 @@ public abstract class Effect {
      * @param gameManager estado atual do jogo.
      * @return {@code true} quando o efeito deve ser removido dos inscritos.
      */
-    public abstract boolean beNotified(EventEnum event, GameManager gameManager);
+    public abstract boolean beNotified(EventEnum event, Battle battle);
 }

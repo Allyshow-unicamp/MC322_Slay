@@ -1,8 +1,8 @@
 package mc322_slay.effect;
 
+import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
 import mc322_slay.Interface;
 import mc322_slay.entity.Hero;
 
@@ -36,7 +36,7 @@ public class LowSyncRate extends Effect {
      * @return {@code true} se o efeito expirou e deve ser removido da lista de inscritos do {@link GameManager}.
      */
     @Override
-    public boolean beNotified(EventEnum event, GameManager gameManager) {
+    public boolean beNotified(EventEnum event, Battle battle) {
         if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
             this.points -= 1;
             if (this.points > 0) {
