@@ -228,24 +228,28 @@ public abstract class Entity {
                 HealthRegeneration hE = healthRegeneration;
                 HealthRegeneration tE = (HealthRegeneration) thisEffect;
                 hE.setHealth(Math.max(hE.getHealth(), tE.getHealth()));
+                e = hE;
 
             } else if (e instanceof PsychicEffect psychicEffect) {
 
                 PsychicEffect pE = psychicEffect;
                 PsychicEffect tE = (PsychicEffect) thisEffect;
                 pE.setDamage(Math.max(pE.getDamage(), tE.getDamage()));
+                e = pE;
 
             } else if (e instanceof HighSyncRate highSyncRate) {
 
                 HighSyncRate hE = highSyncRate;
                 HighSyncRate tE = (HighSyncRate) thisEffect;
                 hE.setBoost(Math.max(hE.getBoost(), tE.getBoost()));
+                e = hE;
     
             } else if (e instanceof LowSyncRate lowSyncRate) {
 
                 LowSyncRate lE = lowSyncRate;
                 LowSyncRate tE = (LowSyncRate) thisEffect;
                 lE.setDeboost(Math.min(lE.getDeboost(), tE.getDeboost()));
+                e = lE;
     
             }
             effects.set(index, e);
