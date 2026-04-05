@@ -41,7 +41,8 @@ Os efeitos possíveis no jogo são:
 - Dano psicológico (veneno): inflinge uma quantidade determinada de dano em quem tem o efeito, durante um certo número de turnos. 
 - Regeneração de vida: restaura uma quantidade fixa de vida ao detentor do efeito no início de seu turno.
 - Corrosão de campo AT: anula a proteção do campo AT (escudo), fazendo com que todo dano recebido seja aplicado diretamente à vida da entidade.
-- Alta taxa de sincronização: aumenta em 50% o dano causado pelas armas do jogador.
+- Alta taxa de sincronização: aumenta em 50% o dano causado pelos ataques das entidades (excluindo efeitos).
+- Baixa taxa de sincronização: reduz em 25% o dano causado pelos ataques das entidades (excluindo efeitos).
 
 A duração dos efeitos é cumulativa (isto é, se uma entidade aplica um mesmo efeito mais de uma vez na outra, o número de turnos que esse efeito durará na entidade que sofre o efeito será somado). Para o caso de uma entidade receber este efeito em diferentes intesidades, a maior intensidade prevalece e o efeito continua ativo pela maior duração entre os dois efeitos.
 
@@ -77,7 +78,9 @@ O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas 
 - `HealthRegeneration`: subclasse de Effect que implementa a regeneração de vida por turno.
 - `ATFieldCorrosion`: subclasse de Effect que implementa a corrosão do campo AT, ignorando o escudo ao receber dano.
 - `HighSyncRate`: subclasse de Effect que implementa o aumento de dano por sincronização.
+- `LowSyncRate`: subclasse de Effect que implementa a redução de dano por sincronização.
 - `EventEnum`: enum que define os tipos de evento para serem percebidos pelos efeitos
+- `ColorEnum`: enum que define as diferentes cores possíveis da interface
 
 ## Compilação e execução do projeto (em linux)
 
