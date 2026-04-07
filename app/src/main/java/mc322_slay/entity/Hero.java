@@ -21,6 +21,11 @@ public class Hero extends Entity {
     public void resetShield(){
         this.ATField = 0;
     }
+
+    public void resetEffects() {
+        this.effects.removeAll(effects);
+    }
+
     /**
      * Cria um herói com atributos iniciais.
      *

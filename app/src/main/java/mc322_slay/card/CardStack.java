@@ -48,4 +48,11 @@ public class CardStack {
     public CardStack() {
         this.cardsStack = new Stack<>();
     }
+
+    public CardStack(CardStack stack) {
+        this.cardsStack = new Stack<>();
+        for (Card card : stack.cardsStack) {
+            this.cardsStack.add(card);
+        }
+    }
 }

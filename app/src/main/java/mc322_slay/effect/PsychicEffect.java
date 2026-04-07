@@ -1,8 +1,8 @@
 package mc322_slay.effect;
 
+import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
 import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
@@ -48,7 +48,7 @@ public class PsychicEffect extends Effect {
      * Causa dano ao dono no fim do turno do jogador (se o dono for herói) ou do inimigo (se o dono for anjo).
      */
     @Override
-    public boolean beNotified(EventEnum event, GameManager gameManager) {
+    public boolean beNotified(EventEnum event, Battle battle) {
         if (event == EventEnum.playerEndOfTurn && this.owner.getClass() == Hero.class ||
                 event == EventEnum.enemyEndOfTurn && this.owner.getClass() == Enemy.class) {
             // damage inflicted to entity at the end of his turn, if it is under this effect

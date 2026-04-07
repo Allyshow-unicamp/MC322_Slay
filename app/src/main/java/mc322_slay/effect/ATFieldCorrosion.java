@@ -1,8 +1,8 @@
 package mc322_slay.effect;
 
+import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
 import mc322_slay.Interface;
 
 /**
@@ -17,7 +17,8 @@ public class ATFieldCorrosion extends Effect {
      */
     @Override
     public String getString() {
-        return (name + " (" + points + " turnos restantes) - Escudo é desconsiderado (dano é dado diretamente na entidade)");
+        return (name + " (" + points
+                + " turnos restantes) - Escudo é desconsiderado (dano é dado diretamente na entidade)");
     }
 
     /**
@@ -28,7 +29,7 @@ public class ATFieldCorrosion extends Effect {
      * @return {@code true} quando o efeito termina.
      */
     @Override
-    public boolean beNotified(EventEnum event, GameManager gameManager) {
+    public boolean beNotified(EventEnum event, Battle battle) {
         if (event == EventEnum.playerEndOfTurn) {
             // at the beginning of the turn the entity has their shield temporarely reduced
             // to 0

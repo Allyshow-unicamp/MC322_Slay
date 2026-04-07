@@ -1,7 +1,8 @@
 package mc322_slay;
 
 public enum ColorEnum {
-    reset("\u001B[0m"), red("\u001B[31m"), green("\u001B[32m"), yellow("\u001B[33m"), blue("\u001B[34m");
+    reset("\u001B[0m"), red("\u001B[31m"), green("\u001B[32m"), yellow("\u001B[33m"), blue("\u001B[34m"),
+    purple("\u001B[35m");
 
     private final String color;
 
