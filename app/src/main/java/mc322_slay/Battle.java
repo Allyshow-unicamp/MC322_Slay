@@ -23,7 +23,7 @@ public class Battle {
     private Enemy angel;
     private int syncRate; // works identical to energy attribute
     static private final int nCards = 4;
-    static private final int initialSync = 10;
+    static private final int initialSync = 15;
     private Random random;
     private PlayerHand hand;
     private CardStack buyPile;
@@ -331,8 +331,6 @@ public class Battle {
      * @return true se jogador venceu, false se perdeu
      */
     private boolean results() {
-        Interface.sleep();
-
         Interface.printTurnInfo(hero, angel);
 
         if (hero.isAlive()) {

@@ -1,25 +1,25 @@
 package mc322_slay;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import mc322_slay.effect.Effect;
-import mc322_slay.entity.Enemy;
-import mc322_slay.entity.Hero;
+
 import mc322_slay.card.Card;
 import mc322_slay.card.DamageCard;
 import mc322_slay.card.ShieldCard;
-
-import java.io.IOException;
+import mc322_slay.effect.Effect;
+import mc322_slay.entity.Enemy;
+import mc322_slay.entity.Hero;
 
 /**
  * Camada de apresentação textual do jogo no terminal.
  */
 public class Interface {
     private static String folder = "assets";
-    static private final int timeSleep = 750;
+    static private final int timeSleep = 350;
 
     /**
      * Limpa a tela do terminal.

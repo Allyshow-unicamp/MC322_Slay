@@ -1,18 +1,17 @@
 package mc322_slay;
 
-import java.util.Random;
 import java.util.Scanner;
 
 import mc322_slay.card.CardStack;
 import mc322_slay.card.DamageCard;
 import mc322_slay.card.EffectCard;
 import mc322_slay.card.ShieldCard;
-import mc322_slay.effect.Effect;
-import mc322_slay.effect.HighSyncRate;
-import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.ATFieldCorrosion;
-import mc322_slay.effect.PsychicEffect;
+import mc322_slay.effect.Effect;
+import mc322_slay.effect.HealthRegeneration;
+import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.LowSyncRate;
+import mc322_slay.effect.PsychicEffect;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
@@ -23,7 +22,6 @@ public class GameManager {
     private Hero hero;
     private Scanner scanner;
     private CardStack deck;
-	private Random random;
 
     /**
      * Preenche o baralho de compra com cartas iniciais da partida.
@@ -102,9 +100,8 @@ public class GameManager {
      * Inicializa os objetos principais e variáveis de estado da partida.
      */
     public void start() {
-        this.hero = new Hero("", 40, 0, "eva.txt");
+        this.hero = new Hero("", 50, 0, "eva.txt");
         this.deck = new CardStack();
-		this.random = new Random();
 		this.scanner = new Scanner(System.in);
     }
 
@@ -163,7 +160,7 @@ public class GameManager {
     public void performNBattles(int n) {
 		boolean won = true;
         for (int i = 0; i < n; i++) {
-            Battle battle = new Battle(hero, new Enemy("Angel", 300 + random.nextInt(150), 200 + random.nextInt(100), "sachiel.txt"), deck);
+            Battle battle = new Battle(hero, new Enemy("Angel", 150 + 50 * i, 100 + 50 * i, "sachiel.txt"), deck);
             if (!battle.performFight()) {
 				won = false;
 				break;
