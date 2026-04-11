@@ -21,12 +21,17 @@ public class Enemy extends Entity {
     /** Gerador de números aleatórios para as ações do inimigo. */
     public Random random = new Random();
 
-    /** Quantidade de dano que o inimigo causará em seu próximo ataque. */
+    /** Dano base do próximo ataque (definido por {@link #nextAction()}). */
     private int damage;
+    /** Protótipo de efeito: dano psicológico aplicado ao herói. */
     private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
+    /** Protótipo de efeito: corrosão do campo AT no herói. */
     private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 3);
+    /** Protótipo de efeito: regeneração aplicada ao próprio anjo. */
     private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 50, 3);
+    /** Protótipo de efeito: baixa sincronização no herói. */
     private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3, 0.75);
+    /** Protótipo de efeito: alta sincronização no próprio anjo. */
     private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3, 1.5);
 
     /**
@@ -116,12 +121,12 @@ public class Enemy extends Entity {
     }
 
     /**
-     * Construtor da classe Enemy.
-     * 
-     * @param name       Nome do inimigo.
-     * @param health     Vida inicial.
-     * @param ATField    Valor inicial do escudo (AT Field).
-     * @param imageAsset Caminho do recurso de imagem.
+     * Cria um anjo com vida, escudo inicial e arte ASCII.
+     *
+     * @param name       nome exibido na interface.
+     * @param health     pontos de vida iniciais (também define o máximo).
+     * @param ATField    valor inicial do campo AT (escudo).
+     * @param imageAsset nome do arquivo de arte em {@code assets} (ex.: {@code sachiel.txt}).
      */
     public Enemy(String name, int health, int ATField, String imageAsset) {
         this.name = name;

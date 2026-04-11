@@ -1,22 +1,29 @@
 package mc322_slay.effect;
 
 import mc322_slay.Battle;
-import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.Interface;
+import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
 /**
- * Efeito que aumenta temporariamente o dano causado pelo herói.
+ * Efeito que aumenta temporariamente o multiplicador de dano das cartas de dano do herói
+ * (via {@link mc322_slay.entity.Entity#getBoost()}), sem alterar dano de efeitos como veneno psíquico.
  */
 public class HighSyncRate extends Effect {
 
+    /** Multiplicador aplicado ao dano das armas/cartas de dano (ex.: {@code 1.5} para +50%). */
     private double boost;
 
+    /**
+     * @return multiplicador atual de dano causado pelo herói em cartas de dano.
+     */
     public double getBoost() {
         return this.boost;
     }
 
+    /**
+     * @param boost novo multiplicador de dano para cartas de dano.
+     */
     public void setBoost(double boost) {
         this.boost = boost;
     }
@@ -33,20 +40,17 @@ public class HighSyncRate extends Effect {
     }
 
     /**
-     * Atualiza a duração no fim do turno do herói.
+     * Decrementa a duração ao fim do turno do jogador quando o dono é o herói.
      *
-     * @param event       evento do jogo.
-     * @return {@code true} quando o efeito termina.
+     * @param event  evento do jogo.
+     * @param battle batalha atual.
+     * @return {@code true} se o efeito expirou e deve ser removido dos inscritos.
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {
-        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
+        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class || 
+            event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
 
             if (this.points == 0) {
                 owner.removeEffect(this);
@@ -60,7 +64,8 @@ public class HighSyncRate extends Effect {
      * Cria um efeito de alta sincronização.
      *
      * @param name  nome do efeito.
-     * @param turns duração em turnos.
+     * @param turns duração em turnos do jogador.
+     * @param boost multiplicador de dano das cartas de dano (ex.: {@code 1.5}).
      */
     public HighSyncRate(String name, int turns, double boost) {
         this.name = name;

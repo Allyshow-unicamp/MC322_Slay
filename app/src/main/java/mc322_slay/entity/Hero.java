@@ -15,13 +15,17 @@ public class Hero extends Entity {
     public void setName(String newName) {
         this.name = newName;
     }
+
     /**
      * Reseta o escudo do herói para zero ao fim do turno.
      */
-    public void resetShield(){
+    public void resetShield() {
         this.ATField = 0;
     }
 
+    /**
+     * Remove todos os efeitos ativos do herói (usado entre batalhas na campanha).
+     */
     public void resetEffects() {
         this.effects.removeAll(effects);
     }
@@ -29,9 +33,9 @@ public class Hero extends Entity {
     /**
      * Cria um herói com atributos iniciais.
      *
-     * @param name nome inicial.
-     * @param health vida inicial.
-     * @param ATField escudo inicial.
+     * @param name       nome inicial.
+     * @param health     vida inicial.
+     * @param ATField    valor inicial do campo AT (escudo).
      * @param imageAsset arte associada ao herói.
      */
     public Hero(String name, int health, int ATField, String imageAsset) {

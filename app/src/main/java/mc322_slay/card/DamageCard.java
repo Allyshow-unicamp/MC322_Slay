@@ -10,12 +10,12 @@ public class DamageCard extends Card{
     /**
      * Aplica dano na entidade alvo.
      *
-     * @param angel entidade que receberá dano.
+     * @param entity entidade que receberá o dano.
      * @param damage valor de dano aplicado.
      */
     @Override
-    public void useCard(Entity angel, int damage) {
-        angel.takeDamage(damage);
+    public void useCard(Entity entity, int damage) {
+        entity.takeDamage(damage);
     }
 
     /**

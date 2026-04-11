@@ -1,8 +1,9 @@
 package mc322_slay;
 
 /**
- * Ponto de entrada da aplicação.
- * Executa o loop principal da partida.
+ * Ponto de entrada da aplicação em modo texto.
+ * Configura saída UTF-8, inicializa o {@link GameManager}, a tela de abertura,
+ * a escolha do piloto, o baralho e uma sequência fixa de batalhas.
  */
 public class App {
     /**

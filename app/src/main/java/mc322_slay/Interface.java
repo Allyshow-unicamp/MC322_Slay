@@ -15,10 +15,13 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
 /**
- * Camada de apresentação textual do jogo no terminal.
+ * Camada de apresentação textual do jogo no terminal: cores ANSI, leitura de arte em
+ * arquivos e exibição de mão, status e imagens lado a lado.
  */
 public class Interface {
+    /** Nome da pasta de assets relativa ao diretório de trabalho (ex.: {@code ../assets}). */
     private static String folder = "assets";
+    /** Pausa em milissegundos após cada mensagem colorida para dar ritmo à leitura. */
     static private final int timeSleep = 350;
 
     /**
@@ -140,9 +143,7 @@ public class Interface {
     public static void showHand(List<Card> hand, int syncRate, int initialSync) {
         System.out.println("\r\n===== Sua Mão =====\r\n");
 
-        // sotrs cards by cost, using a compareTo like function to do so
-        // given that the sort function sorts in ascending order, -1 is placed at the
-        // beginning so that is simulates a desc order
+        // Ordena por custo decrescente: o comparador inverte o resultado para que o maior custo apareça primeiro.
         hand.sort((card1, card2) -> {
             return -1 * (card1.getCost() > card2.getCost() ? 1 : card1.getCost() == card2.getCost() ? 0 : -1);
         });

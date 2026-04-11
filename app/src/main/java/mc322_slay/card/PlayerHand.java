@@ -10,6 +10,7 @@ import mc322_slay.Interface;
  * Gerencia a mão de cartas do jogador.
  */
 public class PlayerHand {
+    /** Cartas atualmente seguradas pelo jogador (índices usados na interface). */
     private List<Card> hand;
 
     /**

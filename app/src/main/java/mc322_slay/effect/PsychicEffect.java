@@ -45,7 +45,12 @@ public class PsychicEffect extends Effect {
     }
 
     /**
-     * Causa dano ao dono no fim do turno do jogador (se o dono for herói) ou do inimigo (se o dono for anjo).
+     * Causa dano ao dono no fim do turno correspondente: fim do turno do jogador se o dono for {@link Hero},
+     * ou fim do turno do inimigo se o dono for {@link Enemy}.
+     *
+     * @param event  evento do jogo.
+     * @param battle batalha atual.
+     * @return {@code true} se o efeito expirou e deve ser removido dos inscritos.
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {
@@ -56,11 +61,7 @@ public class PsychicEffect extends Effect {
             this.owner.takeDamage(damage);
 
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
+            
             if (this.points == 0) { // effect is over
                 owner.removeEffect(this);
                 return true;

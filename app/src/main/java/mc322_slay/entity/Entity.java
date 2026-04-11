@@ -27,13 +27,10 @@ public abstract class Entity {
     /** Vida máxima da entidade. */
     protected int maxHealth;
 
-    /**
-     * Valor atual do escudo (AT Field). Funciona de forma idêntica ao atributo de
-     * escudo.
-     */
+    /** Valor atual do campo AT (escudo) que absorve dano antes da vida. */
     protected int ATField;
 
-    /** Valor máximo do escudo (AT Field). */
+    /** Valor máximo do campo AT (pode ser usado por regras futuras de limite de escudo). */
     protected int maxATField;
 
     /** Lista de efeitos aplicados à entidade. */
@@ -124,8 +121,8 @@ public abstract class Entity {
     }
 
     /**
-     * Multiplicador aplicado ao dano causado por esta entidade (ex.: cartas de dano
-     * do herói).
+     * Multiplicador de dano ao causar dano no combate: no herói, aplicado ao dano das
+     * cartas de dano; no anjo, combinado com {@link #getDeboost()} em {@link Enemy#attack(Hero)}.
      *
      * @return fator multiplicativo; padrão {@code 1.0}.
      */
@@ -134,14 +131,16 @@ public abstract class Entity {
     }
 
     /**
-     * @param boost novo multiplicador de dano causado por esta entidade.
+     * @param boost novo multiplicador de dano ofensivo desta entidade.
      */
     public void setBoost(double boost) {
         this.boost = boost;
     }
 
     /**
-     * Multiplicador aplicado ao dano recebido por esta entidade em ataques diretos.
+     * Segundo multiplicador usado no cálculo de dano: no herói, aplicado junto com
+     * {@link #getBoost()} ao resolver cartas de dano; no anjo, aplicado em {@link Enemy#attack(Hero)}.
+     * Valores menores que {@code 1.0} reduzem o dano final.
      *
      * @return fator multiplicativo; padrão {@code 1.0}.
      */
@@ -150,16 +149,16 @@ public abstract class Entity {
     }
 
     /**
-     * @param deboost novo multiplicador de dano recebido em ataques diretos.
+     * @param deboost novo fator multiplicativo (ex.: efeitos de baixa sincronização).
      */
     public void setDeboost(double deboost) {
         this.deboost = deboost;
     }
 
     /**
-     * Verifica se a entidade ainda está viva (vida > 0).
-     * 
-     * @return True se estiver viva, False caso contrário.
+     * Verifica se a entidade ainda está viva ({@code vida > 0}).
+     *
+     * @return {@code true} se ainda houver vida; caso contrário {@code false}.
      */
     public boolean isAlive() {
         return this.health > 0;

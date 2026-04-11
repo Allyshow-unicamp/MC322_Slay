@@ -1,12 +1,15 @@
 package mc322_slay.effect;
 
 import mc322_slay.Battle;
-import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
-import mc322_slay.Interface;
+import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
+/**
+ * Efeito que reduz (ou altera) o multiplicador {@link mc322_slay.entity.Entity#getDeboost()} do herói,
+ * diminuindo o dano das cartas de dano enquanto ativo (vide {@link mc322_slay.Battle}).
+ * A duração é decrementada ao fim do turno do jogador quando o dono é o herói.
+ */
 public class LowSyncRate extends Effect {
 
     private double deboost;
@@ -34,17 +37,15 @@ public class LowSyncRate extends Effect {
     /**
      * Decrementa a duração ao fim do turno do jogador quando o dono é o herói.
      *
-     * @return {@code true} se o efeito expirou e deve ser removido da lista de inscritos do {@link GameManager}.
+     * @param event  evento do jogo.
+     * @param battle batalha atual.
+     * @return {@code true} se o efeito expirou e deve ser removido da lista de inscritos da {@link Battle}.
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {
-        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
+        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class || 
+            event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
 
             if (this.points == 0) {
                 owner.removeEffect(this);

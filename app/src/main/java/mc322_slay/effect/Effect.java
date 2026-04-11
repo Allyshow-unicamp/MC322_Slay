@@ -5,12 +5,21 @@ import mc322_slay.EventEnum;
 import mc322_slay.entity.Entity;
 
 /**
- * Classe base para efeitos temporários aplicados em entidades.
+ * Classe base para efeitos temporários aplicados a {@link Entity}.
+ * Os efeitos podem reagir a {@link mc322_slay.EventEnum eventos} da batalha e são
+ * clonados ao serem aplicados pela primeira vez.
  */
 public abstract class Effect {
+    /** Nome exibido na interface e nas mensagens de status. */
     protected String name;
+    /** Entidade sobre a qual o efeito está ativo; pode ser {@code null} antes de {@link Entity#applyEffect(Effect)}. */
     protected Entity owner;
+    /**
+     * Pontos restantes (em geral turnos ou cargas); o significado exato depende da subclasse
+     * (ex.: duração em turnos para dano psicológico).
+     */
     protected int points;
+    /** Valor inicial de {@link #points} quando o efeito foi aplicado (útil para empilhar e mesclar). */
     protected int startPoints;
 
     /**
@@ -72,12 +81,23 @@ public abstract class Effect {
     /**
      * Reage a um evento do jogo.
      *
-     * @param event evento recebido.
-     * @return {@code true} quando o efeito deve ser removido dos inscritos.
+     * @param event   evento recebido.
+     * @param battle  contexto da batalha atual (para efeitos que precisem consultar o estado).
+     * @return {@code true} quando o efeito expirou e deve ser removido da lista de inscritos da {@link Battle}.
      */
     public abstract boolean beNotified(EventEnum event, Battle battle);
 
+    /**
+     * Cria uma cópia do efeito para nova aplicação em uma entidade (sem compartilhar estado mutável indevido).
+     *
+     * @return nova instância configurada como este protótipo.
+     */
     public abstract Effect cloneEffect();
 
+    /**
+     * Mescla valores de outro efeito do mesmo tipo quando {@link Entity#applyEffect(Effect)} empilha duplicatas.
+     *
+     * @param effect outra instância do mesmo tipo lógico (ex.: maior cura, maior boost).
+     */
     public abstract void merge(Effect effect);
 }

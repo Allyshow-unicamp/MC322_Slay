@@ -8,14 +8,14 @@ import mc322_slay.entity.Entity;
 public class ShieldCard extends Card{
 
     /**
-     * Aumenta o escudo da entidade alvo.
+     * Aumenta o campo AT (escudo) da entidade alvo.
      *
-     * @param hero entidade que receberá escudo.
-     * @param amount quantidade de escudo aplicada.
+     * @param entity entidade que receberá o escudo.
+     * @param amount quantidade de pontos de campo AT concedidos.
      */
     @Override
-    public void useCard(Entity hero, int amount) {
-        hero.gainATField(amount);
+    public void useCard(Entity entity, int amount) {
+        entity.gainATField(amount);
     }
 
     /**
