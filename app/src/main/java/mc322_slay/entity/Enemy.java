@@ -76,28 +76,28 @@ public class Enemy extends Entity {
             case 0:
                 Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + p.getName()
                         + " com duração de " + p.getPoints() + " turnos.", ColorEnum.red);
-                hero.applyEffect(p, p.getPoints());
+                hero.applyEffect(p);
                 break;
             case 1:
                 Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + c.getName()
                         + " com duração de " + c.getPoints() + " turnos.", ColorEnum.red);
-                hero.applyEffect(c, c.getPoints());
+                hero.applyEffect(c);
                 break;
             case 2:
                 Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + h.getName()
                         + " com duração de " + h.getPoints() + " turnos.", ColorEnum.red);
-                this.applyEffect(h, h.getPoints());
+                this.applyEffect(h);
                 selfInflicted = true;
                 break;
             case 3:
                 Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + w.getName()
                         + " com duração de " + w.getPoints() + " turnos.", ColorEnum.red);
-                hero.applyEffect(w, w.getPoints());
+                hero.applyEffect(w);
                 break;
             case 4:
                 Interface.printMessage("O inimigo " + this.name + " utilizou o efeito " + hs.getName()
                         + " com duração de " + hs.getPoints() + " turnos.", ColorEnum.red);
-                this.applyEffect(hs, hs.getPoints());
+                this.applyEffect(hs);
                 selfInflicted = true;
                 break;
         }

@@ -95,4 +95,15 @@ public class PsychicEffect extends Effect {
         this.points = effect.points;
         this.startPoints = effect.startPoints;
     }
+
+    @Override
+    public PsychicEffect cloneEffect() {
+        return new PsychicEffect(this);
+    }
+
+    @Override
+    public void merge(Effect effect) {
+        PsychicEffect tE = (PsychicEffect) effect;
+        this.setDamage(Math.max(tE.getDamage(), this.getDamage()));
+    }
 }

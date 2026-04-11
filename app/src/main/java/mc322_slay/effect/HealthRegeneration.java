@@ -47,7 +47,6 @@ public class HealthRegeneration extends Effect {
      * Processa a regeneração quando o turno do dono começa.
      *
      * @param event       evento do jogo.
-     * @param gameManager gerenciador da partida.
      * @return {@code true} quando o efeito termina.
      */
     @Override
@@ -98,5 +97,16 @@ public class HealthRegeneration extends Effect {
         this.owner = effect.owner;
         this.points = effect.points;
         this.startPoints = effect.startPoints;
+    }
+
+    @Override
+    public HealthRegeneration cloneEffect() {
+        return new HealthRegeneration(this);
+    }
+
+    @Override
+    public void merge(Effect effect) {
+        HealthRegeneration hE = (HealthRegeneration) effect;
+        this.setHealth(Math.max(hE.getHealth(), this.getHealth()));
     }
 }

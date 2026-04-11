@@ -3,6 +3,7 @@ package mc322_slay.effect;
 import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
+import mc322_slay.GameManager;
 import mc322_slay.Interface;
 import mc322_slay.entity.Hero;
 
@@ -76,5 +77,16 @@ public class LowSyncRate extends Effect {
         this.points = effect.points;
         this.deboost = effect.deboost;
         this.startPoints = effect.startPoints;
+    }
+
+    @Override
+    public LowSyncRate cloneEffect() {
+        return new LowSyncRate(this);
+    }
+
+    @Override
+    public void merge(Effect effect) {
+        LowSyncRate tE = (LowSyncRate) effect;
+        this.setDeboost(Math.min(tE.getDeboost(), this.getDeboost()));
     }
 }

@@ -3,7 +3,6 @@ package mc322_slay.effect;
 import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
 import mc322_slay.Interface;
 import mc322_slay.entity.Hero;
 
@@ -37,7 +36,6 @@ public class HighSyncRate extends Effect {
      * Atualiza a duração no fim do turno do herói.
      *
      * @param event       evento do jogo.
-     * @param gameManager gerenciador da partida.
      * @return {@code true} quando o efeito termina.
      */
     @Override
@@ -82,5 +80,16 @@ public class HighSyncRate extends Effect {
         this.points = effect.points;
         this.boost = effect.boost;
         this.startPoints = effect.startPoints;
+    }
+
+    @Override
+    public HighSyncRate cloneEffect() {
+        return new HighSyncRate(this);
+    }
+
+    @Override
+    public void merge(Effect effect) {
+        HighSyncRate hE = (HighSyncRate) effect;
+        this.setBoost(Math.max(hE.getBoost(), this.getBoost()));
     }
 }

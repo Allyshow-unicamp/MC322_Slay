@@ -25,7 +25,6 @@ public class ATFieldCorrosion extends Effect {
      * Atualiza a duração do efeito no fim do turno do jogador.
      *
      * @param event       evento do jogo.
-     * @param gameManager gerenciador da partida.
      * @return {@code true} quando o efeito termina.
      */
     @Override
@@ -71,4 +70,12 @@ public class ATFieldCorrosion extends Effect {
         this.points = effect.points;
         this.startPoints = effect.startPoints;
     }
+
+    @Override
+    public ATFieldCorrosion cloneEffect() {
+        return new ATFieldCorrosion(this);
+    }
+
+    @Override 
+    public void merge(Effect effect) {}
 }
