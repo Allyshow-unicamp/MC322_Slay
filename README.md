@@ -117,5 +117,5 @@ Já para executar, use o comando:
 
 ## Contribuição de IA Generativa
 
-A documentação das funções do projeto e as descrições dos efeitos presentes neste README foram elaboradas com o auxílio de inteligências artificiais generativas, como Gemini (by Google DeepMind) e Cursor AI (by Anysphere, Inc).
-A inteligência artificial também auxiliou na utilização das bibliotecas `Files`, `Path` e `Paths` para a impressão de arquivos `.txt`.
+A documentação dos arquivos Java do projeto usando Javadoc e as descrições dos efeitos presentes neste README foram elaboradas com o auxílio de inteligências artificiais generativas, como Gemini (by Google DeepMind) e Cursor AI (by Anysphere, Inc). LLMs também auxiliaram na utilização das bibliotecas `Files`, `Path` e `Paths` para a impressão de arquivos `.txt`.
+Além disso, elas também foram empregadas na elaboração de parte dos testes unitários usando JUnit.
