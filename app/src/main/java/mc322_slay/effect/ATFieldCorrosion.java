@@ -22,16 +22,16 @@ public class ATFieldCorrosion extends Effect {
     }
 
     /**
-     * Atualiza a duração do efeito no fim do turno do jogador.
+     * Decrementa a duração ao fim do turno do jogador ({@link mc322_slay.EventEnum#playerEndOfTurn}).
+     * Enquanto ativo, o dono ignora o campo AT ao receber dano (vide {@link mc322_slay.entity.Entity#takeDamage(int)}).
      *
-     * @param event       evento do jogo.
-     * @return {@code true} quando o efeito termina.
+     * @param event  evento do jogo.
+     * @param battle batalha atual.
+     * @return {@code true} quando o efeito termina e deve ser removido dos inscritos.
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {
         if (event == EventEnum.playerEndOfTurn) {
-            // at the beginning of the turn the entity has their shield temporarely reduced
-            // to 0
             this.points -= 1;
             if (this.points > 0) {
                 // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +

@@ -44,10 +44,11 @@ public class HealthRegeneration extends Effect {
     }
 
     /**
-     * Processa a regeneração quando o turno do dono começa.
+     * Processa a cura no início do turno do dono (herói ou anjo, conforme a classe do {@link #owner}).
      *
-     * @param event       evento do jogo.
-     * @return {@code true} quando o efeito termina.
+     * @param event  evento do jogo.
+     * @param battle batalha atual.
+     * @return {@code true} quando o efeito termina após esgotar os turnos.
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {

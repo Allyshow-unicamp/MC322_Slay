@@ -18,20 +18,45 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.EnemyActions;
 import mc322_slay.entity.Hero;
 
+/**
+ * Representa um combate por turnos entre o herói e um anjo.
+ * Gerencia compra de cartas, gasto de sincronização (energia), ações do jogador,
+ * notificação de efeitos e turno do inimigo.
+ */
 public class Battle {
+    /** Herói controlado pelo jogador. */
     private Hero hero;
+    /** Inimigo (anjo) enfrentado nesta batalha. */
     private Enemy angel;
-    private int syncRate; // works identical to energy attribute
+    /**
+     * Taxa de sincronização restante no turno atual; equivale à energia disponível
+     * para jogar cartas.
+     */
+    private int syncRate;
+    /** Quantidade de cartas compradas no início de cada turno do jogador. */
     static private final int nCards = 4;
+    /** Valor inicial e máximo de sincronização recuperado a cada turno do jogador. */
     static private final int initialSync = 15;
     private Random random;
+    /** Mão de cartas do jogador. */
     private PlayerHand hand;
+    /** Pilha de onde as cartas são compradas. */
     private CardStack buyPile;
+    /** Pilha de descarte; quando a compra esgota, é reembaralhada para formar nova compra. */
     private CardStack discardPile;
+    /** Efeitos ativos que recebem eventos do ciclo de batalha. */
     private ArrayList<Effect> subscribers;
     private Scanner scanner;
+    /** Mensagem textual com a intenção do inimigo no turno atual (exibida ao jogador). */
     private String enemyPlanning;
 
+    /**
+     * Cria uma batalha com o herói, o anjo e o baralho compartilhado (cópia para compra/descarte).
+     *
+     * @param hero  herói do jogador.
+     * @param angel inimigo desta luta.
+     * @param deck  baralho base da partida (será copiado para a pilha de compra).
+     */
     public Battle(Hero hero, Enemy angel, CardStack deck) {
         this.hero = hero;
         this.angel = angel;
@@ -44,6 +69,11 @@ public class Battle {
         this.subscribers = new ArrayList<>();
     }
 
+    /**
+     * Executa o loop da batalha até vitória ou derrota.
+     *
+     * @return {@code true} se o herói vencer; {@code false} se for derrotado.
+     */
     public boolean performFight() {
         Interface.printMessage("\r\n=== BATALHA ÉPICA ===", ColorEnum.purple);
         Interface.printMessage(this.hero.getName() + " x " + this.angel.getName() + "\r\n", ColorEnum.purple);
@@ -115,9 +145,10 @@ public class Battle {
     }
 
     /**
-     * Define e exibe a ação planejada do inimigo para o turno.
+     * Sorteia o dano base do próximo ataque do anjo, define a ação do turno e monta
+     * a mensagem exibida ao jogador.
      *
-     * @return valor numérico da ação escolhida.
+     * @return índice numérico compatível com {@code EnemyActions.values()[índice]}.
      */
     int enemyPlanning() {
         int actionValue = angel.nextAction();
@@ -152,7 +183,8 @@ public class Battle {
     }
 
     /**
-     * Move todas as cartas da mão para a pilha de descarte ao fim do turno do jogador.
+     * Move todas as cartas da mão para a pilha de descarte ao fim do turno do
+     * jogador.
      */
     private void discardCards() {
         hand.discardCards(discardPile);
@@ -328,8 +360,9 @@ public class Battle {
     }
 
     /**
-     * Exibe o resultado final da partida.
-     * @return true se jogador venceu, false se perdeu
+     * Exibe o resultado final da batalha (vitória ou game over).
+     *
+     * @return {@code true} se o jogador venceu; {@code false} se perdeu.
      */
     private boolean results() {
         Interface.printTurnInfo(hero, angel);

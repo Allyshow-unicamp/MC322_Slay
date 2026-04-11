@@ -16,11 +16,15 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
 /**
- * Orquestra o estado do jogo, incluindo turnos, baralhos, ações e efeitos.
+ * Orquestra o estado do jogo: inicialização, seleção de personagem, montagem do baralho
+ * e sequência de batalhas até a vitória ou derrota.
  */
 public class GameManager {
+    /** Herói controlado pelo jogador na partida atual. */
     private Hero hero;
+    /** Leitura de entradas do teclado. */
     private Scanner scanner;
+    /** Baralho principal de compra (pilha de cartas). */
     private CardStack deck;
 
     /**
@@ -77,14 +81,18 @@ public class GameManager {
                 new HealthRegeneration("Restauração Forçada do pulso vital", 30, 3)));
         Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2, 1.5);
         deck.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos", effect4));
+                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos",
+                effect4));
         deck.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos", effect4));
+                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos",
+                effect4));
         Effect effect5 = new LowSyncRate("Baixa taxa de sincronização", 2, 0.75);
         deck.add(new EffectCard("Baixa taxa de sincronização", 4,
-                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
+                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos",
+                effect5));
         deck.add(new EffectCard("Baixa taxa de sincronização", 4,
-                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos", effect5));
+                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos",
+                effect5));
         deck.add(new EffectCard("Corrosão do campo AT 1", 4,
                 "Use-a para anular o campo AT do inimigo por 2 turnos",
                 new ATFieldCorrosion("Corrosão do campo AT", 2)));
@@ -102,7 +110,7 @@ public class GameManager {
     public void start() {
         this.hero = new Hero("", 50, 0, "eva.txt");
         this.deck = new CardStack();
-		this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     /**
@@ -111,7 +119,7 @@ public class GameManager {
     public void initialScreen() {
         Interface.clearScreen();
         Interface.printFile("initialScreenArt.txt");
-        System.out.println("Pressione qualquer tecla para iniciar.");
+        System.out.println("Digite [Enter] para começar");
         scanner.nextLine();
     }
 
@@ -153,22 +161,32 @@ public class GameManager {
         Interface.printMessage("\r\n" + hero.getName() + " selecionad*.\r\n", ColorEnum.reset);
     }
 
-	private void resetBattle() {
-		this.hero.resetEffects();
-	}
+    /**
+     * Limpa efeitos persistentes do herói entre uma batalha e outra.
+     */
+    private void resetBattle() {
+        this.hero.resetEffects();
+    }
 
+    /**
+     * Executa em sequência {@code n} batalhas contra anjos com dificuldade crescente.
+     * Se o jogador perder em qualquer etapa, interrompe e não exibe a tela de vitória.
+     *
+     * @param n número de batalhas a disputar.
+     */
     public void performNBattles(int n) {
-		boolean won = true;
+        boolean won = true;
         for (int i = 0; i < n; i++) {
-            Battle battle = new Battle(hero, new Enemy("Angel", 150 + 50 * i, 100 + 50 * i, "sachiel.txt"), deck);
+            Battle battle = new Battle(hero, new Enemy("Angel", 150 + 50 * i, 100 + 50 * i, "sachiel.txt"),
+                    deck);
             if (!battle.performFight()) {
-				won = false;
-				break;
-			}
-			resetBattle();
+                won = false;
+                break;
+            }
+            resetBattle();
         }
 
-		if (won) 
-			Interface.printFile("victory.txt");
+        if (won)
+            Interface.printFile("victory.txt");
     }
 }

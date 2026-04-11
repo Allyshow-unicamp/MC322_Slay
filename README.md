@@ -6,7 +6,7 @@
 
 ### Temática
 
-O jogo consiste em um sistema de batalhas com baralho completo via terminal, baseado no anime popular Neon Genesis Evangelion, onde o jogador enfrenta um inimigo usando suas cartas. 
+O jogo consiste em um sistema de batalhas com baralho completo via terminal, baseado no anime popular Neon Genesis Evangelion, onde o jogador enfrenta uma sequência de inimigos usando cartas.
 
 ### Personagens
 
@@ -52,9 +52,10 @@ O combate continua até a morte de uma das entidades. Vence quem eliminar o outr
 
 ## Estrutura do projeto
 
-O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas consiste em:
+O projeto Java foi criado com a build tool gradle, além de ser usado o JUnit para realização de testes unitários. Assim, a estrutura de pastas consiste em:
 
 - `app/src/main/java`: pasta com as classes .java do projeto, incluindo o App
+- `app/src/main/test`: pasta com os arquivos de teste do JUnit
 - `app/build`: pasta com os arquivos compilados e outros arquivos gerados
 - `gradle`: contém arquivos específicos de versionamento do gradle
 
@@ -81,6 +82,18 @@ O projeto Java foi criado com a build tool gradle. Assim, a estrutura de pastas 
 - `LowSyncRate`: subclasse de Effect que implementa a redução de dano por sincronização.
 - `EventEnum`: enum que define os tipos de evento para serem percebidos pelos efeitos
 - `ColorEnum`: enum que define as diferentes cores possíveis da interface
+
+## Execução de testes unitários (em linux)
+
+Para executar os testes unitários implementados, basta executar:
+```
+./gradlew test
+```
+
+Já para certificar-se que pelo menos 40% do código foi coberto pelos testes, basta executar 
+```
+./gradlew check
+```
 
 ## Compilação e execução do projeto (em linux)
 

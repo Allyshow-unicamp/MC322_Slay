@@ -8,6 +8,7 @@ import mc322_slay.entity.Entity;
  */
 public class EffectCard extends Card{
 
+    /** Efeito persistente aplicado ao usar a carta (duração/intensidade conforme a subclasse). */
     private Effect effect;
     
     /**

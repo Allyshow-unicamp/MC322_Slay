@@ -1,12 +1,14 @@
 package mc322_slay.effect;
 
 import mc322_slay.Battle;
-import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.GameManager;
-import mc322_slay.Interface;
 import mc322_slay.entity.Hero;
 
+/**
+ * Efeito que reduz (ou altera) o multiplicador {@link mc322_slay.entity.Entity#getDeboost()} do herói,
+ * diminuindo o dano das cartas de dano enquanto ativo (vide {@link mc322_slay.Battle}).
+ * A duração é decrementada ao fim do turno do jogador quando o dono é o herói.
+ */
 public class LowSyncRate extends Effect {
 
     private double deboost;
@@ -34,7 +36,9 @@ public class LowSyncRate extends Effect {
     /**
      * Decrementa a duração ao fim do turno do jogador quando o dono é o herói.
      *
-     * @return {@code true} se o efeito expirou e deve ser removido da lista de inscritos do {@link GameManager}.
+     * @param event  evento do jogo.
+     * @param battle batalha atual.
+     * @return {@code true} se o efeito expirou e deve ser removido da lista de inscritos da {@link Battle}.
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {

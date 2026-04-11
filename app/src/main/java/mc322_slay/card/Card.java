@@ -6,9 +6,12 @@ import mc322_slay.entity.Entity;
  * Classe base para cartas jogáveis.
  */
 public abstract class Card {
-    
+
+    /** Nome exibido na mão e nas mensagens de uso. */
     protected String name;
+    /** Custo em sincronização (energia) para jogar a carta no turno atual. */
     protected int energyCost;
+    /** Texto de ajuda exibido ao jogador. */
     protected String cardDescription;
 
     /**
