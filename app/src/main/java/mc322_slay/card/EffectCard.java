@@ -13,12 +13,12 @@ public class EffectCard extends Card{
     /**
      * Aplica o efeito configurado desta carta em uma entidade.
      *
-     * @param angel entidade alvo.
+     * @param entity entidade alvo.
      * @param points duração ou intensidade do efeito.
      */
     @Override
     public void useCard(Entity entity, int points) {
-        entity.applyEffect(effect, points);
+        entity.applyEffect(effect);
     }
     /**
      * Retorna o efeito associado à carta.

@@ -73,8 +73,11 @@ public abstract class Effect {
      * Reage a um evento do jogo.
      *
      * @param event evento recebido.
-     * @param gameManager estado atual do jogo.
      * @return {@code true} quando o efeito deve ser removido dos inscritos.
      */
     public abstract boolean beNotified(EventEnum event, Battle battle);
+
+    public abstract Effect cloneEffect();
+
+    public abstract void merge(Effect effect);
 }

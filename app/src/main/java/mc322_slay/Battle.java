@@ -30,6 +30,7 @@ public class Battle {
     private CardStack discardPile;
     private ArrayList<Effect> subscribers;
     private Scanner scanner;
+    private String enemyPlanning;
 
     public Battle(Hero hero, Enemy angel, CardStack deck) {
         this.hero = hero;
@@ -55,6 +56,7 @@ public class Battle {
             resetTurn();
             int enemyOption = enemyPlanning();
             while (!endOfTurn()) {
+                Interface.printMessage(enemyPlanning, ColorEnum.red);
                 int option = selectOption();
                 playerAction(option);
             }
@@ -121,23 +123,22 @@ public class Battle {
         int actionValue = angel.nextAction();
         EnemyActions action = EnemyActions.values()[actionValue];
 
-        String message = "\r\n";
+        enemyPlanning = "\r\n";
         switch (action) {
             case attack:
-                message = "O inimigo " + angel.getName() + " pretende causar dano ao final do turno.\r\n";
+                enemyPlanning = "O inimigo " + angel.getName() + " pretende causar dano ao final do turno.\r\n";
                 break;
 
             case gainShield:
-                message = "O inimigo " + angel.getName()
+                enemyPlanning = "O inimigo " + angel.getName()
                         + " pretende recuperar campo AT ao final do turno.\r\n";
                 break;
 
             case useEffect:
-                message = "O inimigo " + angel.getName()
+                enemyPlanning = "O inimigo " + angel.getName()
                         + " pretende utilizar um efeito aleatório ao final do turno.\r\n";
                 break;
         }
-        Interface.printMessage(message, ColorEnum.red);
         return action.getValue();
     }
 
