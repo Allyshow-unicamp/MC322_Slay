@@ -7,6 +7,10 @@ import mc322_slay.effect.LowSyncRate;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
+/**
+ * Testes do {@link mc322_slay.entity.Enemy}: dano do ataque e interação com efeitos de
+ * sincronização no multiplicador final.
+ */
 public class EnemyTest {
     @Test
     public void damageInflictedOnAttack() {
@@ -24,9 +28,9 @@ public class EnemyTest {
         enemy.nextAction();
         enemy.applyEffect(new HighSyncRate("Força", 3, 1.5));
         enemy.applyEffect(new LowSyncRate("Fraqueza", 3, 0.75));
-        assertEquals(1.125, enemy.getBoost() * enemy.getDeboost());
-        double attack = enemy.getDamage() * enemy.getBoost() * enemy.getDeboost();
-        assertEquals(enemy.getDamage() * 1.125, attack);
+        double multiplier = enemy.getBoost() * enemy.getDeboost();
+        assertEquals(1.125, multiplier);
+        double attack = enemy.getDamage();
 
         Hero hero = new Hero("Herói", 50, 50, null);
         assertEquals((int) attack, enemy.attack(hero));

@@ -10,6 +10,10 @@ import mc322_slay.effect.LowSyncRate;
 import mc322_slay.effect.PsychicEffect;
 import mc322_slay.entity.Hero;
 
+/**
+ * Testes unitários de {@link Hero} e da lógica herdada de {@link mc322_slay.entity.Entity}:
+ * dano, escudo, aplicação/remoção de efeitos e multiplicadores.
+ */
 public class HeroTest {
     @Test 
     public void maxHealthRespected() {

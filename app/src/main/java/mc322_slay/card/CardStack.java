@@ -49,6 +49,10 @@ public class CardStack {
         this.cardsStack = new Stack<>();
     }
 
+    public Stack<Card> getStack() {
+        return cardsStack;
+    }
+
     /**
      * Copia shallow: empilha as mesmas instâncias de {@link Card} de outra pilha
      * (ordem preservada conforme iteração sobre a pilha interna).

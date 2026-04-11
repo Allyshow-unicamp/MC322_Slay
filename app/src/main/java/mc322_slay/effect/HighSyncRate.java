@@ -4,6 +4,7 @@ import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.Interface;
+import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
 /**
@@ -49,7 +50,8 @@ public class HighSyncRate extends Effect {
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {
-        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class) {
+        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class || 
+            event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
             if (this.points > 0) {
                 // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
