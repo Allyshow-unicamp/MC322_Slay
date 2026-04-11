@@ -208,7 +208,6 @@ public abstract class Entity {
      * @param points A quantidade de pontos/intensidade do efeito.
      */
     public void applyEffect(Effect effect) {
-        Effect thisEffect = effect;
         boolean contains = false;
         int index = 0;
         for (Effect effectX : effects) {
@@ -221,7 +220,7 @@ public abstract class Entity {
         if (contains) {
             Effect e = effects.get(index);
             e.incrementPoints(e.getStartPoints());
-            e.merge(thisEffect);
+            e.merge(effect);
             if (e instanceof HighSyncRate highSyncRate) {
                 this.setBoost(highSyncRate.getBoost());
             } else if (e instanceof LowSyncRate lowSyncRate) {
@@ -230,6 +229,11 @@ public abstract class Entity {
             effects.set(index, e);
         } else {
             Effect newEffect = effect.cloneEffect();
+            if (newEffect instanceof HighSyncRate highSyncRate) {
+                this.setBoost(highSyncRate.getBoost());
+            } else if (newEffect instanceof LowSyncRate lowSyncRate) {
+                this.setDeboost(lowSyncRate.getDeboost());
+            }
             newEffect.setOwner(this);
             effects.add(newEffect);
         }
