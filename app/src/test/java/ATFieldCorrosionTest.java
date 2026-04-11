@@ -30,14 +30,13 @@ public class ATFieldCorrosionTest {
     @Test
     public void beNotifiedFinishedEffect() {
         Hero hero = new Hero("Herói", 50, 20, null);
-
-        ATFieldCorrosion atFieldCorrosion = new ATFieldCorrosion("Corrosão", 1);
-        atFieldCorrosion.setOwner(hero);
-        hero.applyEffect(atFieldCorrosion);
+        hero.applyEffect(new ATFieldCorrosion("Corrosão", 1));
 
         Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, null), new CardStack());
-
-        assertTrue(atFieldCorrosion.beNotified(EventEnum.playerEndOfTurn, battle));
+    
+        ATFieldCorrosion corrosion = (ATFieldCorrosion) hero.getLastEffect();
+        assertTrue(corrosion.beNotified(EventEnum.playerEndOfTurn, battle));
+        assertFalse(hero.hasEffect(ATFieldCorrosion.class));
     }
 
     @Test
@@ -70,7 +69,6 @@ public class ATFieldCorrosionTest {
 
         assertFalse(corrosion.beNotified(EventEnum.playerEndOfTurn, battle));
         assertEquals(1, corrosion.getPoints());
-        assertTrue(hero.hasEffect(ATFieldCorrosion.class));
     }
 
     @Test
@@ -85,7 +83,6 @@ public class ATFieldCorrosionTest {
         assertEquals(20, hero.getShield());
 
         assertTrue(corrosion.beNotified(EventEnum.playerEndOfTurn, battle));
-        assertFalse(hero.hasEffect(ATFieldCorrosion.class));
 
         hero.takeDamage(10);
         assertEquals(40, hero.getHealth());

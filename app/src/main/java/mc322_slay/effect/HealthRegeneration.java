@@ -59,12 +59,6 @@ public class HealthRegeneration extends Effect {
                     ColorEnum.yellow);
             owner.gainHealth(health);
 
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
-
             if (this.points == 0) {
                 owner.removeEffect(this);
                 return true;

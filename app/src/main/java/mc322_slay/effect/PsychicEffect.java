@@ -61,11 +61,7 @@ public class PsychicEffect extends Effect {
             this.owner.takeDamage(damage);
 
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
+            
             if (this.points == 0) { // effect is over
                 owner.removeEffect(this);
                 return true;

@@ -90,10 +90,11 @@ Para executar os testes unitários implementados, basta executar:
 ./gradlew test
 ```
 
-Já para certificar-se que pelo menos 40% do código foi coberto pelos testes, basta executar 
+Já para certificar-se que pelo menos 40% do código foi coberto pelos testes, execute:
 ```
 ./gradlew check
 ```
+O build foi configurado para que, caso a cobertura esteja abaixo de 40%, ele falhe. Assim, se o código rodar sem problemas, então a cobertura foi atingida.
 
 ## Compilação e execução do projeto (em linux)
 

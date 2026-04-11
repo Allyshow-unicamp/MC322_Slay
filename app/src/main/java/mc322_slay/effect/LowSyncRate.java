@@ -46,11 +46,6 @@ public class LowSyncRate extends Effect {
         if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class || 
             event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
 
             if (this.points == 0) {
                 owner.removeEffect(this);

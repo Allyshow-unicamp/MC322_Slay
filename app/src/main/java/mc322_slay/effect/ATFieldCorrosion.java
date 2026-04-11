@@ -1,9 +1,7 @@
 package mc322_slay.effect;
 
 import mc322_slay.Battle;
-import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.Interface;
 
 /**
  * Efeito que mantém o alvo vulnerável ao ignorar AT Field por alguns turnos.
@@ -33,11 +31,6 @@ public class ATFieldCorrosion extends Effect {
     public boolean beNotified(EventEnum event, Battle battle) {
         if (event == EventEnum.playerEndOfTurn) {
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
 
             if (this.points == 0) {
                 owner.removeEffect(this);

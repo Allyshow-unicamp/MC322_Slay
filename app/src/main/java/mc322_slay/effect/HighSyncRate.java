@@ -1,9 +1,7 @@
 package mc322_slay.effect;
 
 import mc322_slay.Battle;
-import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
-import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
@@ -53,11 +51,6 @@ public class HighSyncRate extends Effect {
         if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class || 
             event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
-            if (this.points > 0) {
-                // Interface.printMessage(points + " turnos restantes de " + name + " sobre " +
-                // owner.getName() + ".",
-                // ColorEnum.reset);
-            }
 
             if (this.points == 0) {
                 owner.removeEffect(this);
