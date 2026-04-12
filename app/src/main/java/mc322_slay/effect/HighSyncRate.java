@@ -1,17 +1,25 @@
 package mc322_slay.effect;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.Battle;
 import mc322_slay.EventEnum;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.serializer.HighSyncRateSerializer;
 
 /**
  * Efeito que aumenta temporariamente o multiplicador de dano das cartas de dano do herói
  * (via {@link mc322_slay.entity.Entity#getBoost()}), sem alterar dano de efeitos como veneno psíquico.
  */
+@JsonSerialize(using = HighSyncRateSerializer.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class HighSyncRate extends Effect {
 
     /** Multiplicador aplicado ao dano das armas/cartas de dano (ex.: {@code 1.5} para +50%). */
+    @JsonProperty("boost")
     private double boost;
 
     /**
@@ -72,6 +80,10 @@ public class HighSyncRate extends Effect {
         this.points = turns;
         this.startPoints = turns;
         this.boost = boost;
+    }
+
+    public HighSyncRate() {
+        super();
     }
 
     /**

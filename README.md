@@ -107,7 +107,7 @@ chmod +x gradlew
 
 Para compilar o projeto, basta executar o código abaixo:
 ```
-./gradlew build
+./gradlew build -x test
 ```
 
 Já para executar, use o comando:

@@ -1,5 +1,10 @@
 package mc322_slay.effect;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import mc322_slay.Battle;
 import mc322_slay.EventEnum;
 import mc322_slay.entity.Entity;
@@ -9,8 +14,18 @@ import mc322_slay.entity.Entity;
  * Os efeitos podem reagir a {@link mc322_slay.EventEnum eventos} da batalha e são
  * clonados ao serem aplicados pela primeira vez.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ATFieldCorrosion.class, name = "corrosion"),
+    @JsonSubTypes.Type(value = HealthRegeneration.class, name = "regeneration"),
+    @JsonSubTypes.Type(value = HighSyncRate.class, name = "strength"),
+    @JsonSubTypes.Type(value = LowSyncRate.class, name = "weakness"),
+    @JsonSubTypes.Type(value = PsychicEffect.class, name = "poison"),
+})
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class Effect {
     /** Nome exibido na interface e nas mensagens de status. */
+    @JsonProperty("name")
     protected String name;
     /** Entidade sobre a qual o efeito está ativo; pode ser {@code null} antes de {@link Entity#applyEffect(Effect)}. */
     protected Entity owner;
@@ -18,6 +33,7 @@ public abstract class Effect {
      * Pontos restantes (em geral turnos ou cargas); o significado exato depende da subclasse
      * (ex.: duração em turnos para dano psicológico).
      */
+    @JsonProperty("turns")
     protected int points;
     /** Valor inicial de {@link #points} quando o efeito foi aplicado (útil para empilhar e mesclar). */
     protected int startPoints;

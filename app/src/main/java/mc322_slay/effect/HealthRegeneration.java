@@ -1,18 +1,26 @@
 package mc322_slay.effect;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.serializer.HealthRegenerationSerializer;
 
 /**
  * Efeito que restaura vida do alvo no início do turno.
  */
+@JsonSerialize(using = HealthRegenerationSerializer.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class HealthRegeneration extends Effect {
 
     /** Vida recuperada a cada ativação do efeito. */
+    @JsonProperty("health")
     private int health;
 
     /**
@@ -79,6 +87,10 @@ public class HealthRegeneration extends Effect {
         this.health = amount;
         this.points = points;
         this.startPoints = points;
+    }
+
+    public HealthRegeneration() {
+        super();
     }
 
     /**

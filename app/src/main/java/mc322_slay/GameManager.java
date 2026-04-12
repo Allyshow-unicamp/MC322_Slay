@@ -1,22 +1,19 @@
 package mc322_slay;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import mc322_slay.card.CardStack;
-import mc322_slay.card.DamageCard;
-import mc322_slay.card.EffectCard;
-import mc322_slay.card.ShieldCard;
-import mc322_slay.effect.ATFieldCorrosion;
-import mc322_slay.effect.Effect;
-import mc322_slay.effect.HealthRegeneration;
-import mc322_slay.effect.HighSyncRate;
-import mc322_slay.effect.LowSyncRate;
-import mc322_slay.effect.PsychicEffect;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
 /**
- * Orquestra o estado do jogo: inicialização, seleção de personagem, montagem do baralho
+ * Orquestra o estado do jogo: inicialização, seleção de personagem, montagem do
+ * baralho
  * e sequência de batalhas até a vitória ou derrota.
  */
 public class GameManager {
@@ -31,76 +28,16 @@ public class GameManager {
      * Preenche o baralho de compra com cartas iniciais da partida.
      */
     void populateDeck() {
-        deck.add(new DamageCard("Longinus Spear", 10, "Use-a para dar de 100 a 200 de dano"));
-        deck.add(new DamageCard("Cassius Spear", 9, "Use-a para dar de 90 a 180 de dano"));
-        deck.add(new DamageCard("Positron Sniper Rifle", 8, "Use-a para dar de 80 a 160 de dano"));
-        deck.add(new DamageCard("Prog Knife", 7, "Use-a para dar de 70 a 140 de dano"));
-        deck.add(new DamageCard("Magokoru Sword", 6, "Use-a para dar de 60 a 120 de dano"));
-        deck.add(new DamageCard("Pallet Rifle", 5, "Use-a para dar de 50 a 100 de dano"));
-        deck.add(new DamageCard("Azumaterasu", 4, "Use-a para dar de 40 a 80 de dano"));
-        deck.add(new DamageCard("Smash Hawk", 3, "Use-a para dar de 30 a 60 de dano"));
-        deck.add(new DamageCard("N2 Weapon II", 2, "Use-a para dar de 20 a 40 de dano"));
-        deck.add(new DamageCard("N2 Weapon", 1, "Use-a para dar de 10 a 20 de dano"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 1", 1,
-                "Restaura a integridade do Campo AT entre 2 e 4 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 2", 2,
-                "Restaura a integridade do Campo AT entre 4 e 8 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 3", 3,
-                "Restaura a integridade do Campo AT entre 6 e 12 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 4", 4,
-                "Restaura a integridade do Campo AT entre 8 e 16 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 5", 5,
-                "Restaura a integridade do Campo AT entre 10 e 20 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 6", 6,
-                "Restaura a integridade do Campo AT entre 12 e 24 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 7", 7,
-                "Restaura a integridade do Campo AT entre 14 e 28 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 8", 8,
-                "Restaura a integridade do Campo AT entre 16 e 32 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 9", 9,
-                "Restaura a integridade do Campo AT entre 18 e 36 pontos"));
-        deck.add(new ShieldCard("Regeneração do Campo de Terror Absoluto 10", 10,
-                "Restaura a integridade do Campo AT entre 20 e 40 pontos"));
-        Effect effect1 = new PsychicEffect("Dano psicológico", 30, 3);
-        Effect effect2 = new PsychicEffect("Dano psicológico", 60, 3);
-        Effect effect3 = new PsychicEffect("Dano psicológico", 90, 3);
-        deck.add(new EffectCard("Dano psicológico 1", 3,
-                "Use-a para dar 30 de dano por 3 turnos", effect1));
-        deck.add(new EffectCard("Dano psicológico 2", 6,
-                "Use-a para dar 60 de dano por 3 turnos", effect2));
-        deck.add(new EffectCard("Dano psicológico 3", 9,
-                "Use-a para dar 90 de dano por 3 turnos", effect3));
-        deck.add(new EffectCard("Restauração Forçada do pulso vital 1", 3,
-                "Use-a para restaurar 10 pontos de vida por 3 turnos",
-                new HealthRegeneration("Restauração Forçada do pulso vital", 10, 3)));
-        deck.add(new EffectCard("Restauração Forçada do pulso vital 2", 6,
-                "Use-a para restaurar 20 pontos de vida por 3 turnos",
-                new HealthRegeneration("Restauração Forçada do pulso vital", 20, 3)));
-        deck.add(new EffectCard("Restauração Forçada do pulso vital 3", 9,
-                "Use-a para restaurar 30 pontos de vida por 3 turnos",
-                new HealthRegeneration("Restauração Forçada do pulso vital", 30, 3)));
-        Effect effect4 = new HighSyncRate("Alta taxa de sincronização", 2, 1.5);
-        deck.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos",
-                effect4));
-        deck.add(new EffectCard("Alta taxa de sincronização", 4,
-                "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos",
-                effect4));
-        Effect effect5 = new LowSyncRate("Baixa taxa de sincronização", 2, 0.75);
-        deck.add(new EffectCard("Baixa taxa de sincronização", 4,
-                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos",
-                effect5));
-        deck.add(new EffectCard("Baixa taxa de sincronização", 4,
-                "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos",
-                effect5));
-        deck.add(new EffectCard("Corrosão do campo AT 1", 4,
-                "Use-a para anular o campo AT do inimigo por 2 turnos",
-                new ATFieldCorrosion("Corrosão do campo AT", 2)));
-        deck.add(new EffectCard("Corrosão do campo AT 2", 6,
-                "Use-a para anular o campo AT do inimigo por 3 turnos",
-                new ATFieldCorrosion("Corrosão do campo AT", 3)));
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            String serialized = Files.readString(Paths.get("..", "data", "deck.json"));
+            deck = mapper.readValue(serialized, CardStack.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         deck.shuffle();
+
         Interface.printMessage("O baralho foi embaralhado!", ColorEnum.blue);
     }
 
@@ -169,8 +106,10 @@ public class GameManager {
     }
 
     /**
-     * Executa em sequência {@code n} batalhas contra anjos com dificuldade crescente.
-     * Se o jogador perder em qualquer etapa, interrompe e não exibe a tela de vitória.
+     * Executa em sequência {@code n} batalhas contra anjos com dificuldade
+     * crescente.
+     * Se o jogador perder em qualquer etapa, interrompe e não exibe a tela de
+     * vitória.
      *
      * @param n número de batalhas a disputar.
      */

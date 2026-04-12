@@ -3,11 +3,20 @@ package mc322_slay.card;
 import java.util.Collections;
 import java.util.Stack;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import mc322_slay.serializer.CardStackSerializer;
+
 /**
  * Representa uma pilha de cartas com operações de compra, descarte e embaralhamento.
  */
+@JsonSerialize(using = CardStackSerializer.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class CardStack {
     
+    @JsonProperty("cards")
     private Stack<Card> cardsStack;
 
     /**

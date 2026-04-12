@@ -1,11 +1,15 @@
 package mc322_slay.effect;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.Battle;
 import mc322_slay.EventEnum;
+import mc322_slay.serializer.ATFieldCorrosionSerializer;
 
 /**
  * Efeito que mantém o alvo vulnerável ao ignorar AT Field por alguns turnos.
  */
+@JsonSerialize(using = ATFieldCorrosionSerializer.class)
 public class ATFieldCorrosion extends Effect {
 
     /**
@@ -50,6 +54,10 @@ public class ATFieldCorrosion extends Effect {
         this.name = name;
         this.points = turns;
         this.startPoints = turns;
+    }
+
+    public ATFieldCorrosion() {
+        super();
     }
 
     /**

@@ -1,10 +1,14 @@
 package mc322_slay.card;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.entity.Entity;
+import mc322_slay.serializer.DamageCardSerializer;
 
 /**
  * Carta que causa dano direto ao alvo.
  */
+@JsonSerialize(using = DamageCardSerializer.class)
 public class DamageCard extends Card{
     
     /**
@@ -29,5 +33,9 @@ public class DamageCard extends Card{
         this.name = name;
         this.energyCost = energyCost;
         this.cardDescription = cardDescription;
+    }
+
+    public DamageCard() {
+        super();
     }
 }

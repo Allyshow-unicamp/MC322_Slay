@@ -1,14 +1,22 @@
 package mc322_slay.card;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.effect.Effect;
 import mc322_slay.entity.Entity;
+import mc322_slay.serializer.EffectCardSerializer;
 
 /**
  * Carta que aplica um efeito contínuo ao alvo.
  */
+@JsonSerialize(using = EffectCardSerializer.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class EffectCard extends Card{
 
     /** Efeito persistente aplicado ao usar a carta (duração/intensidade conforme a subclasse). */
+    @JsonProperty("effect")
     private Effect effect;
     
     /**
@@ -43,5 +51,9 @@ public class EffectCard extends Card{
         this.energyCost = energyCost;
         this.cardDescription = cardDescription;
         this.effect = effect;
+    }
+
+    public EffectCard() {
+        super();
     }
 }
