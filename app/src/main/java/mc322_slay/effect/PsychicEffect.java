@@ -1,19 +1,27 @@
 package mc322_slay.effect;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.serializer.PsychicEffectSerializer;
 
 /**
  * Representa um efeito de dano psicológico aplicado a uma entidade.
  * Este efeito causa dano ao dono no final de seu turno.
  */
+@JsonSerialize(using = PsychicEffectSerializer.class)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PsychicEffect extends Effect {
 
     /** Quantidade de dano psicológico causado por turno. */
+    @JsonProperty("damage")
     private int damage;
 
     /**
@@ -95,6 +103,10 @@ public class PsychicEffect extends Effect {
         this.damage = effect.damage;
         this.points = effect.points;
         this.startPoints = effect.startPoints;
+    }
+
+    public PsychicEffect() {
+        super();
     }
 
     @Override

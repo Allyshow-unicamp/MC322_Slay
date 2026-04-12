@@ -1,10 +1,14 @@
 package mc322_slay.card;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.entity.Entity;
+import mc322_slay.serializer.ShieldCardSerializer;
 
 /**
  * Carta que concede escudo (AT Field) ao alvo.
  */
+@JsonSerialize(using = ShieldCardSerializer.class)
 public class ShieldCard extends Card{
 
     /**
@@ -29,5 +33,9 @@ public class ShieldCard extends Card{
         this.energyCost = energyCost;
         this.name = name;
         this.cardDescription = cardDescription;
+    }
+
+    public ShieldCard() {
+        super();
     }
 }

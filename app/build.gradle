@@ -19,9 +19,13 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation libs.guava
+    // tests
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.14.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.14.2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // json
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.1'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
