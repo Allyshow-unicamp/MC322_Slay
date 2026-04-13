@@ -36,6 +36,7 @@ public abstract class Effect {
     @JsonProperty("turns")
     protected int points;
     /** Valor inicial de {@link #points} quando o efeito foi aplicado (útil para empilhar e mesclar). */
+    @JsonProperty("startTurns")
     protected int startPoints;
 
     /**

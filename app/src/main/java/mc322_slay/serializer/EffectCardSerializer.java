@@ -11,15 +11,27 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import mc322_slay.card.EffectCard;
 
+/**
+ * Serializador customizado de {@link EffectCard}.
+ */
 public class EffectCardSerializer extends StdSerializer<EffectCard> {
+    /**
+     * Cria o serializador padrão para uso pelo Jackson.
+     */
     public EffectCardSerializer() {
         this(null);
     }
 
+    /**
+     * @param t tipo concreto serializado.
+     */
     public EffectCardSerializer(Class<EffectCard> t) {
         super(t);
     }
 
+    /**
+     * Serializa os campos da carta e o efeito embutido.
+     */
     @Override
     public void serialize(EffectCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
@@ -28,6 +40,9 @@ public class EffectCardSerializer extends StdSerializer<EffectCard> {
         gen.writeObjectField("effect", value.getEffect());
     }
 
+    /**
+     * Serializa a carta incluindo metadados de tipo polimórfico.
+     */
     @Override
     public void serializeWithType(EffectCard value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {

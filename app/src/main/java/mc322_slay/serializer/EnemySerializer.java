@@ -9,41 +9,44 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-import mc322_slay.effect.ATFieldCorrosion;
+import mc322_slay.entity.Enemy;
 
 /**
- * Serializador customizado de {@link ATFieldCorrosion}.
+ * Serializador customizado de {@link Enemy}.
  */
-public class ATFieldCorrosionSerializer extends StdSerializer<ATFieldCorrosion> {
+public class EnemySerializer extends StdSerializer<Enemy> {
     /**
      * Cria o serializador padrão para uso pelo Jackson.
      */
-    public ATFieldCorrosionSerializer() {
+    public EnemySerializer() {
         this(null);
     }
 
     /**
      * @param t tipo concreto serializado.
      */
-    public ATFieldCorrosionSerializer(Class<ATFieldCorrosion> t) {
+    public EnemySerializer(Class<Enemy> t) {
         super(t);
     }
 
     /**
-     * Serializa nome e duração do efeito de corrosão.
+     * Serializa os dados persistidos do inimigo para salvamento/carregamento.
      */
     @Override
-    public void serialize(ATFieldCorrosion value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    public void serialize(Enemy value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
-        gen.writeNumberField("turns", value.getPoints());
-        gen.writeNumberField("startTurns", value.getStartPoints());
+        gen.writeNumberField("health", value.getHealth());
+        gen.writeNumberField("maxHealth", value.getHealth());
+        gen.writeObjectField("effects", value.getHealth());
+        gen.writeNumberField("shield", value.getShield());
+        gen.writeStringField("image", value.getImage());
     }
 
     /**
-     * Serializa o efeito incluindo metadados de tipo polimórfico.
+     * Serializa o inimigo incluindo metadados de tipo polimórfico.
      */
     @Override
-    public void serializeWithType(ATFieldCorrosion value, JsonGenerator gen, SerializerProvider serializers,
+    public void serializeWithType(Enemy value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {
         WritableTypeId typeIdDef = typeSer.writeTypePrefix(gen, typeSer.typeId(value, JsonToken.START_OBJECT));
 

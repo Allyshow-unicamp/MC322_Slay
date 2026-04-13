@@ -16,6 +16,7 @@ import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.LowSyncRate;
 import mc322_slay.effect.PsychicEffect;
+import mc322_slay.entity.Enemy;
 
 /**
  * Testes de serialização JSON das classes em {@link mc322_slay.serializer}: o {@link ObjectMapper}
@@ -146,5 +147,16 @@ public class SerializerTest {
 
         assertTrue(root.has("cards"));
         assertEquals(0, root.get("cards").size());
+    }
+
+    @Test
+    public void enemySerializerWritesNameHealthShieldAndImage() throws Exception {
+        Enemy enemy = new Enemy("Sachiel", 180, 60, "sachiel.txt");
+        JsonNode root = mapper.readTree(mapper.writeValueAsString(enemy));
+
+        assertEquals("Sachiel", root.get("name").asText());
+        assertEquals(180, root.get("health").asInt());
+        assertEquals(60, root.get("shield").asInt());
+        assertEquals("sachiel.txt", root.get("image").asText());
     }
 }

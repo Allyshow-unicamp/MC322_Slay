@@ -53,17 +53,23 @@ public class Interface {
         sleep();
     }
 
+    public static void printInline(String message, ColorEnum color) {
+        System.out.print(color.getColor() + message + ColorEnum.reset.getColor());
+    }
+
     /**
      * Imprime o conteúdo de um arquivo de texto da pasta de assets.
      *
      * @param text nome do arquivo a ser exibido.
      */
-    public static void printFile(String text) {
+    public static void printFile(String text, ColorEnum colorEnum) {
 
         Path filePath = Path.of("..", folder, text);
 
         try {
+            System.out.print(colorEnum.getColor());
             Files.lines(filePath, StandardCharsets.UTF_8).forEach(System.out::println);
+            System.out.print(ColorEnum.reset.getColor());
         } catch (IOException e) {
         }
     }

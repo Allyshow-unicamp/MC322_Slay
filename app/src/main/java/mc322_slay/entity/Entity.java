@@ -2,6 +2,11 @@ package mc322_slay.entity;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import mc322_slay.ColorEnum;
 import mc322_slay.Interface;
 import mc322_slay.effect.ATFieldCorrosion;
@@ -13,29 +18,38 @@ import mc322_slay.effect.LowSyncRate;
  * Representa uma entidade base no jogo, podendo ser o herói ou um inimigo.
  * Gerencia atributos comuns como vida, escudo (AT Field) e efeitos aplicados.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Enemy.class, name = "enemy"),
+        @JsonSubTypes.Type(value = Hero.class, name = "hero"),
+})
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class Entity {
 
     protected double boost = 1;
     protected double deboost = 1;
 
+    @JsonProperty("name")
     /** Nome da entidade. */
     protected String name;
 
+    @JsonProperty("health")
     /** Vida atual da entidade. */
     protected int health;
 
     /** Vida máxima da entidade. */
+    @JsonProperty("maxHealth")
     protected int maxHealth;
 
+    @JsonProperty("shield")
     /** Valor atual do campo AT (escudo) que absorve dano antes da vida. */
     protected int ATField;
 
-    /** Valor máximo do campo AT (pode ser usado por regras futuras de limite de escudo). */
-    protected int maxATField;
-
+    @JsonProperty("effects")
     /** Lista de efeitos aplicados à entidade. */
     protected ArrayList<Effect> effects;
 
+    @JsonProperty("image")
     /** Caminho ou nome do recurso de imagem associado à entidade. */
     protected String imageAsset;
 
@@ -82,15 +96,6 @@ public abstract class Entity {
      */
     public int getShield() {
         return this.ATField;
-    }
-
-    /**
-     * Obtém o valor máximo do escudo (AT Field).
-     * 
-     * @return O valor máximo do escudo.
-     */
-    public int getMaxShield() {
-        return this.maxATField;
     }
 
     /**

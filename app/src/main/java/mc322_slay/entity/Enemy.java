@@ -3,12 +3,15 @@ package mc322_slay.entity;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import mc322_slay.ColorEnum;
 import mc322_slay.Interface;
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.PsychicEffect;
+import mc322_slay.serializer.EnemySerializer;
 import mc322_slay.effect.LowSyncRate;
 
 /**
@@ -16,6 +19,7 @@ import mc322_slay.effect.LowSyncRate;
  * Estende a classe Entity e define comportamentos específicos de ataque e uso
  * de efeitos.
  */
+@JsonSerialize(using = EnemySerializer.class)
 public class Enemy extends Entity {
 
     /** Gerador de números aleatórios para as ações do inimigo. */
@@ -136,5 +140,9 @@ public class Enemy extends Entity {
         this.effects = new ArrayList<>();
         this.imageAsset = imageAsset;
         this.maxHealth = health;
+    }
+
+    public Enemy() {
+        super();
     }
 }

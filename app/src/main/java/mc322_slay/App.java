@@ -27,6 +27,12 @@ public class App {
         game.selectCharacter();
         game.populateDeck();
 
-        game.performNBattles(5);
+        boolean won = true;
+        while (game.isRunning()) {
+            int option = game.selectPathOnMap();
+            if (!game.performBattle(option))
+                won = false;
+        }
+        game.printResults(won);
     }
 }
