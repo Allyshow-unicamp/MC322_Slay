@@ -11,15 +11,27 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import mc322_slay.card.ShieldCard;
 
+/**
+ * Serializador customizado de {@link ShieldCard}.
+ */
 public class ShieldCardSerializer extends StdSerializer<ShieldCard> {
+    /**
+     * Cria o serializador padrão para uso pelo Jackson.
+     */
     public ShieldCardSerializer() {
         this(null);
     }
 
+    /**
+     * @param t tipo concreto serializado.
+     */
     public ShieldCardSerializer(Class<ShieldCard> t) {
         super(t);
     }
 
+    /**
+     * Serializa os campos estáveis da carta de escudo.
+     */
     @Override
     public void serialize(ShieldCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
@@ -27,6 +39,9 @@ public class ShieldCardSerializer extends StdSerializer<ShieldCard> {
         gen.writeStringField("description", value.getDescription());
     }
 
+    /**
+     * Serializa a carta incluindo metadados de tipo polimórfico.
+     */
     @Override
     public void serializeWithType(ShieldCard value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {

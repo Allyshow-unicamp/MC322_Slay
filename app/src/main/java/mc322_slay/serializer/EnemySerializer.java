@@ -11,15 +11,27 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import mc322_slay.entity.Enemy;
 
+/**
+ * Serializador customizado de {@link Enemy}.
+ */
 public class EnemySerializer extends StdSerializer<Enemy> {
+    /**
+     * Cria o serializador padrão para uso pelo Jackson.
+     */
     public EnemySerializer() {
         this(null);
     }
 
+    /**
+     * @param t tipo concreto serializado.
+     */
     public EnemySerializer(Class<Enemy> t) {
         super(t);
     }
 
+    /**
+     * Serializa os dados persistidos do inimigo para salvamento/carregamento.
+     */
     @Override
     public void serialize(Enemy value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
@@ -28,6 +40,9 @@ public class EnemySerializer extends StdSerializer<Enemy> {
         gen.writeStringField("image", value.getImage());
     }
 
+    /**
+     * Serializa o inimigo incluindo metadados de tipo polimórfico.
+     */
     @Override
     public void serializeWithType(Enemy value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {

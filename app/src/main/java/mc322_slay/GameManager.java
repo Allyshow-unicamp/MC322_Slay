@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import mc322_slay.card.CardStack;
-import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 
 /**

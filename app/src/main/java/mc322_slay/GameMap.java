@@ -10,10 +10,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * Constrói e renderiza o mapa de progressão entre batalhas.
+ * Também mantém o nó atual do jogador e as opções de avanço na árvore.
+ */
 public class GameMap {
     private int rows = 0, cols = 0;
     private char[][] map;
 
+    /**
+     * Coordenada de um identificador de batalha dentro da malha textual do mapa.
+     */
     public record pos(int x, int y) {}
     private Hashtable<Integer, pos> mapCoords;
 
@@ -22,6 +29,12 @@ public class GameMap {
     private DefaultMutableTreeNode tree;
     private DefaultMutableTreeNode playerNode;
 
+    /**
+     * Carrega matriz visual do mapa e monta a árvore de batalhas.
+     *
+     * @param mapFile arquivo JSON da matriz de caracteres do mapa.
+     * @param battleFile arquivo JSON com metadados dos nós de batalha.
+     */
     public void buildMap(String mapFile, String battleFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -47,6 +60,11 @@ public class GameMap {
         }
     }
 
+    /**
+     * Carrega os nós de batalha e cria a árvore conectada a partir do nó inicial.
+     *
+     * @param battleFile arquivo JSON com o dicionário id -> {@link BattleNode}.
+     */
     public void buildTree(String battleFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -64,10 +82,23 @@ public class GameMap {
         }
     }
 
+    /**
+     * Verifica se uma coordenada pertence aos limites do mapa.
+     *
+     * @param x coordenada horizontal.
+     * @param y coordenada vertical.
+     * @return {@code true} quando a posição é válida.
+     */
     private boolean isValidPos(int x, int y) {
         return 0 <= x && x < cols && 0 <= y && y < rows;
     }
 
+    /**
+     * Percorre recursivamente a matriz e conecta os próximos nós válidos na árvore.
+     *
+     * @param currenId id do nó atual em expansão.
+     * @param currentNode referência de árvore correspondente ao nó atual.
+     */
     public void buildTreeRec(int currenId, DefaultMutableTreeNode currentNode) {
         int[] dirX = { -1, 0, 1 };
 
@@ -97,6 +128,10 @@ public class GameMap {
         }
     }
 
+    /**
+     * Imprime o estado atual do mapa para o terminal.
+     * Marca posição do jogador, caminhos já visitados e opções disponíveis.
+     */
     public void printMap() {
         int counter = 1;
         for (int i = 0; i < rows; i++) {

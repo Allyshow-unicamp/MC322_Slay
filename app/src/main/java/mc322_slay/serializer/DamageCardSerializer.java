@@ -11,15 +11,27 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import mc322_slay.card.DamageCard;
 
+/**
+ * Serializador customizado de {@link DamageCard}.
+ */
 public class DamageCardSerializer extends StdSerializer<DamageCard> {
+    /**
+     * Cria o serializador padrão para uso pelo Jackson.
+     */
     public DamageCardSerializer() {
         this(null);
     }
 
+    /**
+     * @param t tipo concreto serializado.
+     */
     public DamageCardSerializer(Class<DamageCard> t) {
         super(t);
     }
 
+    /**
+     * Serializa os campos estáveis da carta de dano.
+     */
     @Override
     public void serialize(DamageCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
@@ -27,6 +39,9 @@ public class DamageCardSerializer extends StdSerializer<DamageCard> {
         gen.writeStringField("description", value.getDescription());
     }
 
+    /**
+     * Serializa a carta incluindo metadados de tipo polimórfico.
+     */
     @Override
     public void serializeWithType(DamageCard value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {

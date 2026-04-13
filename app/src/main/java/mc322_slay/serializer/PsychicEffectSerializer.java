@@ -11,15 +11,27 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import mc322_slay.effect.PsychicEffect;
 
+/**
+ * Serializador customizado de {@link PsychicEffect}.
+ */
 public class PsychicEffectSerializer extends StdSerializer<PsychicEffect> {
+    /**
+     * Cria o serializador padrão para uso pelo Jackson.
+     */
     public PsychicEffectSerializer() {
         this(null);
     }
 
+    /**
+     * @param t tipo concreto serializado.
+     */
     public PsychicEffectSerializer(Class<PsychicEffect> t) {
         super(t);
     }
 
+    /**
+     * Serializa nome, duração e dano periódico do efeito.
+     */
     @Override
     public void serialize(PsychicEffect value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
@@ -27,6 +39,9 @@ public class PsychicEffectSerializer extends StdSerializer<PsychicEffect> {
         gen.writeNumberField("damage", value.getDamage());
     }
 
+    /**
+     * Serializa o efeito incluindo metadados de tipo polimórfico.
+     */
     @Override
     public void serializeWithType(PsychicEffect value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {

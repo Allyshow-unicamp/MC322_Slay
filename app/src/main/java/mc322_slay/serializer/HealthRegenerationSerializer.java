@@ -11,15 +11,27 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import mc322_slay.effect.HealthRegeneration;
 
+/**
+ * Serializador customizado de {@link HealthRegeneration}.
+ */
 public class HealthRegenerationSerializer extends StdSerializer<HealthRegeneration> {
+    /**
+     * Cria o serializador padrão para uso pelo Jackson.
+     */
     public HealthRegenerationSerializer() {
         this(null);
     }
 
+    /**
+     * @param t tipo concreto serializado.
+     */
     public HealthRegenerationSerializer(Class<HealthRegeneration> t) {
         super(t);
     }
 
+    /**
+     * Serializa nome, duração e valor de cura do efeito.
+     */
     @Override
     public void serialize(HealthRegeneration value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
@@ -27,6 +39,9 @@ public class HealthRegenerationSerializer extends StdSerializer<HealthRegenerati
         gen.writeNumberField("health", value.getHealth());
     }
 
+    /**
+     * Serializa o efeito incluindo metadados de tipo polimórfico.
+     */
     @Override
     public void serializeWithType(HealthRegeneration value, JsonGenerator gen, SerializerProvider serializers,
             TypeSerializer typeSer) throws IOException {
