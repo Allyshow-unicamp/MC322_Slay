@@ -23,6 +23,8 @@ public class GameManager {
     private Scanner scanner;
     /** Baralho principal de compra (pilha de cartas). */
     private CardStack deck;
+    private GameMap map;
+    private boolean end;
 
     /**
      * Preenche o baralho de compra com cartas iniciais da partida.
@@ -48,6 +50,8 @@ public class GameManager {
         this.hero = new Hero("", 50, 0, "eva.txt");
         this.deck = new CardStack();
         this.scanner = new Scanner(System.in);
+        this.map = new GameMap();
+        this.map.buildMap("map.json", "battles.json");
     }
 
     /**
@@ -105,27 +109,27 @@ public class GameManager {
         this.hero.resetEffects();
     }
 
-    /**
-     * Executa em sequência {@code n} batalhas contra anjos com dificuldade
-     * crescente.
-     * Se o jogador perder em qualquer etapa, interrompe e não exibe a tela de
-     * vitória.
-     *
-     * @param n número de batalhas a disputar.
-     */
-    public void performNBattles(int n) {
-        boolean won = true;
-        for (int i = 0; i < n; i++) {
-            Battle battle = new Battle(hero, new Enemy("Angel", 150 + 50 * i, 100 + 50 * i, "sachiel.txt"),
-                    deck);
-            if (!battle.performFight()) {
-                won = false;
-                break;
-            }
-            resetBattle();
-        }
+    public boolean isRunning() {
+        return hero.isAlive() && !end;
+    }
 
+    public int selectPathOnMap() {
+        this.map.printMap();
+        scanner.nextLine();
+        return 0;
+    }
+
+    public boolean performBattle(int option) {
+        Battle battle = new Battle(hero, null, deck);
+        boolean result = battle.performFight();
+        resetBattle();
+        return result;
+    }
+
+    public void printResults(boolean won) {
         if (won)
             Interface.printFile("victory.txt");
+        else
+            Interface.printFile("defeat.txt");
     }
 }
