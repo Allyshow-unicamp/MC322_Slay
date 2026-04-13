@@ -36,6 +36,7 @@ public class ATFieldCorrosionSerializer extends StdSerializer<ATFieldCorrosion> 
     public void serialize(ATFieldCorrosion value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("turns", value.getPoints());
+        gen.writeNumberField("startTurns", value.getStartPoints());
     }
 
     /**

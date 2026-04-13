@@ -36,6 +36,7 @@ public class HighSyncRateSerializer extends StdSerializer<HighSyncRate> {
     public void serialize(HighSyncRate value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("turns", value.getPoints());
+        gen.writeNumberField("startTurns", value.getStartPoints());
         gen.writeNumberField("boost", value.getBoost());
     }
 

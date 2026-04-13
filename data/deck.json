@@ -108,6 +108,7 @@
       "type" : "poison",
       "name" : "Dano psicológico",
       "turns" : 3,
+      "startTurns": 3,
       "damage" : 30
     }
   }, {
@@ -119,6 +120,7 @@
       "type" : "poison",
       "name" : "Dano psicológico",
       "turns" : 3,
+      "startTurns": 3,
       "damage" : 60
     }
   }, {
@@ -130,6 +132,7 @@
       "type" : "poison",
       "name" : "Dano psicológico",
       "turns" : 3,
+      "startTurns": 3,
       "damage" : 90
     }
   }, {
@@ -141,6 +144,7 @@
       "type" : "regeneration",
       "name" : "Restauração Forçada do pulso vital",
       "turns" : 3,
+      "startTurns": 3,
       "health" : 10
     }
   }, {
@@ -152,6 +156,7 @@
       "type" : "regeneration",
       "name" : "Restauração Forçada do pulso vital",
       "turns" : 3,
+      "startTurns": 3,
       "health" : 20
     }
   }, {
@@ -163,6 +168,7 @@
       "type" : "regeneration",
       "name" : "Restauração Forçada do pulso vital",
       "turns" : 3,
+      "startTurns": 3,
       "health" : 30
     }
   }, {
@@ -174,6 +180,7 @@
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
       "turns" : 2,
+      "startTurns": 2,
       "boost" : 1.5
     }
   }, {
@@ -185,6 +192,7 @@
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
       "turns" : 2,
+      "startTurns": 2,
       "boost" : 1.5
     }
   }, {
@@ -196,6 +204,7 @@
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
       "turns" : 2,
+      "startTurns": 2,
       "deboost" : 0.75
     }
   }, {
@@ -207,6 +216,7 @@
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
       "turns" : 2,
+      "startTurns": 2,
       "deboost" : 0.75
     }
   }, {
@@ -217,7 +227,8 @@
     "effect" : {
       "type" : "corrosion",
       "name" : "Corrosão do campo AT",
-      "turns" : 2
+      "turns" : 2,
+      "startTurns": 2
     }
   }, {
     "type" : "effect",
@@ -227,7 +238,8 @@
     "effect" : {
       "type" : "corrosion",
       "name" : "Corrosão do campo AT",
-      "turns" : 3
+      "turns" : 3,
+      "startTurns": 3
     }
   } ]
 }

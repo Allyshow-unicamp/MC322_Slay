@@ -36,6 +36,7 @@ public class PsychicEffectSerializer extends StdSerializer<PsychicEffect> {
     public void serialize(PsychicEffect value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("turns", value.getPoints());
+        gen.writeNumberField("startTurns", value.getStartPoints());
         gen.writeNumberField("damage", value.getDamage());
     }
 

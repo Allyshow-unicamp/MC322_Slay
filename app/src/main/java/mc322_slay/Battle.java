@@ -75,6 +75,8 @@ public class Battle {
      * @return {@code true} se o herói vencer; {@code false} se for derrotado.
      */
     public boolean performFight() {
+        Interface.clearScreen();
+
         Interface.printMessage("\r\n=== BATALHA ÉPICA ===", ColorEnum.purple);
         Interface.printMessage(this.hero.getName() + " x " + this.angel.getName() + "\r\n", ColorEnum.purple);
 
@@ -367,11 +369,12 @@ public class Battle {
     private boolean results() {
         Interface.printTurnInfo(hero, angel);
 
+        Interface.clearScreen();
+
         if (hero.isAlive()) {
-            Interface.printFile("youWin.txt");
+            Interface.printFile("victory.txt", ColorEnum.green);
             return true;
         } else {
-            Interface.printFile("gameOver.txt");
             return false;
         }
     }

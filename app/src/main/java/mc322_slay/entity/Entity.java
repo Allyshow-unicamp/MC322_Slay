@@ -38,15 +38,14 @@ public abstract class Entity {
     protected int health;
 
     /** Vida máxima da entidade. */
+    @JsonProperty("maxHealth")
     protected int maxHealth;
 
     @JsonProperty("shield")
     /** Valor atual do campo AT (escudo) que absorve dano antes da vida. */
     protected int ATField;
 
-    /** Valor máximo do campo AT (pode ser usado por regras futuras de limite de escudo). */
-    protected int maxATField;
-
+    @JsonProperty("effects")
     /** Lista de efeitos aplicados à entidade. */
     protected ArrayList<Effect> effects;
 
@@ -97,15 +96,6 @@ public abstract class Entity {
      */
     public int getShield() {
         return this.ATField;
-    }
-
-    /**
-     * Obtém o valor máximo do escudo (AT Field).
-     * 
-     * @return O valor máximo do escudo.
-     */
-    public int getMaxShield() {
-        return this.maxATField;
     }
 
     /**

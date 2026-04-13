@@ -29,6 +29,14 @@ public class GameMap {
     private DefaultMutableTreeNode tree;
     private DefaultMutableTreeNode playerNode;
 
+    public DefaultMutableTreeNode getPlayerNode() {
+        return playerNode;
+    }
+
+    public void setPlayerNode(DefaultMutableTreeNode playerNode) {
+        this.playerNode = playerNode;
+    }
+
     /**
      * Carrega matriz visual do mapa e monta a árvore de batalhas.
      *
@@ -137,14 +145,20 @@ public class GameMap {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 char c = map[i][j];
-                if (c == '|' || c == '\\' || c == '/' || c == ' ') {} // connections or empty spaces
+                if (c == '|' || c == '\\' || c == '/' || c == ' ') {
+                    System.out.print(c);
+                } // connections or empty spaces
                 else {
                     BattleNode nodeP = (BattleNode) playerNode.getUserObject();
                     BattleNode nodeX = battles.get(c - '0');
-                    if (nodeX.getId() == nodeP.getId())
+                    if (nodeX.getId() == nodeP.getId()) {
                         c = 'P'; // player position
-                    else if (nodeX.isVisited())
+                        Interface.printInline(c + "", ColorEnum.yellow);
+                    }
+                    else if (nodeX.isVisited()) {
                         c = 'x'; // already visited position
+                        Interface.printInline(c + "", ColorEnum.red);
+                    }
                     else {
                         boolean nextOption = false;
                         for (int k = 0; k < playerNode.getChildCount(); k++) {
@@ -154,16 +168,26 @@ public class GameMap {
                                 c = (char) ('0' + counter); // options to select position
                                 counter++;
                                 nextOption = true;
+                                Interface.printInline(c + "", ColorEnum.yellow);
                                 break;
                             }
                         }
-                        if (!nextOption)
+                        if (!nextOption) {
                             c = 'o'; // normal position
+                            Interface.printInline(c + "", ColorEnum.blue);
+                        }
                     }
                 }
-                System.out.print(c);
             }
             System.out.println();
         }
+
+        Interface.printInline("\r\n========\r\n", ColorEnum.purple);
+        System.out.println("Legenda: ");
+        System.out.println("P: Sua posição (player)");
+        System.out.println("o: Batalhas ainda não travadas");
+        System.out.println("x: Batalhas já vencidas");
+        System.out.println("1,...,n: Caminhos disponíveis");
+        Interface.printInline("\r\n========\r\n", ColorEnum.purple);
     }
 }

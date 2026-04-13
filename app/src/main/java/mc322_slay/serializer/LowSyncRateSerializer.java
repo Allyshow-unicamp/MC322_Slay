@@ -36,6 +36,7 @@ public class LowSyncRateSerializer extends StdSerializer<LowSyncRate> {
     public void serialize(LowSyncRate value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("turns", value.getPoints());
+        gen.writeNumberField("startTurns", value.getStartPoints());
         gen.writeNumberField("deboost", value.getDeboost());
     }
 

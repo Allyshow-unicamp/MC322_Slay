@@ -4,8 +4,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -15,8 +17,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -26,8 +30,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -37,8 +43,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -48,8 +56,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -59,8 +69,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -70,8 +82,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -81,8 +95,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false
@@ -92,8 +108,10 @@
     "enemy" : {
       "type" : "enemy",
       "name" : "Angel",
-      "health" : 150,
-      "shield" : 100,
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
       "image" : "sachiel.txt"
     },
     "visited" : false

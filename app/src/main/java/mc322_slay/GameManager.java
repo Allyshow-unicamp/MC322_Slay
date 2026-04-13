@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -31,7 +33,7 @@ public class GameManager {
     void populateDeck() {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..", "data", "deck.json"));
+            String serialized = Files.readString(Paths.get("..","data", "deck.json"));
             deck = mapper.readValue(serialized, CardStack.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +60,7 @@ public class GameManager {
      */
     public void initialScreen() {
         Interface.clearScreen();
-        Interface.printFile("initialScreenArt.txt");
+        Interface.printFile("initialScreenArt.txt", ColorEnum.reset);
         System.out.println("Digite [Enter] para começar");
         scanner.nextLine();
     }
@@ -67,7 +69,7 @@ public class GameManager {
      * Permite ao jogador escolher o personagem controlado.
      */
     public void selectCharacter() {
-        Interface.printFile("selectCharacter.txt");
+        Interface.printFile("selectCharacter.txt", ColorEnum.reset);
         int option;
         String name = "";
         while (true) {
@@ -113,22 +115,59 @@ public class GameManager {
     }
 
     public int selectPathOnMap() {
+        Interface.printInline("\r\n\r\n=== MAPA ===\r\n", ColorEnum.purple);
         this.map.printMap();
-        scanner.nextLine();
-        return 0;
+
+        DefaultMutableTreeNode playerNode = map.getPlayerNode();
+        int nOptions = playerNode.getChildCount();
+        if (nOptions == 0) // reached end
+            return -1;
+
+        int option;
+        while (true) {
+            try {
+                System.out.print("\r\nSelecione o caminho que deseja seguir no mapa: ");
+                option = Integer.parseInt(scanner.nextLine());
+                if (0 < option && option <= nOptions) {
+                    break;
+                } else {
+                    Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                }
+            } catch (Exception e) {
+                Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+            }
+        }
+        
+        return option;
     }
 
     public boolean performBattle(int option) {
-        Battle battle = new Battle(hero, null, deck);
-        boolean result = battle.performFight();
-        resetBattle();
-        return result;
+        if (option == -1) 
+            return true;
+        
+        DefaultMutableTreeNode playerNode = map.getPlayerNode();
+        BattleNode playerBattleNode = (BattleNode) playerNode.getUserObject();
+
+        DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(option - 1);
+        BattleNode childBattleNode = (BattleNode) childNode.getUserObject();
+
+        Battle battle = new Battle(hero, childBattleNode.getEnemy(), deck);
+        boolean won = battle.performFight();
+        if (won) {
+            playerBattleNode.setVisited(true);
+            playerNode.setUserObject(playerBattleNode);
+            map.setPlayerNode(childNode);
+            resetBattle();
+        }
+        return won;
     }
 
     public void printResults(boolean won) {
+        Interface.clearScreen();
+
         if (won)
-            Interface.printFile("victory.txt");
+            Interface.printFile("youWin.txt", ColorEnum.purple);
         else
-            Interface.printFile("defeat.txt");
+            Interface.printFile("gameOver.txt", ColorEnum.red);
     }
 }

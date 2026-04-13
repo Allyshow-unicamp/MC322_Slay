@@ -36,6 +36,8 @@ public class EnemySerializer extends StdSerializer<Enemy> {
     public void serialize(Enemy value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("health", value.getHealth());
+        gen.writeNumberField("maxHealth", value.getHealth());
+        gen.writeObjectField("effects", value.getHealth());
         gen.writeNumberField("shield", value.getShield());
         gen.writeStringField("image", value.getImage());
     }
