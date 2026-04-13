@@ -1,0 +1,101 @@
+{
+  "9" : {
+    "id" : 9,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "8" : {
+    "id" : 8,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "7" : {
+    "id" : 7,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "6" : {
+    "id" : 6,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "5" : {
+    "id" : 5,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "4" : {
+    "id" : 4,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "3" : {
+    "id" : 3,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "2" : {
+    "id" : 2,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "1" : {
+    "id" : 1,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 150,
+      "shield" : 100,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  }
+}
