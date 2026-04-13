@@ -141,4 +141,8 @@ public class Enemy extends Entity {
         this.imageAsset = imageAsset;
         this.maxHealth = health;
     }
+
+    public Enemy() {
+        super();
+    }
 }

@@ -1,11 +1,12 @@
 package mc322_slay;
 
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Hashtable;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -24,7 +25,7 @@ public class GameMap {
     public void buildMap(String mapFile, String battleFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..", "data", mapFile));
+            String serialized = Files.readString(Path.of("..","data", mapFile));
             this.map = mapper.readValue(serialized, char[][].class);
             this.rows = this.map.length;
             this.cols = this.map[0].length;
@@ -33,8 +34,8 @@ public class GameMap {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     char value = map[i][j];
-                    if (value != ' ' && value != '\\' && value != '/') {
-                        mapCoords.put((int) value, new pos(j, i));
+                    if (value != ' ' && value != '|' && value != '\\' && value != '/') {
+                        mapCoords.put(value - '0', new pos(j, i));
                     }
                 }
                 System.out.println();
@@ -49,8 +50,9 @@ public class GameMap {
     public void buildTree(String battleFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..", "data", battleFile));
-            battles = mapper.readValue(serialized, Hashtable.class);
+            String serialized = Files.readString(Path.of("..","data", battleFile));
+            battles = mapper.readValue(serialized, new TypeReference<Hashtable<Integer, BattleNode>>() {
+            });
 
             tree = new DefaultMutableTreeNode(battles.get(1));
             buildTreeRec(1, tree);
@@ -67,7 +69,7 @@ public class GameMap {
     }
 
     public void buildTreeRec(int currenId, DefaultMutableTreeNode currentNode) {
-        int[] dirX = {-1, 0, 1};
+        int[] dirX = { -1, 0, 1 };
 
         pos coord = mapCoords.get(currenId);
 
@@ -77,40 +79,20 @@ public class GameMap {
 
             if (isValidPos(newX, newY)) {
                 char c = map[newY][newX];
-                int nextId;
-                if (c == '|') { // upper node
-                    nextId = (int) map[newY - 1][newX];
-                } else if (c == '\\') { // left node
-                    nextId = (int) map[newY - 1][newX - 1];
-                } else { // right node
-                    nextId = (int) map[newY - 1][newX + 1];
-                }
+                if (c != ' ') {
+                    int nextId;
+                    if (c == '|') { // upper node
+                        nextId = map[newY - 1][newX] - '0';
+                    } else if (c == '\\') { // left node
+                        nextId = map[newY - 1][newX - 1] - '0';
+                    } else { // right node
+                        nextId = map[newY - 1][newX + 1] - '0';
+                    }
 
-                DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(battles.get(nextId));
-                currentNode.add(nextNode);
-                buildTreeRec(nextId, nextNode);
-            }
-        }
-    }
-
-    private char charToBePrinted(char c, int counter) {
-        if (c == '|' || c == '\\' || c == '/' || c == ' ')    
-            return c; // connections or empty spaces
-        else {
-            BattleNode nodeP = (BattleNode) playerNode.getUserObject();
-            BattleNode nodeX = battles.get((int) c);
-            if (nodeX.getId() == nodeP.getId())
-                return 'P'; // player position
-            else if (nodeX.isVisited())
-                return 'x'; // already visited position
-            else {
-                for (int k = 0; k < playerNode.getChildCount(); k++) {
-                    DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(k);
-                    BattleNode nodeC = (BattleNode) childNode.getUserObject();
-                    if (nodeX.getId() == nodeC.getId()) 
-                        return (char) ('0' + counter); // options to select position
+                    DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(battles.get(nextId));
+                    currentNode.add(nextNode);
+                    buildTreeRec(nextId, nextNode);
                 }
-                return 'o'; // normal position 
             }
         }
     }
@@ -119,7 +101,32 @@ public class GameMap {
         int counter = 1;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                System.out.print(charToBePrinted(map[i][j], counter));
+                char c = map[i][j];
+                if (c == '|' || c == '\\' || c == '/' || c == ' ') {} // connections or empty spaces
+                else {
+                    BattleNode nodeP = (BattleNode) playerNode.getUserObject();
+                    BattleNode nodeX = battles.get(c - '0');
+                    if (nodeX.getId() == nodeP.getId())
+                        c = 'P'; // player position
+                    else if (nodeX.isVisited())
+                        c = 'x'; // already visited position
+                    else {
+                        boolean nextOption = false;
+                        for (int k = 0; k < playerNode.getChildCount(); k++) {
+                            DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(k);
+                            BattleNode nodeC = (BattleNode) childNode.getUserObject();
+                            if (nodeX.getId() == nodeC.getId()) {
+                                c = (char) ('0' + counter); // options to select position
+                                counter++;
+                                nextOption = true;
+                                break;
+                            }
+                        }
+                        if (!nextOption)
+                            c = 'o'; // normal position
+                    }
+                }
+                System.out.print(c);
             }
             System.out.println();
         }

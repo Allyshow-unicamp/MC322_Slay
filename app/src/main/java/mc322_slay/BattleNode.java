@@ -31,6 +31,10 @@ public class BattleNode {
         this.visited = visited;
     }
 
+    public BattleNode() {
+        super();
+    }
+
     public BattleNode(int id, Enemy enemy, boolean visited) {
         this.id = id;
         this.enemy = enemy;
