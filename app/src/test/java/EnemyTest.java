@@ -1,5 +1,4 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
 import mc322_slay.effect.HighSyncRate;
@@ -12,6 +11,9 @@ import mc322_slay.entity.Hero;
  * sincronização no multiplicador final.
  */
 public class EnemyTest {
+    /**
+     * Garante que o ataque aplica o dano base e reduz o escudo do herói alvo.
+     */
     @Test
     public void damageInflictedOnAttack() {
         Enemy enemy = new Enemy("Anjo", 200, 100, null);
@@ -22,6 +24,9 @@ public class EnemyTest {
         assertEquals(50 - enemy.getDamage(), hero.getShield());
     }
 
+    /**
+     * Garante que efeitos de boost/deboost alteram o multiplicador de dano final.
+     */
     @Test
     public void damageInflictedWithEffects() {
         Enemy enemy = new Enemy("Anjo", 200, 100, null);
