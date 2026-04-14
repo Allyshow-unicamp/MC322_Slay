@@ -25,7 +25,7 @@ public class GameManager {
     /** Baralho principal de compra (pilha de cartas). */
     private CardStack deck;
     private GameMap map;
-    private boolean end;
+    private boolean end = false;
 
     /**
      * Preenche o baralho de compra com cartas iniciais da partida.
@@ -115,18 +115,19 @@ public class GameManager {
     }
 
     public int selectPathOnMap() {
-        Interface.printInline("\r\n\r\n=== MAPA ===\r\n", ColorEnum.purple);
         this.map.printMap();
 
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         int nOptions = playerNode.getChildCount();
-        if (nOptions == 0) // reached end
+        if (nOptions == 0) { // reached end 
+            end = true;
             return -1;
+        }
 
         int option;
         while (true) {
             try {
-                System.out.print("\r\nSelecione o caminho que deseja seguir no mapa: ");
+                System.out.print("Selecione o caminho que deseja seguir no mapa: ");
                 option = Integer.parseInt(scanner.nextLine());
                 if (0 < option && option <= nOptions) {
                     break;

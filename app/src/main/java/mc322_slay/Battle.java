@@ -78,7 +78,7 @@ public class Battle {
         Interface.clearScreen();
 
         Interface.printMessage("\r\n=== BATALHA ÉPICA ===", ColorEnum.purple);
-        Interface.printMessage(this.hero.getName() + " x " + this.angel.getName() + "\r\n", ColorEnum.purple);
+        Interface.printMessage(this.hero.getName() + " x " + this.angel.getName(), ColorEnum.purple);
 
         while (isRunning()) {
             notifySubscribers(EventEnum.playerStartOfTurn);
@@ -236,7 +236,7 @@ public class Battle {
         int option = 0;
         while (true) {
             try {
-                System.out.println("Qual carta deseja usar (-1 para passar o turno): ");
+                System.out.print("Qual carta deseja usar (-1 para passar o turno): ");
                 option = Integer.parseInt(scanner.nextLine());
                 if (-1 <= option && option < hand.nCards()) {
                     if (option == -1)
@@ -267,7 +267,7 @@ public class Battle {
      * @param option índice da carta na mão ou {@code -1} para passar.
      */
     private void playerAction(int option) {
-        Interface.printMessage("\r\n", ColorEnum.reset);
+        Interface.printMessage("", ColorEnum.reset);
 
         if (option == -1) {
             syncRate = 0; // end of turn
@@ -370,6 +370,8 @@ public class Battle {
         Interface.printTurnInfo(hero, angel);
 
         Interface.clearScreen();
+
+        System.out.print("\r\n\r\n");
 
         if (hero.isAlive()) {
             Interface.printFile("victory.txt", ColorEnum.green);

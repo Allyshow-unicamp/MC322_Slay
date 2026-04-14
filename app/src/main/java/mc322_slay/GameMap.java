@@ -141,6 +141,7 @@ public class GameMap {
      * Marca posição do jogador, caminhos já visitados e opções disponíveis.
      */
     public void printMap() {
+        Interface.printInline("\r\n= MAPA =\r\n", ColorEnum.purple);
         int counter = 1;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -182,12 +183,12 @@ public class GameMap {
             System.out.println();
         }
 
-        Interface.printInline("\r\n========\r\n", ColorEnum.purple);
+        Interface.printInline("========\r\n", ColorEnum.purple);
         System.out.println("Legenda: ");
         System.out.println("P: Sua posição (player)");
         System.out.println("o: Batalhas ainda não travadas");
         System.out.println("x: Batalhas já vencidas");
         System.out.println("1,...,n: Caminhos disponíveis");
-        Interface.printInline("\r\n========\r\n", ColorEnum.purple);
+        Interface.printInline("========\r\n", ColorEnum.purple);
     }
 }

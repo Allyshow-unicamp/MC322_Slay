@@ -1,4 +1,82 @@
 {
+  "22" : {
+    "id" : 22,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "21" : {
+    "id" : 21,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "20" : {
+    "id" : 20,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "19" : {
+    "id" : 19,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "18" : {
+    "id" : 18,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
+  "17" : {
+    "id" : 17,
+    "enemy" : {
+      "type" : "enemy",
+      "name" : "Angel",
+      "health" : 100,
+      "maxHealth": 100,
+      "effects": [],
+      "shield" : 50,
+      "image" : "sachiel.txt"
+    },
+    "visited" : false
+  },
   "9" : {
     "id" : 9,
     "enemy" : {
@@ -107,7 +185,7 @@
     "id" : 1,
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
+      "name" : "Ignored",
       "health" : 100,
       "maxHealth": 100,
       "effects": [],

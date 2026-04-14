@@ -103,7 +103,7 @@ public class Interface {
      */
     public static void printTurnInfo(Hero hero, Enemy angel) {
         System.out.println(
-                "\r\nHerói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor()
+                "Herói: " + ColorEnum.blue.getColor() + hero.getName() + ColorEnum.reset.getColor()
                         + " vs. Inimigo: "
                         + ColorEnum.red.getColor() + angel.getName() + ColorEnum.reset.getColor() + "\r\n");
 
@@ -126,14 +126,14 @@ public class Interface {
                     + ColorEnum.reset.getColor() + ": ";
             for (Effect effect : hero.getEffects())
                 result += "\r\n   " + effect.getString();
-            result += "\r\n";
+            result += "\r\n\r\n";
         }
         if (!angel.getEffects().isEmpty()) {
             result += ColorEnum.yellow.getColor() + "Efeitos de " + ColorEnum.red.getColor() + angel.getName()
                     + ColorEnum.reset.getColor() + ": ";
             for (Effect effect : angel.getEffects())
                 result += "\r\n   " + effect.getString();
-            result += "\r\n";
+            result += "\r\n\r\n";
         }
 
         System.out.print(result);
@@ -147,7 +147,7 @@ public class Interface {
      * @param initialSync energia máxima padrão.
      */
     public static void showHand(List<Card> hand, int syncRate, int initialSync) {
-        System.out.println("\r\n===== Sua Mão =====\r\n");
+        System.out.println("===== Sua Mão =====");
 
         // Ordena por custo decrescente: o comparador inverte o resultado para que o maior custo apareça primeiro.
         hand.sort((card1, card2) -> {
@@ -172,7 +172,7 @@ public class Interface {
                             + ColorEnum.reset.getColor() + ": " + card.getDescription());
         }
 
-        System.out.println("\r\n===================\r\n" + //
+        System.out.println("===================\r\n" + //
                 ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
                 + " de Sincronização (Energia) disponível\r\n");
     }
