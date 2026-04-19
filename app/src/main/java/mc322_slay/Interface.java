@@ -88,8 +88,21 @@ public class Interface {
             List<String> lines1 = Files.readAllLines(Paths.get(pathImg1.toString()), StandardCharsets.UTF_8);
             List<String> lines2 = Files.readAllLines(Paths.get(pathImg2.toString()), StandardCharsets.UTF_8);
 
-            for (int i = 0; i < Math.min(lines1.size(), lines2.size()); i++) {
+            int i = 0;
+            for (i = 0; i < Math.min(lines1.size(), lines2.size()); i++) {
                 System.out.println(lines1.get(i) + lines2.get(i));
+            }
+
+            if (lines1.size() > lines2.size())
+                for (; i < lines1.size(); i++) 
+                    System.out.println(lines1.get(i));
+            else if (lines2.size() > lines1.size()) {
+                int n_left = lines1.get(0).length();
+                for (; i < lines2.size(); i++) {
+                    for (int j = 0; j < n_left; j++) 
+                        System.out.print(" ");
+                    System.out.println(lines2.get(i));
+                }   
             }
         } catch (IOException e) {
         }

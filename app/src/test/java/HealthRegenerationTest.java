@@ -74,7 +74,7 @@ public class HealthRegenerationTest {
     @Test
     public void beNotifiedEnemyStartOfTurn() {
         Hero hero = new Hero("Herói", 50, 0, null);
-        Enemy angel = new Enemy("Anjo", 200, 100, null);
+        Enemy angel = new Enemy("Anjo", 200, 100, 20, 40, null);
         angel.takeDamage(200);
         angel.applyEffect(new HealthRegeneration("Regeneração", 20, 2));
         HealthRegeneration regen = (HealthRegeneration) angel.getLastEffect();
@@ -87,6 +87,6 @@ public class HealthRegenerationTest {
     }
 
     private static Battle battleFor(Hero hero) {
-        return new Battle(hero, new Enemy("Anjo", 200, 100, null), new CardStack());
+        return new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
     }
 }

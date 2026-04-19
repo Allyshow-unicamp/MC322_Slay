@@ -52,53 +52,38 @@
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 1",
-    "cost" : 1,
-    "description" : "Restaura a integridade do Campo AT entre 2 e 4 pontos"
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 2",
     "cost" : 2,
-    "description" : "Restaura a integridade do Campo AT entre 4 e 8 pontos"
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 3",
-    "cost" : 3,
-    "description" : "Restaura a integridade do Campo AT entre 6 e 12 pontos"
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 4",
-    "cost" : 4,
     "description" : "Restaura a integridade do Campo AT entre 8 e 16 pontos"
   }, {
     "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 5",
-    "cost" : 5,
-    "description" : "Restaura a integridade do Campo AT entre 10 e 20 pontos"
+    "name" : "Regeneração do Campo de Terror Absoluto 1",
+    "cost" : 2,
+    "description" : "Restaura a integridade do Campo AT entre 8 e 16 pontos"
   }, {
     "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 6",
-    "cost" : 6,
-    "description" : "Restaura a integridade do Campo AT entre 12 e 24 pontos"
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 7",
-    "cost" : 7,
-    "description" : "Restaura a integridade do Campo AT entre 14 e 28 pontos"
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 8",
-    "cost" : 8,
+    "name" : "Regeneração do Campo de Terror Absoluto 2",
+    "cost" : 4,
     "description" : "Restaura a integridade do Campo AT entre 16 e 32 pontos"
   }, {
     "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 9",
-    "cost" : 9,
-    "description" : "Restaura a integridade do Campo AT entre 18 e 36 pontos"
+    "name" : "Regeneração do Campo de Terror Absoluto 2",
+    "cost" : 4,
+    "description" : "Restaura a integridade do Campo AT entre 16 e 32 pontos"
   }, {
     "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 10",
+    "name" : "Regeneração do Campo de Terror Absoluto 3",
+    "cost" : 6,
+    "description" : "Restaura a integridade do Campo AT entre 24 e 48 pontos"
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 4",
+    "cost" : 8,
+    "description" : "Restaura a integridade do Campo AT entre 32 e 64 pontos"
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 5",
     "cost" : 10,
-    "description" : "Restaura a integridade do Campo AT entre 20 e 40 pontos"
+    "description" : "Restaura a integridade do Campo AT entre 40 e 80 pontos"
   }, {
     "type" : "effect",
     "name" : "Dano psicológico 1",
@@ -122,18 +107,6 @@
       "turns" : 3,
       "startTurns": 3,
       "damage" : 60
-    }
-  }, {
-    "type" : "effect",
-    "name" : "Dano psicológico 3",
-    "cost" : 9,
-    "description" : "Use-a para dar 90 de dano por 3 turnos",
-    "effect" : {
-      "type" : "poison",
-      "name" : "Dano psicológico",
-      "turns" : 3,
-      "startTurns": 3,
-      "damage" : 90
     }
   }, {
     "type" : "effect",
@@ -161,63 +134,51 @@
     }
   }, {
     "type" : "effect",
-    "name" : "Restauração Forçada do pulso vital 3",
+    "name" : "Alta taxa de sincronização",
+    "cost" : 6,
+    "description" : "Use-a para dobrar o dano causado pelas armas do jogador por 2 turnos",
+    "effect" : {
+      "type" : "strength",
+      "name" : "Alta taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "boost" : 2
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Alta taxa de sincronização 2",
     "cost" : 9,
-    "description" : "Use-a para restaurar 30 pontos de vida por 3 turnos",
-    "effect" : {
-      "type" : "regeneration",
-      "name" : "Restauração Forçada do pulso vital",
-      "turns" : 3,
-      "startTurns": 3,
-      "health" : 30
-    }
-  }, {
-    "type" : "effect",
-    "name" : "Alta taxa de sincronização",
-    "cost" : 4,
-    "description" : "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos",
+    "description" : "Use-a para dobrar o dano causado pelas armas do jogador por 3 turnos",
     "effect" : {
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
       "turns" : 2,
       "startTurns": 2,
-      "boost" : 1.5
-    }
-  }, {
-    "type" : "effect",
-    "name" : "Alta taxa de sincronização",
-    "cost" : 4,
-    "description" : "Use-a para aumentar em 50% o dano causado pelas armas do jogador por 2 turnos",
-    "effect" : {
-      "type" : "strength",
-      "name" : "Alta taxa de sincronização",
-      "turns" : 2,
-      "startTurns": 2,
-      "boost" : 1.5
+      "boost" : 2
     }
   }, {
     "type" : "effect",
     "name" : "Baixa taxa de sincronização",
-    "cost" : 4,
-    "description" : "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos",
+    "cost" : 6,
+    "description" : "Use-a para reduzir em 75% o dano causado pelo ataque do inimigo por 2 turnos",
     "effect" : {
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
       "turns" : 2,
       "startTurns": 2,
-      "deboost" : 0.75
+      "deboost" : 0.25
     }
   }, {
     "type" : "effect",
-    "name" : "Baixa taxa de sincronização",
-    "cost" : 4,
-    "description" : "Use-a para reduzir em 25% o dano causado pelo ataque do inimigo por 2 turnos",
+    "name" : "Baixa taxa de sincronização 2",
+    "cost" : 9,
+    "description" : "Use-a para reduzir em 75% o dano causado pelo ataque do inimigo por 3 turnos",
     "effect" : {
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
       "turns" : 2,
       "startTurns": 2,
-      "deboost" : 0.75
+      "deboost" : 0.25
     }
   }, {
     "type" : "effect",

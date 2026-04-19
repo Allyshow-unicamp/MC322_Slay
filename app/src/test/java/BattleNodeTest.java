@@ -17,10 +17,10 @@ public class BattleNodeTest {
      */
     @Test
     public void constructorSetsNodeData() {
-        Enemy enemy = new Enemy("Sachiel", 180, 50, "sachiel.txt");
-        BattleNode node = new BattleNode(7, enemy, true);
+        Enemy enemy = new Enemy("Sachiel", 180, 50, 20, 40, "sachiel.txt");
+        BattleNode node = new BattleNode('7', enemy, true);
 
-        assertEquals(7, node.getId());
+        assertEquals('7', node.getId());
         assertSame(enemy, node.getEnemy());
         assertTrue(node.isVisited());
     }
@@ -31,13 +31,13 @@ public class BattleNodeTest {
     @Test
     public void settersUpdateNodeState() {
         BattleNode node = new BattleNode();
-        Enemy enemy = new Enemy("Ramiel", 200, 80, "ramiel.txt");
+        Enemy enemy = new Enemy("Ramiel", 200, 80, 20, 40, "ramiel.txt");
 
-        node.setId(3);
+        node.setId('3');
         node.setEnemy(enemy);
         node.setVisited(false);
 
-        assertEquals(3, node.getId());
+        assertEquals('3', node.getId());
         assertSame(enemy, node.getEnemy());
         assertFalse(node.isVisited());
     }

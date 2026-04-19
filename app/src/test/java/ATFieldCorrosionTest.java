@@ -22,7 +22,7 @@ public class ATFieldCorrosionTest {
         ATFieldCorrosion atFieldCorrosion = new ATFieldCorrosion("Corrosão", 3);
         atFieldCorrosion.setOwner(hero);
 
-        Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, null), new CardStack());
+        Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
 
         assertFalse(atFieldCorrosion.beNotified(EventEnum.playerEndOfTurn, battle));
     }
@@ -32,7 +32,7 @@ public class ATFieldCorrosionTest {
         Hero hero = new Hero("Herói", 50, 20, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão", 1));
 
-        Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, null), new CardStack());
+        Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
     
         ATFieldCorrosion corrosion = (ATFieldCorrosion) hero.getLastEffect();
         assertTrue(corrosion.beNotified(EventEnum.playerEndOfTurn, battle));
@@ -90,6 +90,6 @@ public class ATFieldCorrosionTest {
     }
 
     private static Battle battleFor(Hero hero) {
-        return new Battle(hero, new Enemy("Anjo", 200, 100, null), new CardStack());
+        return new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
     }
 }

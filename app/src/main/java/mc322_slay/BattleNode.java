@@ -7,21 +7,21 @@ import mc322_slay.entity.Enemy;
  * Cada nó representa uma batalha contra um inimigo e mantém o estado de visita.
  */
 public class BattleNode {
-    private int id;
+    private char id;
     private Enemy enemy;
     private boolean visited;
 
     /**
      * @return identificador único do nó no mapa.
      */
-    public int getId() {
+    public char getId() {
         return id;
     }
 
     /**
      * @param id novo identificador único do nó.
      */
-    public void setId(int id) {
+    public void setId(char id) {
         this.id = id;
     }
 
@@ -67,7 +67,7 @@ public class BattleNode {
      * @param enemy inimigo da batalha.
      * @param visited estado inicial de visita.
      */
-    public BattleNode(int id, Enemy enemy, boolean visited) {
+    public BattleNode(char id, Enemy enemy, boolean visited) {
         this.id = id;
         this.enemy = enemy;
         this.visited = visited;

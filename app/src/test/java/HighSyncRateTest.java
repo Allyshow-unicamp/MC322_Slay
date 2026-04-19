@@ -76,7 +76,7 @@ public class HighSyncRateTest {
     @Test
     public void beNotifiedEnemyEndOfTurn() {
         Hero hero = new Hero("Herói", 50, 0, null);
-        Enemy angel = new Enemy("Anjo", 200, 100, null);
+        Enemy angel = new Enemy("Anjo", 200, 100, 20, 40, null);
         angel.applyEffect(new HighSyncRate("Força", 2, 1.5));
         HighSyncRate high = (HighSyncRate) angel.getLastEffect();
         Battle battle = new Battle(hero, angel, new CardStack());
@@ -89,6 +89,6 @@ public class HighSyncRateTest {
     }
 
     private static Battle battleFor(Hero hero) {
-        return new Battle(hero, new Enemy("Anjo", 200, 100, null), new CardStack());
+        return new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
     }
 }

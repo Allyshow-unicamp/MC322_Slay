@@ -36,7 +36,7 @@ public class Battle {
     /** Quantidade de cartas compradas no início de cada turno do jogador. */
     static private final int nCards = 4;
     /** Valor inicial e máximo de sincronização recuperado a cada turno do jogador. */
-    static private final int initialSync = 15;
+    static private final int initialSync = 10;
     private Random random;
     /** Mão de cartas do jogador. */
     private PlayerHand hand;
@@ -61,6 +61,7 @@ public class Battle {
         this.hero = hero;
         this.angel = angel;
         this.hand = new PlayerHand();
+        deck.shuffle();
         this.buyPile = new CardStack(deck);
         this.discardPile = new CardStack();
         this.syncRate = initialSync;
@@ -291,7 +292,7 @@ public class Battle {
 
             } else if (card.getClass() == ShieldCard.class) {
 
-                int shield = card.getCost() * 2 + random.nextInt(card.getCost() * 2);
+                int shield = card.getCost() * 4 + random.nextInt(card.getCost() * 4);
 
                 Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesm*.", ColorEnum.green);
 

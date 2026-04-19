@@ -151,7 +151,7 @@ public class SerializerTest {
 
     @Test
     public void enemySerializerWritesNameHealthShieldAndImage() throws Exception {
-        Enemy enemy = new Enemy("Sachiel", 180, 60, "sachiel.txt");
+        Enemy enemy = new Enemy("Sachiel", 180, 60, 20, 40, "sachiel.txt");
         JsonNode root = mapper.readTree(mapper.writeValueAsString(enemy));
 
         assertEquals("Sachiel", root.get("name").asText());

@@ -30,13 +30,32 @@ public class Enemy extends Entity {
     /** Protótipo de efeito: dano psicológico aplicado ao herói. */
     private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
     /** Protótipo de efeito: corrosão do campo AT no herói. */
-    private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 3);
+    private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 2);
     /** Protótipo de efeito: regeneração aplicada ao próprio anjo. */
     private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 50, 3);
     /** Protótipo de efeito: baixa sincronização no herói. */
-    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3, 0.75);
+    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3, 0.25);
     /** Protótipo de efeito: alta sincronização no próprio anjo. */
-    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3, 1.5);
+    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3, 2);
+
+    private int minDamage;
+    private int maxDamage;
+
+    public int getMinDamage() {
+        return minDamage;
+    }
+
+    public void setMinDamage(int minDamage) {
+        this.minDamage = minDamage;
+    }
+
+    public int getMaxDamage() {
+        return maxDamage;
+    }
+
+    public void setMaxDamage(int maxDamage) {
+        this.maxDamage = maxDamage;
+    }
 
     /**
      * Realiza um ataque contra o herói.
@@ -119,9 +138,13 @@ public class Enemy extends Entity {
      * @return O valor correspondente à ação sorteada.
      */
     public int nextAction() {
-        this.damage = (random.nextInt(40) + 1);
-        int action = random.nextInt(3);
-        return action;
+        this.damage = (random.nextInt(minDamage, maxDamage));
+        int randomN = random.nextInt(4);
+        if (randomN <= 1)
+            return EnemyActions.attack.getValue();
+        else if (randomN == 2)
+            return EnemyActions.gainShield.getValue();
+        return EnemyActions.useEffect.getValue();
     }
 
     /**
@@ -132,7 +155,7 @@ public class Enemy extends Entity {
      * @param ATField    valor inicial do campo AT (escudo).
      * @param imageAsset nome do arquivo de arte em {@code assets} (ex.: {@code sachiel.txt}).
      */
-    public Enemy(String name, int health, int ATField, String imageAsset) {
+    public Enemy(String name, int health, int ATField, int minDamage, int maxDamage, String imageAsset) {
         this.name = name;
         this.health = health;
         this.ATField = ATField;
@@ -140,6 +163,8 @@ public class Enemy extends Entity {
         this.effects = new ArrayList<>();
         this.imageAsset = imageAsset;
         this.maxHealth = health;
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
     }
 
     public Enemy() {

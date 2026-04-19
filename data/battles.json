@@ -1,197 +1,217 @@
 {
-  "22" : {
-    "id" : 22,
+  "E" : {
+    "id" : "E",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Kaworu",
+      "health" : 400,
+      "maxHealth": 400,
+      "minDamage": 25,
+      "maxDamage": 45,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 200,
+      "image" : "kaworu.txt"
     },
     "visited" : false
   },
-  "21" : {
-    "id" : 21,
+  "D" : {
+    "id" : "D",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Armisael",
+      "health" : 200,
+      "maxHealth": 200,
+      "minDamage": 25,
+      "maxDamage": 35,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 150,
+      "image" : "amisael.txt"
     },
     "visited" : false
   },
-  "20" : {
-    "id" : 20,
+  "C" : {
+    "id" : "C",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Arael",
+      "health" : 200,
+      "maxHealth": 200,
+      "minDamage": 25,
+      "maxDamage": 35,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 150,
+      "image" : "arael.txt"
     },
     "visited" : false
   },
-  "19" : {
-    "id" : 19,
+  "B" : {
+    "id" : "B",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Zeruel",
+      "health" : 200,
+      "maxHealth": 200,
+      "minDamage": 25,
+      "maxDamage": 35,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 150,
+      "image" : "zeruel.txt"
     },
     "visited" : false
   },
-  "18" : {
-    "id" : 18,
+  "A" : {
+    "id" : "A",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Bardiel",
+      "health" : 150,
+      "maxHealth": 150,
+      "minDamage": 25,
+      "maxDamage": 30,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
-    },
-    "visited" : false
-  },
-  "17" : {
-    "id" : 17,
-    "enemy" : {
-      "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
-      "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 100,
+      "image" : "bardiel.txt"
     },
     "visited" : false
   },
   "9" : {
-    "id" : 9,
+    "id" : "9",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Leliel",
+      "health" : 150,
+      "maxHealth": 150,
+      "minDamage": 25,
+      "maxDamage": 30,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 100,
+      "image" : "leliel.txt"
     },
     "visited" : false
   },
   "8" : {
-    "id" : 8,
+    "id" : "8",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Ireul",
+      "health" : 150,
+      "maxHealth": 150,
+      "minDamage": 25,
+      "maxDamage": 30,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 100,
+      "image" : "ireul.txt"
     },
     "visited" : false
   },
   "7" : {
-    "id" : 7,
+    "id" : "7",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Sahaquiel",
+      "health" : 150,
+      "maxHealth": 150,
+      "minDamage": 25,
+      "maxDamage": 30,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 100,
+      "image" : "sahaquiel.txt"
     },
     "visited" : false
   },
   "6" : {
-    "id" : 6,
+    "id" : "6",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Matarael",
+      "health" : 150,
+      "maxHealth": 150,
+      "minDamage": 25,
+      "maxDamage": 30,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 100,
+      "image" : "matarael.txt"
     },
     "visited" : false
   },
   "5" : {
-    "id" : 5,
+    "id" : "5",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Sandalphon",
+      "health" : 125,
+      "maxHealth": 125,
+      "minDamage": 15,
+      "maxDamage": 25,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 75,
+      "image" : "sandalphol.txt"
     },
     "visited" : false
   },
   "4" : {
-    "id" : 4,
+    "id" : "4",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Gaghiel",
+      "health" : 125,
+      "maxHealth": 125,
+      "minDamage": 15,
+      "maxDamage": 25,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 75,
+      "image" : "gaghiel.txt"
     },
     "visited" : false
   },
   "3" : {
-    "id" : 3,
+    "id" : "3",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
-      "health" : 100,
-      "maxHealth": 100,
+      "name" : "Ramiel",
+      "health" : 125,
+      "maxHealth": 125,
+      "minDamage": 15,
+      "maxDamage": 25,
       "effects": [],
-      "shield" : 50,
-      "image" : "sachiel.txt"
+      "shield" : 75,
+      "image" : "ramiel.txt"
     },
     "visited" : false
-  },
+  },  
   "2" : {
-    "id" : 2,
+    "id" : "2",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Angel",
+      "name" : "Shamshel",
       "health" : 100,
       "maxHealth": 100,
+      "minDamage": 10,
+      "maxDamage": 20,
       "effects": [],
       "shield" : 50,
-      "image" : "sachiel.txt"
+      "image" : "shmashel.txt"
     },
     "visited" : false
   },
   "1" : {
-    "id" : 1,
+    "id" : "1",
     "enemy" : {
       "type" : "enemy",
-      "name" : "Ignored",
+      "name" : "Sachiel",
       "health" : 100,
       "maxHealth": 100,
+      "minDamage": 10,
+      "maxDamage": 20,
       "effects": [],
       "shield" : 50,
       "image" : "sachiel.txt"
     },
+    "visited" : false
+  },
+  "P" : {
+    "id" : "P",
+    "enemy" : null,
     "visited" : false
   }
 }

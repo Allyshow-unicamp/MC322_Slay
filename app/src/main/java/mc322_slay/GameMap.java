@@ -21,10 +21,12 @@ public class GameMap {
     /**
      * Coordenada de um identificador de batalha dentro da malha textual do mapa.
      */
-    public record pos(int x, int y) {}
-    private Hashtable<Integer, pos> mapCoords;
+    public record pos(int x, int y) {
+    }
 
-    private Hashtable<Integer, BattleNode> battles;
+    private Hashtable<Character, pos> mapCoords;
+
+    private Hashtable<Character, BattleNode> battles;
 
     private DefaultMutableTreeNode tree;
     private DefaultMutableTreeNode playerNode;
@@ -40,13 +42,13 @@ public class GameMap {
     /**
      * Carrega matriz visual do mapa e monta a árvore de batalhas.
      *
-     * @param mapFile arquivo JSON da matriz de caracteres do mapa.
+     * @param mapFile    arquivo JSON da matriz de caracteres do mapa.
      * @param battleFile arquivo JSON com metadados dos nós de batalha.
      */
     public void buildMap(String mapFile, String battleFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Path.of("..","data", mapFile));
+            String serialized = Files.readString(Path.of("..", "data", mapFile));
             this.map = mapper.readValue(serialized, char[][].class);
             this.rows = this.map.length;
             this.cols = this.map[0].length;
@@ -56,7 +58,7 @@ public class GameMap {
                 for (int j = 0; j < cols; j++) {
                     char value = map[i][j];
                     if (value != ' ' && value != '|' && value != '\\' && value != '/') {
-                        mapCoords.put(value - '0', new pos(j, i));
+                        mapCoords.put(value, new pos(j, i));
                     }
                 }
                 System.out.println();
@@ -76,12 +78,12 @@ public class GameMap {
     public void buildTree(String battleFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Path.of("..","data", battleFile));
-            battles = mapper.readValue(serialized, new TypeReference<Hashtable<Integer, BattleNode>>() {
+            String serialized = Files.readString(Path.of("..", "data", battleFile));
+            battles = mapper.readValue(serialized, new TypeReference<Hashtable<Character, BattleNode>>() {
             });
 
-            tree = new DefaultMutableTreeNode(battles.get(1));
-            buildTreeRec(1, tree);
+            tree = new DefaultMutableTreeNode(battles.get('P'));
+            buildTreeRec('P', tree);
 
             playerNode = tree;
 
@@ -104,10 +106,10 @@ public class GameMap {
     /**
      * Percorre recursivamente a matriz e conecta os próximos nós válidos na árvore.
      *
-     * @param currenId id do nó atual em expansão.
+     * @param currenId    id do nó atual em expansão.
      * @param currentNode referência de árvore correspondente ao nó atual.
      */
-    public void buildTreeRec(int currenId, DefaultMutableTreeNode currentNode) {
+    public void buildTreeRec(char currenId, DefaultMutableTreeNode currentNode) {
         int[] dirX = { -1, 0, 1 };
 
         pos coord = mapCoords.get(currenId);
@@ -119,18 +121,20 @@ public class GameMap {
             if (isValidPos(newX, newY)) {
                 char c = map[newY][newX];
                 if (c != ' ') {
-                    int nextId;
-                    if (c == '|') { // upper node
-                        nextId = map[newY - 1][newX] - '0';
-                    } else if (c == '\\') { // left node
-                        nextId = map[newY - 1][newX - 1] - '0';
-                    } else { // right node
-                        nextId = map[newY - 1][newX + 1] - '0';
+                    char nextId = '*';
+                    if (c == '|' && i == 1) { // upper node
+                        nextId = map[newY - 1][newX];
+                    } else if (c == '\\' && i == 0) { // left node
+                        nextId = map[newY - 1][newX - 1];
+                    } else if (c == '/' && i == 2) { // right node
+                        nextId = map[newY - 1][newX + 1];
                     }
 
-                    DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(battles.get(nextId));
-                    currentNode.add(nextNode);
-                    buildTreeRec(nextId, nextNode);
+                    if (nextId != '*') {
+                        DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(battles.get(nextId));
+                        currentNode.add(nextNode);
+                        buildTreeRec(nextId, nextNode);
+                    }
                 }
             }
         }
@@ -151,16 +155,14 @@ public class GameMap {
                 } // connections or empty spaces
                 else {
                     BattleNode nodeP = (BattleNode) playerNode.getUserObject();
-                    BattleNode nodeX = battles.get(c - '0');
+                    BattleNode nodeX = battles.get(c);
                     if (nodeX.getId() == nodeP.getId()) {
                         c = 'P'; // player position
                         Interface.printInline(c + "", ColorEnum.yellow);
-                    }
-                    else if (nodeX.isVisited()) {
+                    } else if (nodeX.isVisited()) {
                         c = 'x'; // already visited position
                         Interface.printInline(c + "", ColorEnum.red);
-                    }
-                    else {
+                    } else {
                         boolean nextOption = false;
                         for (int k = 0; k < playerNode.getChildCount(); k++) {
                             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(k);
@@ -188,7 +190,7 @@ public class GameMap {
         System.out.println("P: Sua posição (player)");
         System.out.println("o: Batalhas ainda não travadas");
         System.out.println("x: Batalhas já vencidas");
-        System.out.println("1,...,n: Caminhos disponíveis");
+        System.out.println("1 a n: Caminhos disponíveis");
         Interface.printInline("========\r\n", ColorEnum.purple);
     }
 }

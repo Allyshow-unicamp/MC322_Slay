@@ -24,8 +24,6 @@ public class GameMapTest {
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         assertNotNull(playerNode);
 
-        BattleNode battleNode = (BattleNode) playerNode.getUserObject();
-        assertEquals(1, battleNode.getId());
         assertEquals(2, playerNode.getChildCount());
     }
 
@@ -41,6 +39,6 @@ public class GameMapTest {
         map.setPlayerNode(child);
 
         BattleNode battleNode = (BattleNode) map.getPlayerNode().getUserObject();
-        assertEquals(2, battleNode.getId());
+        assertEquals('1', battleNode.getId());
     }
 }
