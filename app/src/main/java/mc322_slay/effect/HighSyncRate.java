@@ -11,14 +11,19 @@ import mc322_slay.entity.Hero;
 import mc322_slay.serializer.HighSyncRateSerializer;
 
 /**
- * Efeito que aumenta temporariamente o multiplicador de dano das cartas de dano do herói
- * (via {@link mc322_slay.entity.Entity#getBoost()}), sem alterar dano de efeitos como veneno psíquico.
+ * Efeito que aumenta temporariamente o multiplicador de dano das cartas de dano
+ * do herói
+ * (via {@link mc322_slay.entity.Entity#getBoost()}), sem alterar dano de
+ * efeitos como veneno psíquico.
  */
 @JsonSerialize(using = HighSyncRateSerializer.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class HighSyncRate extends Effect {
 
-    /** Multiplicador aplicado ao dano das armas/cartas de dano (ex.: {@code 1.5} para +50%). */
+    /**
+     * Multiplicador aplicado ao dano das armas/cartas de dano (ex.: {@code 1.5}
+     * para +50%).
+     */
     @JsonProperty("boost")
     private double boost;
 
@@ -47,6 +52,12 @@ public class HighSyncRate extends Effect {
                 + " (desconsiderando danos oriundos de efeitos)");
     }
 
+    @Override
+    public String getDescription() {
+        return "Dano causado é multiplicado por " + boost + " (desconsiderando danos oriundos de efeitos) durante "
+                + points + " turnos.";
+    }
+
     /**
      * Decrementa a duração ao fim do turno do jogador quando o dono é o herói.
      *
@@ -56,8 +67,8 @@ public class HighSyncRate extends Effect {
      */
     @Override
     public boolean beNotified(EventEnum event, Battle battle) {
-        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class || 
-            event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
+        if (event == EventEnum.playerEndOfTurn && owner.getClass() == Hero.class ||
+                event == EventEnum.enemyEndOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
 
             if (this.points == 0) {

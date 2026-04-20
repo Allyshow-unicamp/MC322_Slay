@@ -26,7 +26,6 @@ public abstract class Card {
     @JsonProperty("cost")
     protected int energyCost;
     /** Texto de ajuda exibido ao jogador. */
-    @JsonProperty("description")
     protected String cardDescription;
 
     /**

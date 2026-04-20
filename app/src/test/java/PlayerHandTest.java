@@ -21,9 +21,9 @@ public class PlayerHandTest {
         CardStack buyPile = new CardStack();
         CardStack discardPile = new CardStack();
 
-        buyPile.add(new DamageCard("Carta de dano", 3, "Uma carta de dano"));
-        buyPile.add(new ShieldCard("Carta de escudo", 3, "Uma carta de escudo"));
-        EffectCard card = new EffectCard("Carta de efeito", 3, "Uma carta de efeito",
+        buyPile.add(new DamageCard("Carta de dano", 3));
+        buyPile.add(new ShieldCard("Carta de escudo", 3));
+        EffectCard card = new EffectCard("Carta de efeito", 3,
                 new PsychicEffect("Veneno", 20, 3));
         buyPile.add(card);
 
@@ -38,11 +38,11 @@ public class PlayerHandTest {
         CardStack buyPile = new CardStack();
         CardStack discardPile = new CardStack();
         
-        DamageCard card1 = new DamageCard("Carta de dano", 3, "Uma carta de dano");
+        DamageCard card1 = new DamageCard("Carta de dano", 3);
         discardPile.add(card1);
-        ShieldCard card2 = new ShieldCard("Carta de escudo", 3, "Uma carta de escudo");
+        ShieldCard card2 = new ShieldCard("Carta de escudo", 3);
         discardPile.add(card2);
-        EffectCard card3 = new EffectCard("Carta de efeito", 3, "Uma carta de efeito",
+        EffectCard card3 = new EffectCard("Carta de efeito", 3,
                 new PsychicEffect("Veneno", 20, 3));
         discardPile.add(card3);
 
@@ -59,11 +59,11 @@ public class PlayerHandTest {
         CardStack buyPile = new CardStack();
         CardStack discardPile = new CardStack();
         
-        DamageCard card1 = new DamageCard("Carta de dano", 3, "Uma carta de dano");
+        DamageCard card1 = new DamageCard("Carta de dano", 3);
         discardPile.add(card1);
-        ShieldCard card2 = new ShieldCard("Carta de escudo", 3, "Uma carta de escudo");
+        ShieldCard card2 = new ShieldCard("Carta de escudo", 3);
         discardPile.add(card2);
-        EffectCard card3 = new EffectCard("Carta de efeito", 3, "Uma carta de efeito",
+        EffectCard card3 = new EffectCard("Carta de efeito", 3,
                 new PsychicEffect("Veneno", 20, 3));
         discardPile.add(card3);
 
@@ -79,11 +79,11 @@ public class PlayerHandTest {
         CardStack buyPile = new CardStack();
         CardStack discardPile = new CardStack();
 
-        DamageCard card1 = new DamageCard("Carta de dano", 3, "Uma carta de dano");
+        DamageCard card1 = new DamageCard("Carta de dano", 3);
         buyPile.add(card1);
-        ShieldCard card2 = new ShieldCard("Carta de escudo", 3, "Uma carta de escudo");
+        ShieldCard card2 = new ShieldCard("Carta de escudo", 3);
         buyPile.add(card2);
-        EffectCard card3 = new EffectCard("Carta de efeito", 3, "Uma carta de efeito",
+        EffectCard card3 = new EffectCard("Carta de efeito", 3,
                 new PsychicEffect("Veneno", 20, 3));
         buyPile.add(card3);
 

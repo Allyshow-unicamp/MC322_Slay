@@ -51,6 +51,11 @@ public class HealthRegeneration extends Effect {
         return (name + " (" + points + " turnos restantes) - Recupera " + health + " de saúde por turno");
     }
 
+    @Override
+    public String getDescription() {
+        return "Recupera " + health + " de saúde por turno durante " + points + " turnos.";
+    }
+
     /**
      * Processa a cura no início do turno do dono (herói ou anjo, conforme a classe do {@link #owner}).
      *

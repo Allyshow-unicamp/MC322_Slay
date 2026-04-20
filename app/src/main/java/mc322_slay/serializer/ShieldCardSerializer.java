@@ -36,7 +36,6 @@ public class ShieldCardSerializer extends StdSerializer<ShieldCard> {
     public void serialize(ShieldCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("cost", value.getCost());
-        gen.writeStringField("description", value.getDescription());
     }
 
     /**

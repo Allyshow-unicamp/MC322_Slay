@@ -42,6 +42,12 @@ public class LowSyncRate extends Effect {
                 + " (desconsiderando danos oriundos de efeitos)");
     }
 
+    @Override
+    public String getDescription() {
+        return "Dano causado é multiplicado por " + deboost + " (desconsiderando danos oriundos de efeitos) durante "
+                + points + " turnos.";
+    }
+
     /**
      * Decrementa a duração ao fim do turno do jogador quando o dono é o herói.
      *

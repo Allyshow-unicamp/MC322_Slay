@@ -36,7 +36,6 @@ public class EffectCardSerializer extends StdSerializer<EffectCard> {
     public void serialize(EffectCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("cost", value.getCost());
-        gen.writeStringField("description", value.getDescription());
         gen.writeObjectField("effect", value.getEffect());
     }
 

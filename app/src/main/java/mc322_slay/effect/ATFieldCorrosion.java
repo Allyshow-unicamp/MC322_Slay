@@ -23,6 +23,11 @@ public class ATFieldCorrosion extends Effect {
                 + " turnos restantes) - Escudo é desconsiderado (dano é dado diretamente na entidade)");
     }
 
+    @Override
+    public String getDescription() {
+        return "Escudo é desconsiderado (dano é dado diretamente na entidade) durante " + points + " turnos.";
+    }
+
     /**
      * Decrementa a duração ao fim do turno do jogador ({@link mc322_slay.EventEnum#playerEndOfTurn}).
      * Enquanto ativo, o dono ignora o campo AT ao receber dano (vide {@link mc322_slay.entity.Entity#takeDamage(int)}).
