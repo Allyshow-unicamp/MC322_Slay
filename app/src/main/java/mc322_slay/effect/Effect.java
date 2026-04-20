@@ -95,6 +95,8 @@ public abstract class Effect {
      */
     public abstract String getString();
 
+    public abstract String getDescription();
+
     /**
      * Reage a um evento do jogo.
      *

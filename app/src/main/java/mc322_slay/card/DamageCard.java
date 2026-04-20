@@ -9,8 +9,10 @@ import mc322_slay.serializer.DamageCardSerializer;
  * Carta que causa dano direto ao alvo.
  */
 @JsonSerialize(using = DamageCardSerializer.class)
-public class DamageCard extends Card{
-    
+public class DamageCard extends Card {
+
+    public static final int multiplier = 10;
+
     /**
      * Aplica dano na entidade alvo.
      *
@@ -25,14 +27,20 @@ public class DamageCard extends Card{
     /**
      * Cria uma carta de dano.
      *
-     * @param name nome da carta.
-     * @param energyCost custo de energia para uso.
+     * @param name            nome da carta.
+     * @param energyCost      custo de energia para uso.
      * @param cardDescription descrição exibida ao jogador.
      */
-    public DamageCard(String name, int energyCost, String cardDescription) {
+    public DamageCard(String name, int energyCost) {
         this.name = name;
         this.energyCost = energyCost;
-        this.cardDescription = cardDescription;
+        this.cardDescription = "Use-a para dar entre " + energyCost * multiplier + " e " + 2 * energyCost * multiplier
+                + " de dano.";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Use-a para dar entre " + energyCost * multiplier + " e " + 2 * energyCost * multiplier + " de dano.";
     }
 
     public DamageCard() {

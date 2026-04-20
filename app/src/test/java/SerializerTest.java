@@ -83,7 +83,7 @@ public class SerializerTest {
 
     @Test
     public void damageCardSerializerWritesNameCostAndDescription() throws Exception {
-        DamageCard card = new DamageCard("Ataque", 2, "Causa dano direto.");
+        DamageCard card = new DamageCard("Ataque", 2);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
         assertEquals("damage", root.get("type").asText());
@@ -94,7 +94,7 @@ public class SerializerTest {
 
     @Test
     public void shieldCardSerializerWritesNameCostAndDescription() throws Exception {
-        ShieldCard card = new ShieldCard("Escudo", 1, "Aumenta AT Field.");
+        ShieldCard card = new ShieldCard("Escudo", 1);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
         assertEquals("shield", root.get("type").asText());
@@ -106,7 +106,7 @@ public class SerializerTest {
     @Test
     public void effectCardSerializerWritesNestedEffect() throws Exception {
         PsychicEffect inner = new PsychicEffect("veneno", 15, 2);
-        EffectCard card = new EffectCard("Carta tóxica", 3, "Aplica veneno.", inner);
+        EffectCard card = new EffectCard("Carta tóxica", 3, inner);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
         assertEquals("effect", root.get("type").asText());
@@ -124,8 +124,8 @@ public class SerializerTest {
     @Test
     public void cardStackSerializerWritesCardsArray() throws Exception {
         CardStack stack = new CardStack();
-        stack.add(new DamageCard("A", 1, "d1"));
-        stack.add(new ShieldCard("B", 2, "d2"));
+        stack.add(new DamageCard("A", 1));
+        stack.add(new ShieldCard("B", 2));
 
         JsonNode root = mapper.readTree(mapper.writeValueAsString(stack));
         assertTrue(root.has("cards"));

@@ -2,93 +2,75 @@
   "cards" : [ {
     "type" : "damage",
     "name" : "Longinus Spear",
-    "cost" : 10,
-    "description" : "Use-a para dar de 100 a 200 de dano"
+    "cost" : 10
   }, {
     "type" : "damage",
     "name" : "Cassius Spear",
-    "cost" : 9,
-    "description" : "Use-a para dar de 90 a 180 de dano"
+    "cost" : 9
   }, {
     "type" : "damage",
     "name" : "Positron Sniper Rifle",
-    "cost" : 8,
-    "description" : "Use-a para dar de 80 a 160 de dano"
+    "cost" : 8
   }, {
     "type" : "damage",
     "name" : "Prog Knife",
-    "cost" : 7,
-    "description" : "Use-a para dar de 70 a 140 de dano"
+    "cost" : 7
   }, {
     "type" : "damage",
     "name" : "Magokoru Sword",
-    "cost" : 6,
-    "description" : "Use-a para dar de 60 a 120 de dano"
+    "cost" : 6
   }, {
     "type" : "damage",
     "name" : "Pallet Rifle",
-    "cost" : 5,
-    "description" : "Use-a para dar de 50 a 100 de dano"
+    "cost" : 5
   }, {
     "type" : "damage",
     "name" : "Azumaterasu",
-    "cost" : 4,
-    "description" : "Use-a para dar de 40 a 80 de dano"
+    "cost" : 4
   }, {
     "type" : "damage",
     "name" : "Smash Hawk",
-    "cost" : 3,
-    "description" : "Use-a para dar de 30 a 60 de dano"
+    "cost" : 3
   }, {
     "type" : "damage",
     "name" : "N2 Weapon II",
-    "cost" : 2,
-    "description" : "Use-a para dar de 20 a 40 de dano"
+    "cost" : 2
   }, {
     "type" : "damage",
     "name" : "N2 Weapon",
-    "cost" : 1,
-    "description" : "Use-a para dar de 10 a 20 de dano"
+    "cost" : 1
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 1",
-    "cost" : 2,
-    "description" : "Restaura a integridade do Campo AT entre 8 e 16 pontos"
+    "cost" : 2
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 1",
-    "cost" : 2,
-    "description" : "Restaura a integridade do Campo AT entre 8 e 16 pontos"
+    "cost" : 2
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 2",
-    "cost" : 4,
-    "description" : "Restaura a integridade do Campo AT entre 16 e 32 pontos"
+    "cost" : 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 2",
-    "cost" : 4,
-    "description" : "Restaura a integridade do Campo AT entre 16 e 32 pontos"
+    "cost" : 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 3",
-    "cost" : 6,
-    "description" : "Restaura a integridade do Campo AT entre 24 e 48 pontos"
+    "cost" : 6
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 4",
-    "cost" : 8,
-    "description" : "Restaura a integridade do Campo AT entre 32 e 64 pontos"
+    "cost" : 8
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 5",
-    "cost" : 10,
-    "description" : "Restaura a integridade do Campo AT entre 40 e 80 pontos"
+    "cost" : 10
   }, {
     "type" : "effect",
     "name" : "Dano psicológico 1",
     "cost" : 3,
-    "description" : "Use-a para dar 30 de dano por 3 turnos",
     "effect" : {
       "type" : "poison",
       "name" : "Dano psicológico",
@@ -100,7 +82,6 @@
     "type" : "effect",
     "name" : "Dano psicológico 2",
     "cost" : 6,
-    "description" : "Use-a para dar 60 de dano por 3 turnos",
     "effect" : {
       "type" : "poison",
       "name" : "Dano psicológico",
@@ -112,7 +93,6 @@
     "type" : "effect",
     "name" : "Restauração Forçada do pulso vital 1",
     "cost" : 3,
-    "description" : "Use-a para restaurar 10 pontos de vida por 3 turnos",
     "effect" : {
       "type" : "regeneration",
       "name" : "Restauração Forçada do pulso vital",
@@ -124,7 +104,6 @@
     "type" : "effect",
     "name" : "Restauração Forçada do pulso vital 2",
     "cost" : 6,
-    "description" : "Use-a para restaurar 20 pontos de vida por 3 turnos",
     "effect" : {
       "type" : "regeneration",
       "name" : "Restauração Forçada do pulso vital",
@@ -136,7 +115,6 @@
     "type" : "effect",
     "name" : "Alta taxa de sincronização",
     "cost" : 6,
-    "description" : "Use-a para dobrar o dano causado pelas armas do jogador por 2 turnos",
     "effect" : {
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
@@ -148,7 +126,6 @@
     "type" : "effect",
     "name" : "Alta taxa de sincronização 2",
     "cost" : 9,
-    "description" : "Use-a para dobrar o dano causado pelas armas do jogador por 3 turnos",
     "effect" : {
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
@@ -160,7 +137,6 @@
     "type" : "effect",
     "name" : "Baixa taxa de sincronização",
     "cost" : 6,
-    "description" : "Use-a para reduzir em 75% o dano causado pelo ataque do inimigo por 2 turnos",
     "effect" : {
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
@@ -172,7 +148,6 @@
     "type" : "effect",
     "name" : "Baixa taxa de sincronização 2",
     "cost" : 9,
-    "description" : "Use-a para reduzir em 75% o dano causado pelo ataque do inimigo por 3 turnos",
     "effect" : {
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
@@ -184,7 +159,6 @@
     "type" : "effect",
     "name" : "Corrosão do campo AT 1",
     "cost" : 4,
-    "description" : "Use-a para anular o campo AT do inimigo por 2 turnos",
     "effect" : {
       "type" : "corrosion",
       "name" : "Corrosão do campo AT",
@@ -195,7 +169,6 @@
     "type" : "effect",
     "name" : "Corrosão do campo AT 2",
     "cost" : 6,
-    "description" : "Use-a para anular o campo AT do inimigo por 3 turnos",
     "effect" : {
       "type" : "corrosion",
       "name" : "Corrosão do campo AT",

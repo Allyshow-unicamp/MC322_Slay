@@ -34,6 +34,11 @@ public class PsychicEffect extends Effect {
         return (name + " (" + points + " turnos restantes) - Causa " + damage + " de dano por turno");
     }
 
+    @Override
+    public String getDescription() {
+        return "Causa " + damage + " de dano por turno durante " + points + " turnos.";
+    }
+
     /**
      * Define o dano psicológico aplicado por turno.
      *

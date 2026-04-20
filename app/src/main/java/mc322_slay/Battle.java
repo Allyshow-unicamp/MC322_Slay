@@ -277,7 +277,7 @@ public class Battle {
             Card card = hand.useCard(option);
             if (card.getClass() == DamageCard.class) {
 
-                int damage = card.getCost() * 10 + random.nextInt(card.getCost() * 10);
+                int damage = card.getCost() * DamageCard.multiplier + random.nextInt(card.getCost() * DamageCard.multiplier);
                 if (hero.hasEffect(HighSyncRate.class)) {
                     damage = (int) (hero.getBoost() * damage);
                 }
@@ -292,7 +292,7 @@ public class Battle {
 
             } else if (card.getClass() == ShieldCard.class) {
 
-                int shield = card.getCost() * 4 + random.nextInt(card.getCost() * 4);
+                int shield = card.getCost() * ShieldCard.multiplier + random.nextInt(card.getCost() * ShieldCard.multiplier);
 
                 Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesm*.", ColorEnum.green);
 
