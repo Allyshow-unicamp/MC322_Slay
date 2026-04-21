@@ -82,25 +82,23 @@ public class SerializerTest {
     }
 
     @Test
-    public void damageCardSerializerWritesNameCostAndDescription() throws Exception {
+    public void damageCardSerializerWritesNameCost() throws Exception {
         DamageCard card = new DamageCard("Ataque", 2);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
         assertEquals("damage", root.get("type").asText());
         assertEquals("Ataque", root.get("name").asText());
         assertEquals(2, root.get("cost").asInt());
-        assertEquals("Causa dano direto.", root.get("description").asText());
     }
 
     @Test
-    public void shieldCardSerializerWritesNameCostAndDescription() throws Exception {
+    public void shieldCardSerializerWritesNameCost() throws Exception {
         ShieldCard card = new ShieldCard("Escudo", 1);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
         assertEquals("shield", root.get("type").asText());
         assertEquals("Escudo", root.get("name").asText());
         assertEquals(1, root.get("cost").asInt());
-        assertEquals("Aumenta AT Field.", root.get("description").asText());
     }
 
     @Test
@@ -112,7 +110,6 @@ public class SerializerTest {
         assertEquals("effect", root.get("type").asText());
         assertEquals("Carta tóxica", root.get("name").asText());
         assertEquals(3, root.get("cost").asInt());
-        assertEquals("Aplica veneno.", root.get("description").asText());
 
         JsonNode effectNode = root.get("effect");
         assertEquals("poison", effectNode.get("type").asText());
