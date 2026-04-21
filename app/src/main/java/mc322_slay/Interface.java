@@ -170,7 +170,16 @@ public class Interface {
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
 
-            String cardType = "";
+            printCardInfo(card, i);
+        }
+
+        System.out.println("===================\r\n" + //
+                ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
+                + " de Sincronização (Energia) disponível\r\n");
+    }
+
+    public static void printCardInfo(Card card, int i) {
+         String cardType = "";
             if (card instanceof DamageCard)
                 cardType = "Carta de Dano  ";
             else if (card instanceof ShieldCard)
@@ -183,10 +192,5 @@ public class Interface {
                             + ColorEnum.reset.getColor() + ": " + card.getName() +
                             ColorEnum.yellow.getColor() + " (Custo: " + card.getCost() + ")"
                             + ColorEnum.reset.getColor() + ": " + card.getDescription());
-        }
-
-        System.out.println("===================\r\n" + //
-                ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
-                + " de Sincronização (Energia) disponível\r\n");
     }
 }

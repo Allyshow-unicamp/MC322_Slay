@@ -116,7 +116,14 @@ public class Battle extends Event {
             }
         }
 
-        return results(hero);
+        boolean won = results(hero);
+
+        if (hero.isAlive()) {
+            Reward reward = new Reward();
+            reward.init(hero, possibleNewCards);
+        }
+
+        return won;
     }
 
     /**
@@ -350,6 +357,7 @@ public class Battle extends Event {
 
         if (hero.isAlive()) {
             Interface.printFile("victory.txt", ColorEnum.green);
+
             return true;
         } else {
             return false;

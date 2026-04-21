@@ -119,7 +119,7 @@ public class GameManager {
     /**
      * Limpa efeitos persistentes do herói entre uma batalha e outra.
      */
-    private void resetBattle() {
+    private void resetEffects() {
         this.hero.resetEffects();
     }
 
@@ -171,7 +171,7 @@ public class GameManager {
             playerEventNode.setVisited(true);
             playerNode.setUserObject(playerEventNode);
             map.setPlayerNode(childNode);
-            resetBattle();
+            resetEffects();
         }
         return alive;
     }
