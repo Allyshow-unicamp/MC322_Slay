@@ -25,7 +25,6 @@ public class App {
         game.start();
         game.initialScreen();
         game.selectCharacter();
-        game.populateDeck();
 
         boolean won = true;
         while (game.isRunning()) {

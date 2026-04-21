@@ -1,7 +1,6 @@
 package mc322_slay.event;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,14 +11,11 @@ import mc322_slay.EventEnum;
 import mc322_slay.Interface;
 import mc322_slay.card.Card;
 import mc322_slay.card.CardStack;
-import mc322_slay.card.DamageCard;
 import mc322_slay.card.EffectCard;
 import mc322_slay.card.PlayerHand;
-import mc322_slay.card.ShieldCard;
 import mc322_slay.effect.Effect;
 import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
-import mc322_slay.effect.LowSyncRate;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.EnemyActions;
 import mc322_slay.entity.Hero;
@@ -49,7 +45,6 @@ public class Battle extends Event {
     static private final int nCards = 4;
     /** Valor inicial e máximo de sincronização recuperado a cada turno do jogador. */
     static private final int initialSync = 10;
-    private Random random;
     /** Mão de cartas do jogador. */
     private PlayerHand hand;
     /** Pilha de onde as cartas são compradas. */
@@ -83,11 +78,10 @@ public class Battle extends Event {
      * @return {@code true} se o herói vencer; {@code false} se for derrotado.
      */
     @Override
-    public boolean init(Hero hero) {
+    public boolean init(Hero hero, CardStack possibleNewCards) {
         this.hand = new PlayerHand();
         this.syncRate = initialSync;
         this.scanner = new Scanner(System.in);
-        this.random = new Random();
         this.subscribers = new ArrayList<>();
         hero.getDeck().shuffle();
         this.buyPile = new CardStack(hero.getDeck());
@@ -121,8 +115,6 @@ public class Battle extends Event {
                 notifySubscribers(EventEnum.enemyEndOfTurn, hero);
             }
         }
-
-        scanner.close();
 
         return results(hero);
     }
@@ -294,48 +286,13 @@ public class Battle extends Event {
             Interface.printMessage("Você passa o turno.", ColorEnum.blue);
         } else {
             Card card = hand.useCard(option);
-            if (card.getClass() == DamageCard.class) {
-
-                int damage = card.getCost() * DamageCard.multiplier + random.nextInt(card.getCost() * DamageCard.multiplier);
-                if (hero.hasEffect(HighSyncRate.class)) {
-                    damage = (int) (hero.getBoost() * damage);
-                }
-                if (hero.hasEffect(LowSyncRate.class)) {
-                    damage = (int) (hero.getDeboost() * damage);
-                }
-                Interface.printMessage(
-                        hero.getName() + " usa " + card.getName() + " contra " + angel.getName() + ".",
-                        ColorEnum.green);
-
-                card.useCard(angel, damage);
-
-            } else if (card.getClass() == ShieldCard.class) {
-
-                int shield = card.getCost() * ShieldCard.multiplier + random.nextInt(card.getCost() * ShieldCard.multiplier);
-
-                Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesm*.", ColorEnum.green);
-
-                card.useCard(hero, shield);
-
-            } else if (card.getClass() == EffectCard.class) {
-
-                EffectCard effectCard = (EffectCard) card;
-                Effect effectX = effectCard.getEffect();
-
-                if (effectX instanceof HealthRegeneration || effectX instanceof HighSyncRate) {
-                    Interface.printMessage(hero.getName() + " usa " + card.getName() + " em si mesm*.",
-                            ColorEnum.green);
-
-                    card.useCard(hero, effectX.getStartPoints());
+            card.useCard(hero, angel);
+            if (card instanceof EffectCard) {
+                Effect effect = ((EffectCard)card).getEffect();
+                if (effect instanceof HealthRegeneration || effect instanceof HighSyncRate)
                     subscribe(hero.getLastEffect());
-                } else {
-                    Interface.printMessage(
-                            hero.getName() + " usa " + card.getName() + " contra " + angel.getName() + ".",
-                            ColorEnum.green);
-
-                    card.useCard(angel, effectX.getStartPoints());
+                else
                     subscribe(angel.getLastEffect());
-                }
             }
             syncRate -= card.getCost();
             discardPile.add(card);
@@ -362,9 +319,7 @@ public class Battle extends Event {
                     break;
 
                 case gainShield:
-                    int amount = random.nextInt(100) + 1;
-                    Interface.printMessage(angel.getName() + " fortalece seu escudo.", ColorEnum.red);
-                    angel.gainATField(amount);
+                    angel.gainATField();;
                     break;
 
                 case useEffect:

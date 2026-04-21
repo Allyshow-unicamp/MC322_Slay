@@ -26,17 +26,17 @@ public class Enemy extends Entity {
     public Random random = new Random();
 
     /** Dano base do próximo ataque (definido por {@link #nextAction()}). */
-    private int damage;
+    private int damage;    
     /** Protótipo de efeito: dano psicológico aplicado ao herói. */
-    private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
+    private PsychicEffect p;
     /** Protótipo de efeito: corrosão do campo AT no herói. */
     private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 2);
     /** Protótipo de efeito: regeneração aplicada ao próprio anjo. */
-    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 50, 3);
+    private HealthRegeneration h;
     /** Protótipo de efeito: baixa sincronização no herói. */
-    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3, 0.25);
+    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 2, 0.25);
     /** Protótipo de efeito: alta sincronização no próprio anjo. */
-    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3, 2);
+    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 2, 2);
 
     private int minDamage;
     private int maxDamage;
@@ -99,6 +99,9 @@ public class Enemy extends Entity {
     public boolean useEffect(Hero hero) {
         int effect = random.nextInt(5);
 
+        p = new PsychicEffect("Dano psicológico", maxDamage * 2, 2);
+        h = new HealthRegeneration("Regeneração de vida", maxHealth / 5, 2);
+
         boolean selfInflicted = false;
         switch (effect) {
             case 0:
@@ -145,6 +148,11 @@ public class Enemy extends Entity {
         else if (randomN == 2)
             return EnemyActions.gainShield.getValue();
         return EnemyActions.useEffect.getValue();
+    }
+
+    public void gainATField() {
+        gainATField(random.nextInt(maxHealth / 8, maxHealth / 4));
+        Interface.printMessage(getName() + " fortalece seu escudo.", ColorEnum.red);
     }
 
     /**

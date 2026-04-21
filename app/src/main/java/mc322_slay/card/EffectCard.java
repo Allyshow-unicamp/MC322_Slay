@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import mc322_slay.ColorEnum;
+import mc322_slay.Interface;
 import mc322_slay.effect.Effect;
+import mc322_slay.effect.HealthRegeneration;
+import mc322_slay.effect.HighSyncRate;
 import mc322_slay.entity.Entity;
 import mc322_slay.serializer.EffectCardSerializer;
 
@@ -29,8 +33,14 @@ public class EffectCard extends Card {
      * @param points duração ou intensidade do efeito.
      */
     @Override
-    public void useCard(Entity entity, int points) {
-        entity.applyEffect(effect);
+    public void useCard(Entity player, Entity enemy) {
+        if (effect instanceof HealthRegeneration || effect instanceof HighSyncRate) {
+            Interface.printMessage(player.getName() + " usa " + getName() + " em si mesm*.", ColorEnum.green);
+            player.applyEffect(effect);
+        } else {
+            Interface.printMessage(player.getName() + " usa " + getName() + " contra " + enemy.getName() + ".", ColorEnum.green);
+            enemy.applyEffect(effect);
+        }
     }
 
     /**

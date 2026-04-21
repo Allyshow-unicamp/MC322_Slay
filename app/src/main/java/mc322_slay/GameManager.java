@@ -26,12 +26,23 @@ public class GameManager {
     private Scanner scanner;
     /** Baralho principal de compra (pilha de cartas). */
     private GameMap map;
+    private CardStack possibleNewCards;
     private boolean end = false;
+
+    private void readPosssibleCards() {
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            String serialized = Files.readString(Paths.get("..","data", "cards.json"));
+            possibleNewCards = mapper.readValue(serialized, CardStack.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Preenche o baralho de compra com cartas iniciais da partida.
      */
-    void populateDeck() {
+    private void populateDeck() {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             String serialized = Files.readString(Paths.get("..","data", "deck.json"));
@@ -50,6 +61,8 @@ public class GameManager {
      */
     public void start() {
         this.hero = new Hero("", 50, 0, new CardStack(), "eva.txt");
+        this.populateDeck();
+        this.readPosssibleCards();
         this.scanner = new Scanner(System.in);
         this.map = new GameMap();
         this.map.buildMap("map.json", "battles.json");
@@ -153,7 +166,7 @@ public class GameManager {
         EventNode childEventNode = (EventNode) childNode.getUserObject();
 
         Event event = childEventNode.getEvent();
-        boolean alive = event.init(hero);
+        boolean alive = event.init(hero, possibleNewCards);
         if (alive) {
             playerEventNode.setVisited(true);
             playerNode.setUserObject(playerEventNode);

@@ -1,0 +1,196 @@
+{
+  "cards" : [ {
+    "type" : "damage",
+    "name" : "Longinus Spear",
+    "cost" : 10,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Cassius Spear",
+    "cost" : 9,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Positron Sniper Rifle",
+    "cost" : 8,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Prog Knife",
+    "cost" : 7,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Magokoru Sword",
+    "cost" : 6,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Pallet Rifle",
+    "cost" : 5,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Azumaterasu",
+    "cost" : 4,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Smash Hawk",
+    "cost" : 3,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "N2 Weapon II",
+    "cost" : 2,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "N2 Weapon",
+    "cost" : 1,
+    "multiplier": 10
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 1",
+    "cost" : 2,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 1",
+    "cost" : 2,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 2",
+    "cost" : 4,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 2",
+    "cost" : 4,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 3",
+    "cost" : 6,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 4",
+    "cost" : 8,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 5",
+    "cost" : 10,
+    "multiplier": 4
+  }, {
+    "type" : "effect",
+    "name" : "Dano psicológico 1",
+    "cost" : 3,
+    "effect" : {
+      "type" : "poison",
+      "name" : "Dano psicológico",
+      "turns" : 3,
+      "startTurns": 3,
+      "damage" : 30
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Dano psicológico 2",
+    "cost" : 6,
+    "effect" : {
+      "type" : "poison",
+      "name" : "Dano psicológico",
+      "turns" : 3,
+      "startTurns": 3,
+      "damage" : 60
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Restauração Forçada do pulso vital 1",
+    "cost" : 3,
+    "effect" : {
+      "type" : "regeneration",
+      "name" : "Restauração Forçada do pulso vital",
+      "turns" : 3,
+      "startTurns": 3,
+      "health" : 10
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Restauração Forçada do pulso vital 2",
+    "cost" : 6,
+    "effect" : {
+      "type" : "regeneration",
+      "name" : "Restauração Forçada do pulso vital",
+      "turns" : 3,
+      "startTurns": 3,
+      "health" : 20
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Alta taxa de sincronização",
+    "cost" : 6,
+    "effect" : {
+      "type" : "strength",
+      "name" : "Alta taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "boost" : 2
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Alta taxa de sincronização 2",
+    "cost" : 9,
+    "effect" : {
+      "type" : "strength",
+      "name" : "Alta taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "boost" : 2
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Baixa taxa de sincronização",
+    "cost" : 6,
+    "effect" : {
+      "type" : "weakness",
+      "name" : "Baixa taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "deboost" : 0.25
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Baixa taxa de sincronização 2",
+    "cost" : 9,
+    "effect" : {
+      "type" : "weakness",
+      "name" : "Baixa taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "deboost" : 0.25
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Corrosão do campo AT 1",
+    "cost" : 4,
+    "effect" : {
+      "type" : "corrosion",
+      "name" : "Corrosão do campo AT",
+      "turns" : 2,
+      "startTurns": 2
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Corrosão do campo AT 2",
+    "cost" : 6,
+    "effect" : {
+      "type" : "corrosion",
+      "name" : "Corrosão do campo AT",
+      "turns" : 3,
+      "startTurns": 3
+    }
+  } ]
+}

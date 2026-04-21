@@ -1,7 +1,11 @@
 package mc322_slay.card;
 
+import java.util.Random;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import mc322_slay.ColorEnum;
+import mc322_slay.Interface;
 import mc322_slay.entity.Entity;
 import mc322_slay.serializer.ShieldCardSerializer;
 
@@ -11,7 +15,15 @@ import mc322_slay.serializer.ShieldCardSerializer;
 @JsonSerialize(using = ShieldCardSerializer.class)
 public class ShieldCard extends Card {
 
-    public static final int multiplier = 4;
+    private int multiplier = 4;
+
+    public int getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(int multiplier) {
+        this.multiplier = multiplier;
+    }
 
     /**
      * Aumenta o campo AT (escudo) da entidade alvo.
@@ -20,8 +32,11 @@ public class ShieldCard extends Card {
      * @param amount quantidade de pontos de campo AT concedidos.
      */
     @Override
-    public void useCard(Entity entity, int amount) {
-        entity.gainATField(amount);
+    public void useCard(Entity player, Entity enemy) {
+        Random random = new Random();
+        int shield = getCost() * multiplier + random.nextInt(getCost() * multiplier);
+        Interface.printMessage(player.getName() + " usa " + getName() + " em si mesm*.", ColorEnum.green);
+        player.gainATField(shield);
     }
 
     /**

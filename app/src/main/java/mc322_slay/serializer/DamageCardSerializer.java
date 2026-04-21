@@ -36,6 +36,7 @@ public class DamageCardSerializer extends StdSerializer<DamageCard> {
     public void serialize(DamageCard value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStringField("name", value.getName());
         gen.writeNumberField("cost", value.getCost());
+        gen.writeNumberField("multiplier", value.getCost());
     }
 
     /**

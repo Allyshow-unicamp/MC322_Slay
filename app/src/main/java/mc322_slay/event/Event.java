@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 
+import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
@@ -13,7 +14,7 @@ import mc322_slay.entity.Hero;
 })
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public abstract class Event {
-    public abstract boolean init(Hero hero);
+    public abstract boolean init(Hero hero, CardStack possibleNewCards);
 
     public abstract String getDescription();
 }

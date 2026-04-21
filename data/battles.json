@@ -250,13 +250,5 @@
       }
     },
     "visited" : false
-  },
-  "P" : {
-    "id" : "P",
-    "event" : {
-      "type" : "battle",
-      "angel" : null
-    },
-    "visited" : false
   }
 }

@@ -34,7 +34,7 @@ public abstract class Card {
      * @param entity entidade alvo da carta.
      * @param amount magnitude associada ao uso da carta.
      */
-    public abstract void useCard(Entity entity, int amount);
+    public abstract void useCard(Entity player, Entity enemy);
 
     /**
      * Retorna o nome da carta.

@@ -66,6 +66,8 @@ public class GameMap {
             this.events = mapper.readValue(serialized, new TypeReference<Hashtable<Character, EventNode>>() {
             });
 
+            this.events.put('P', new EventNode('P', null, false));
+
             this.mapCoords = new Hashtable<>();
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
