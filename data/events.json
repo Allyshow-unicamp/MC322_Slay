@@ -1,0 +1,262 @@
+{
+  "E" : {
+    "id" : "E",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Kaworu",
+        "health" : 400,
+        "maxHealth" : 400,
+        "minDamage" : 25,
+        "maxDamage" : 45,
+        "effects" : [],
+        "shield" : 200,
+        "image" : "kaworu.txt"
+      }
+    },
+    "visited" : false
+  },
+  "D" : {
+    "id" : "D",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Armisael",
+        "health" : 200,
+        "maxHealth" : 200,
+        "minDamage" : 25,
+        "maxDamage" : 35,
+        "effects" : [],
+        "shield" : 150,
+        "image" : "amisael.txt"
+      }
+    },
+    "visited" : false
+  },
+  "C" : {
+    "id" : "C",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Arael",
+        "health" : 200,
+        "maxHealth" : 200,
+        "minDamage" : 25,
+        "maxDamage" : 35,
+        "effects" : [],
+        "shield" : 150,
+        "image" : "arael.txt"
+      }
+    },
+    "visited" : false
+  },
+  "B" : {
+    "id" : "B",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Zeruel",
+        "health" : 200,
+        "maxHealth" : 200,
+        "minDamage" : 25,
+        "maxDamage" : 35,
+        "effects" : [],
+        "shield" : 150,
+        "image" : "zeruel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "A" : {
+    "id" : "A",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Bardiel",
+        "health" : 150,
+        "maxHealth" : 150,
+        "minDamage" : 25,
+        "maxDamage" : 30,
+        "effects" : [],
+        "shield" : 100,
+        "image" : "bardiel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "9" : {
+    "id" : "9",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Leliel",
+        "health" : 150,
+        "maxHealth" : 150,
+        "minDamage" : 25,
+        "maxDamage" : 30,
+        "effects" : [],
+        "shield" : 100,
+        "image" : "leliel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "8" : {
+    "id" : "8",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Ireul",
+        "health" : 150,
+        "maxHealth" : 150,
+        "minDamage" : 25,
+        "maxDamage" : 30,
+        "effects" : [],
+        "shield" : 100,
+        "image" : "ireul.txt"
+      }
+    },
+    "visited" : false
+  },
+  "7" : {
+    "id" : "7",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Sahaquiel",
+        "health" : 150,
+        "maxHealth" : 150,
+        "minDamage" : 25,
+        "maxDamage" : 30,
+        "effects" : [],
+        "shield" : 100,
+        "image" : "sahaquiel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "6" : {
+    "id" : "6",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Matarael",
+        "health" : 150,
+        "maxHealth" : 150,
+        "minDamage" : 25,
+        "maxDamage" : 30,
+        "effects" : [],
+        "shield" : 100,
+        "image" : "matarael.txt"
+      }
+    },
+    "visited" : false
+  },
+  "5" : {
+    "id" : "5",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Sandalphon",
+        "health" : 125,
+        "maxHealth" : 125,
+        "minDamage" : 15,
+        "maxDamage" : 25,
+        "effects" : [],
+        "shield" : 75,
+        "image" : "sandalphol.txt"
+      }
+    },
+    "visited" : false
+  },
+  "4" : {
+    "id" : "4",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Gaghiel",
+        "health" : 125,
+        "maxHealth" : 125,
+        "minDamage" : 15,
+        "maxDamage" : 25,
+        "effects" : [],
+        "shield" : 75,
+        "image" : "gaghiel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "3" : {
+    "id" : "3",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Ramiel",
+        "health" : 125,
+        "maxHealth" : 125,
+        "minDamage" : 15,
+        "maxDamage" : 25,
+        "effects" : [],
+        "shield" : 75,
+        "image" : "ramiel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "2" : {
+    "id" : "2",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Shamshel",
+        "health" : 100,
+        "maxHealth" : 100,
+        "minDamage" : 10,
+        "maxDamage" : 20,
+        "effects" : [],
+        "shield" : 50,
+        "image" : "shmashel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "1" : {
+    "id" : "1",
+    "event" : {
+      "type" : "battle",
+      "angel" : {
+        "type" : "enemy",
+        "name" : "Sachiel",
+        "health" : 100,
+        "maxHealth" : 100,
+        "minDamage" : 10,
+        "maxDamage" : 20,
+        "effects" : [],
+        "shield" : 50,
+        "image" : "sachiel.txt"
+      }
+    },
+    "visited" : false
+  },
+  "P" : {
+    "id" : "P",
+    "event" : {
+      "type" : "battle",
+      "angel" : null
+    },
+    "visited" : false
+  }
+}

@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
 import mc322_slay.entity.Entity;
+import mc322_slay.event.Battle;
 
 /**
  * Classe base para efeitos temporários aplicados a {@link Entity}.

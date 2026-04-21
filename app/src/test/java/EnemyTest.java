@@ -18,7 +18,7 @@ public class EnemyTest {
     public void damageInflictedOnAttack() {
         Enemy enemy = new Enemy("Anjo", 200, 100, 20, 40, null);
         enemy.nextAction();
-        Hero hero = new Hero("Herói", 50,50, null);
+        Hero hero = new Hero("Herói", 50, 50, null, null);
         assertEquals(enemy.getDamage(), enemy.attack(hero));
         assertEquals(50, hero.getHealth());
         assertEquals(50 - enemy.getDamage(), hero.getShield());
@@ -37,7 +37,7 @@ public class EnemyTest {
         assertEquals(1.125, multiplier);
         double attack = enemy.getDamage();
 
-        Hero hero = new Hero("Herói", 50, 50, null);
+        Hero hero = new Hero("Herói", 50, 50, null, null);
         assertEquals((int) attack, enemy.attack(hero));
         assertEquals(50, hero.getHealth());
         assertEquals(50 - (int) attack, hero.getShield());

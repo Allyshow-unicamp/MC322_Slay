@@ -1,9 +1,15 @@
-package mc322_slay;
+package mc322_slay.event;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import mc322_slay.ColorEnum;
+import mc322_slay.EventEnum;
+import mc322_slay.Interface;
 import mc322_slay.card.Card;
 import mc322_slay.card.CardStack;
 import mc322_slay.card.DamageCard;
@@ -17,17 +23,23 @@ import mc322_slay.effect.LowSyncRate;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.EnemyActions;
 import mc322_slay.entity.Hero;
+import mc322_slay.serializer.BattleSerializer;
 
 /**
  * Representa um combate por turnos entre o herói e um anjo.
  * Gerencia compra de cartas, gasto de sincronização (energia), ações do jogador,
  * notificação de efeitos e turno do inimigo.
  */
-public class Battle {
-    /** Herói controlado pelo jogador. */
-    private Hero hero;
+@JsonSerialize(using = BattleSerializer.class)
+public class Battle extends Event {
     /** Inimigo (anjo) enfrentado nesta batalha. */
+    @JsonProperty("angel")
     private Enemy angel;
+    
+    public Enemy getAngel() {
+        return angel;
+    }
+
     /**
      * Taxa de sincronização restante no turno atual; equivale à energia disponível
      * para jogar cartas.
@@ -57,17 +69,12 @@ public class Battle {
      * @param angel inimigo desta luta.
      * @param deck  baralho base da partida (será copiado para a pilha de compra).
      */
-    public Battle(Hero hero, Enemy angel, CardStack deck) {
-        this.hero = hero;
+    public Battle(Enemy angel) {
         this.angel = angel;
-        this.hand = new PlayerHand();
-        deck.shuffle();
-        this.buyPile = new CardStack(deck);
-        this.discardPile = new CardStack();
-        this.syncRate = initialSync;
-        this.scanner = new Scanner(System.in);
-        this.random = new Random();
-        this.subscribers = new ArrayList<>();
+    }
+
+    public Battle() {
+        super();
     }
 
     /**
@@ -75,37 +82,47 @@ public class Battle {
      *
      * @return {@code true} se o herói vencer; {@code false} se for derrotado.
      */
-    public boolean performFight() {
+    @Override
+    public boolean init(Hero hero) {
+        this.hand = new PlayerHand();
+        this.syncRate = initialSync;
+        this.scanner = new Scanner(System.in);
+        this.random = new Random();
+        this.subscribers = new ArrayList<>();
+        hero.getDeck().shuffle();
+        this.buyPile = new CardStack(hero.getDeck());
+        this.discardPile = new CardStack();
+
         Interface.clearScreen();
 
         Interface.printMessage("\r\n=== BATALHA ÉPICA ===", ColorEnum.purple);
-        Interface.printMessage(this.hero.getName() + " x " + this.angel.getName(), ColorEnum.purple);
+        Interface.printMessage(hero.getName() + " x " + this.angel.getName(), ColorEnum.purple);
 
-        while (isRunning()) {
-            notifySubscribers(EventEnum.playerStartOfTurn);
+        while (isRunning(hero)) {
+            notifySubscribers(EventEnum.playerStartOfTurn, hero);
             Interface.printMessage("\r\n=== TURNO DO JOGADOR ===\r\n", ColorEnum.reset);
 
             buyCards();
-            resetTurn();
+            resetTurn(hero);
             int enemyOption = enemyPlanning();
-            while (!endOfTurn()) {
+            while (!endOfTurn(hero)) {
                 Interface.printMessage(enemyPlanning, ColorEnum.red);
-                int option = selectOption();
-                playerAction(option);
+                int option = selectOption(hero);
+                playerAction(option, hero);
             }
-            notifySubscribers(EventEnum.playerEndOfTurn);
+            notifySubscribers(EventEnum.playerEndOfTurn, hero);
 
-            if (isRunning()) {
+            if (isRunning(hero)) {
                 discardCards();
 
-                notifySubscribers(EventEnum.enemyStartOfTurn);
+                notifySubscribers(EventEnum.enemyStartOfTurn, hero);
                 Interface.printMessage("\r\n=== TURNO DO INIMIGO ===\r\n", ColorEnum.reset);
-                enemyAction(enemyOption);
-                notifySubscribers(EventEnum.enemyEndOfTurn);
+                enemyAction(enemyOption, hero);
+                notifySubscribers(EventEnum.enemyEndOfTurn, hero);
             }
         }
 
-        return results();
+        return results(hero);
     }
 
     /**
@@ -132,8 +149,8 @@ public class Battle {
      *
      * @param event evento disparado no ciclo do jogo.
      */
-    private void notifySubscribers(EventEnum event) {
-        if (isRunning()) {
+    private void notifySubscribers(EventEnum event, Hero hero) {
+        if (isRunning(hero)) {
             ArrayList<Effect> effectsToBeRemoved = new ArrayList<>();
             for (Effect subscriber : this.subscribers) {
                 // if effect has to be removed
@@ -181,7 +198,7 @@ public class Battle {
      *
      * @return {@code true} se herói e inimigo estão vivos.
      */
-    private boolean isRunning() {
+    private boolean isRunning(Hero hero) {
         return hero.isAlive() && angel.isAlive();
     }
 
@@ -196,7 +213,7 @@ public class Battle {
     /**
      * Restaura energia base e reseta o escudo.
      */
-    private void resetTurn() {
+    private void resetTurn(Hero hero) {
         hero.resetShield();
         Interface.printMessage("Seu campo AT (escudo) foi zerado.", ColorEnum.blue);
         syncRate = initialSync;
@@ -208,8 +225,8 @@ public class Battle {
      *
      * @return {@code true} quando não há energia ou o combate terminou.
      */
-    private boolean endOfTurn() {
-        boolean end = !isRunning() || syncRate == 0;
+    private boolean endOfTurn(Hero hero) {
+        boolean end = !isRunning(hero) || syncRate == 0;
         return end;
     }
 
@@ -229,7 +246,7 @@ public class Battle {
      *
      * @return índice da carta selecionada ou {@code -1} para encerrar turno.
      */
-    private int selectOption() {
+    private int selectOption(Hero hero) {
         Interface.printTurnInfo(hero, angel);
 
         Interface.showHand(hand.getHand(), syncRate, initialSync);
@@ -267,7 +284,7 @@ public class Battle {
      *
      * @param option índice da carta na mão ou {@code -1} para passar.
      */
-    private void playerAction(int option) {
+    private void playerAction(int option, Hero hero) {
         Interface.printMessage("", ColorEnum.reset);
 
         if (option == -1) {
@@ -332,8 +349,8 @@ public class Battle {
      *
      * @param enemyOption valor correspondente à ação do inimigo.
      */
-    private void enemyAction(int enemyOption) {
-        if (isRunning()) {
+    private void enemyAction(int enemyOption, Hero hero) {
+        if (isRunning(hero)) {
 
             EnemyActions action = EnemyActions.values()[enemyOption];
 
@@ -367,7 +384,7 @@ public class Battle {
      *
      * @return {@code true} se o jogador venceu; {@code false} se perdeu.
      */
-    private boolean results() {
+    private boolean results(Hero hero) {
         Interface.printTurnInfo(hero, angel);
 
         Interface.clearScreen();

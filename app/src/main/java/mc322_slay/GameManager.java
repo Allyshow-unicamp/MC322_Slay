@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Event;
+import mc322_slay.event.EventNode;
 
 /**
  * Orquestra o estado do jogo: inicialização, seleção de personagem, montagem do
@@ -23,7 +25,6 @@ public class GameManager {
     /** Leitura de entradas do teclado. */
     private Scanner scanner;
     /** Baralho principal de compra (pilha de cartas). */
-    private CardStack deck;
     private GameMap map;
     private boolean end = false;
 
@@ -34,12 +35,12 @@ public class GameManager {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             String serialized = Files.readString(Paths.get("..","data", "deck.json"));
-            deck = mapper.readValue(serialized, CardStack.class);
+            hero.setDeck(mapper.readValue(serialized, CardStack.class));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        deck.shuffle();
+        hero.getDeck().shuffle();
 
         Interface.printMessage("O baralho foi embaralhado!", ColorEnum.blue);
     }
@@ -48,11 +49,10 @@ public class GameManager {
      * Inicializa os objetos principais e variáveis de estado da partida.
      */
     public void start() {
-        this.hero = new Hero("", 50, 0, "eva.txt");
-        this.deck = new CardStack();
+        this.hero = new Hero("", 50, 0, new CardStack(), "eva.txt");
         this.scanner = new Scanner(System.in);
         this.map = new GameMap();
-        this.map.buildMap("map.json", "battles.json");
+        this.map.buildMap("map.json", "events.json");
     }
 
     /**
@@ -142,25 +142,25 @@ public class GameManager {
         return option;
     }
 
-    public boolean performBattle(int option) {
+    public boolean performEvent(int option) {
         if (option == -1) 
             return true;
         
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
-        BattleNode playerBattleNode = (BattleNode) playerNode.getUserObject();
+        EventNode playerEventNode = (EventNode) playerNode.getUserObject();
 
         DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(option - 1);
-        BattleNode childBattleNode = (BattleNode) childNode.getUserObject();
+        EventNode childEventNode = (EventNode) childNode.getUserObject();
 
-        Battle battle = new Battle(hero, childBattleNode.getEnemy(), deck);
-        boolean won = battle.performFight();
-        if (won) {
-            playerBattleNode.setVisited(true);
-            playerNode.setUserObject(playerBattleNode);
+        Event event = childEventNode.getEvent();
+        boolean alive = event.init(hero);
+        if (alive) {
+            playerEventNode.setVisited(true);
+            playerNode.setUserObject(playerEventNode);
             map.setPlayerNode(childNode);
             resetBattle();
         }
-        return won;
+        return alive;
     }
 
     public void printResults(boolean won) {

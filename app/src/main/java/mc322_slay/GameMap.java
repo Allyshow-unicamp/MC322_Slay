@@ -10,6 +10,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import mc322_slay.event.EventNode;
+
 /**
  * Constrói e renderiza o mapa de progressão entre batalhas.
  * Também mantém o nó atual do jogador e as opções de avanço na árvore.
@@ -26,7 +28,7 @@ public class GameMap {
 
     private Hashtable<Character, pos> mapCoords;
 
-    private Hashtable<Character, BattleNode> battles;
+    private Hashtable<Character, EventNode> events;
 
     private DefaultMutableTreeNode tree;
     private DefaultMutableTreeNode playerNode;
@@ -43,9 +45,9 @@ public class GameMap {
      * Carrega matriz visual do mapa e monta a árvore de batalhas.
      *
      * @param mapFile    arquivo JSON da matriz de caracteres do mapa.
-     * @param battleFile arquivo JSON com metadados dos nós de batalha.
+     * @param eventFile arquivo JSON com metadados dos nós de batalha.
      */
-    public void buildMap(String mapFile, String battleFile) {
+    public void buildMap(String mapFile, String eventFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             String serialized = Files.readString(Path.of("..", "data", mapFile));
@@ -64,7 +66,7 @@ public class GameMap {
                 System.out.println();
             }
 
-            this.buildTree(battleFile);
+            this.buildTree(eventFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,16 +75,16 @@ public class GameMap {
     /**
      * Carrega os nós de batalha e cria a árvore conectada a partir do nó inicial.
      *
-     * @param battleFile arquivo JSON com o dicionário id -> {@link BattleNode}.
+     * @param eventFile arquivo JSON com o dicionário id -> {@link EventNode}.
      */
-    public void buildTree(String battleFile) {
+    public void buildTree(String eventFile) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Path.of("..", "data", battleFile));
-            battles = mapper.readValue(serialized, new TypeReference<Hashtable<Character, BattleNode>>() {
+            String serialized = Files.readString(Path.of("..", "data", eventFile));
+            events = mapper.readValue(serialized, new TypeReference<Hashtable<Character, EventNode>>() {
             });
 
-            tree = new DefaultMutableTreeNode(battles.get('P'));
+            tree = new DefaultMutableTreeNode(events.get('P'));
             buildTreeRec('P', tree);
 
             playerNode = tree;
@@ -131,7 +133,7 @@ public class GameMap {
                     }
 
                     if (nextId != '*') {
-                        DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(battles.get(nextId));
+                        DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(events.get(nextId));
                         currentNode.add(nextNode);
                         buildTreeRec(nextId, nextNode);
                     }
@@ -154,8 +156,8 @@ public class GameMap {
                     System.out.print(c);
                 } // connections or empty spaces
                 else {
-                    BattleNode nodeP = (BattleNode) playerNode.getUserObject();
-                    BattleNode nodeX = battles.get(c);
+                    EventNode nodeP = (EventNode) playerNode.getUserObject();
+                    EventNode nodeX = events.get(c);
                     if (nodeX.getId() == nodeP.getId()) {
                         c = 'P'; // player position
                         Interface.printInline(c + "", ColorEnum.yellow);
@@ -166,7 +168,7 @@ public class GameMap {
                         boolean nextOption = false;
                         for (int k = 0; k < playerNode.getChildCount(); k++) {
                             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(k);
-                            BattleNode nodeC = (BattleNode) childNode.getUserObject();
+                            EventNode nodeC = (EventNode) childNode.getUserObject();
                             if (nodeX.getId() == nodeC.getId()) {
                                 c = (char) ('0' + counter); // options to select position
                                 counter++;

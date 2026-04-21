@@ -17,7 +17,7 @@ import mc322_slay.entity.Hero;
 public class HeroTest {
     @Test 
     public void maxHealthRespected() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.takeDamage(10);
         hero.gainHealth(15);
         assertEquals(50, hero.getHealth());
@@ -25,7 +25,7 @@ public class HeroTest {
     
     @Test
     public void damageAbsorbedByShield() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.takeDamage(15);
         assertEquals(50, hero.getHealth());
         assertEquals(5, hero.getShield());
@@ -33,7 +33,7 @@ public class HeroTest {
 
     @Test 
     public void damagePartiallyAbsorbedByShield() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.takeDamage(30);
         assertEquals(40, hero.getHealth());
         assertEquals(0, hero.getShield());
@@ -41,7 +41,7 @@ public class HeroTest {
 
     @Test 
     public void damageWithNoShield() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.takeDamage(30);
         assertEquals(20, hero.getHealth());
         assertEquals(0, hero.getShield());
@@ -49,7 +49,7 @@ public class HeroTest {
 
     @Test
     public void healthAlwaysNotNegative() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.takeDamage(100);
         assertEquals(0, hero.getHealth());
         assertEquals(0, hero.getShield());
@@ -57,7 +57,7 @@ public class HeroTest {
 
     @Test 
     public void effectApplied() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão de Campo AT", 3));
         assertTrue(hero.hasEffect(ATFieldCorrosion.class));
         assertEquals("Corrosão de Campo AT", hero.getEffects().get(0).getName());
@@ -68,7 +68,7 @@ public class HeroTest {
 
     @Test 
     public void corrosionEffectPointsIncremented() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão de Campo AT", 3));
         hero.applyEffect(new ATFieldCorrosion("Corrosão de Campo AT", 3));
         assertEquals(6, hero.getEffects().get(0).getPoints());
@@ -76,7 +76,7 @@ public class HeroTest {
 
     @Test 
     public void healthRegenEffectHealthPointsIncremented() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HealthRegeneration("Regeneração", 3, 3));
         hero.applyEffect(new HealthRegeneration("Regeneração", 5, 3));
         assertEquals(6, hero.getEffects().get(0).getPoints());
@@ -85,7 +85,7 @@ public class HeroTest {
 
     @Test 
     public void poisonEffectPoisonPointsIncremented() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new PsychicEffect("Dano psicológico", 3, 3));
         hero.applyEffect(new PsychicEffect("Dano psicológico", 5, 3));
         assertEquals(6, hero.getEffects().get(0).getPoints());
@@ -94,7 +94,7 @@ public class HeroTest {
 
     @Test 
     public void boostApplied() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HighSyncRate("Força", 3, 1.5));
         hero.applyEffect(new HighSyncRate("Força", 3, 2));
         assertEquals(2, hero.getBoost());
@@ -102,7 +102,7 @@ public class HeroTest {
 
     @Test 
     public void deboostApplied() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new LowSyncRate("Fraqueza", 3, 0.75));
         hero.applyEffect(new LowSyncRate("Fraqueza", 3, 0.5));
         assertEquals(0.5, hero.getDeboost());
@@ -110,7 +110,7 @@ public class HeroTest {
 
     @Test 
     public void highSyncEffectBoostIncremented() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HighSyncRate("Força", 3, 1.5));
         hero.applyEffect(new HighSyncRate("Força", 3, 2));
         assertEquals(6, hero.getEffects().get(0).getPoints());
@@ -119,7 +119,7 @@ public class HeroTest {
 
     @Test 
     public void lowSyncEffectDeboostIncremented() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new LowSyncRate("Fraqueza", 3, 0.75));
         hero.applyEffect(new LowSyncRate("Fraqueza", 3, 0.5));
         assertEquals(6, hero.getEffects().get(0).getPoints());
@@ -128,7 +128,7 @@ public class HeroTest {
 
     @Test 
     public void effectRemoved() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão de Campo AT", 3));
         hero.removeEffect(hero.getLastEffect());
         assertTrue(hero.getEffects().isEmpty());
@@ -136,7 +136,7 @@ public class HeroTest {
 
     @Test 
     public void allEffectsRemoved() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão de Campo AT", 3));
         hero.applyEffect(new LowSyncRate("Fraqueza", 3, 0.75));
         hero.applyEffect(new HighSyncRate("Força", 3, 1.5));

@@ -2,8 +2,8 @@ package mc322_slay.effect;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
+import mc322_slay.event.Battle;
 import mc322_slay.serializer.ATFieldCorrosionSerializer;
 
 /**

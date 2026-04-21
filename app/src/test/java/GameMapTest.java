@@ -5,8 +5,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.junit.jupiter.api.Test;
 
-import mc322_slay.BattleNode;
 import mc322_slay.GameMap;
+import mc322_slay.event.EventNode;
 
 /**
  * Testes unitários de {@link GameMap} para validação de criação e movimentação no mapa.
@@ -19,7 +19,7 @@ public class GameMapTest {
     public void buildMapInitializesTreeAndPlayerOnRootNode() {
         GameMap map = new GameMap();
 
-        map.buildMap("map.json", "battles.json");
+        map.buildMap("map.json", "events.json");
 
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         assertNotNull(playerNode);
@@ -33,12 +33,12 @@ public class GameMapTest {
     @Test
     public void setPlayerNodeUpdatesCurrentNodeReference() {
         GameMap map = new GameMap();
-        map.buildMap("map.json", "battles.json");
+        map.buildMap("map.json", "events.json");
 
         DefaultMutableTreeNode child = (DefaultMutableTreeNode) map.getPlayerNode().getChildAt(0);
         map.setPlayerNode(child);
 
-        BattleNode battleNode = (BattleNode) map.getPlayerNode().getUserObject();
+        EventNode battleNode = (EventNode) map.getPlayerNode().getUserObject();
         assertEquals('1', battleNode.getId());
     }
 }

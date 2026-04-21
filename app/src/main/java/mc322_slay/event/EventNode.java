@@ -1,15 +1,21 @@
-package mc322_slay;
-
-import mc322_slay.entity.Enemy;
+package mc322_slay.event;
 
 /**
  * Nó lógico de um caminho do mapa.
  * Cada nó representa uma batalha contra um inimigo e mantém o estado de visita.
  */
-public class BattleNode {
+public class EventNode {
     private char id;
-    private Enemy enemy;
+    private Event event;
     private boolean visited;
+    
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
     /**
      * @return identificador único do nó no mapa.
@@ -23,20 +29,6 @@ public class BattleNode {
      */
     public void setId(char id) {
         this.id = id;
-    }
-
-    /**
-     * @return inimigo associado à batalha deste nó.
-     */
-    public Enemy getEnemy() {
-        return enemy;
-    }
-
-    /**
-     * @param enemy novo inimigo associado à batalha.
-     */
-    public void setEnemy(Enemy enemy) {
-        this.enemy = enemy;
     }
 
     /**
@@ -56,7 +48,7 @@ public class BattleNode {
     /**
      * Constrói um nó vazio para desserialização.
      */
-    public BattleNode() {
+    public EventNode() {
         super();
     }
 
@@ -67,9 +59,9 @@ public class BattleNode {
      * @param enemy inimigo da batalha.
      * @param visited estado inicial de visita.
      */
-    public BattleNode(char id, Enemy enemy, boolean visited) {
+    public EventNode(char id, Event event, boolean visited) {
         this.id = id;
-        this.enemy = enemy;
+        this.event = event;
         this.visited = visited;
     }
 }

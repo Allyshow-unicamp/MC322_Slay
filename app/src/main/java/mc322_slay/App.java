@@ -30,7 +30,7 @@ public class App {
         boolean won = true;
         while (game.isRunning()) {
             int option = game.selectPathOnMap();
-            if (!game.performBattle(option))
+            if (!game.performEvent(option))
                 won = false;
         }
         game.printResults(won);
