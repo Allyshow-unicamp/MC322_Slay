@@ -52,7 +52,7 @@ public class GameManager {
         this.hero = new Hero("", 50, 0, new CardStack(), "eva.txt");
         this.scanner = new Scanner(System.in);
         this.map = new GameMap();
-        this.map.buildMap("map.json", "events.json");
+        this.map.buildMap("map.json", "battles.json");
     }
 
     /**
@@ -164,6 +164,8 @@ public class GameManager {
     }
 
     public void printResults(boolean won) {
+        scanner.close();
+
         Interface.clearScreen();
 
         if (won)

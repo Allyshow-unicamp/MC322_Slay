@@ -14,4 +14,6 @@ import mc322_slay.entity.Hero;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public abstract class Event {
     public abstract boolean init(Hero hero);
+
+    public abstract String getDescription();
 }

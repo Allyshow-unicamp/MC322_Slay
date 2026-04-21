@@ -122,6 +122,8 @@ public class Battle extends Event {
             }
         }
 
+        scanner.close();
+
         return results(hero);
     }
 
@@ -397,5 +399,10 @@ public class Battle extends Event {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public String getDescription() {
+        return "Batalha";
     }
 }
