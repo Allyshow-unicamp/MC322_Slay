@@ -21,14 +21,16 @@ public class Choice extends Event {
 
         Interface.printInline("\r\n== ESCOLHA ==\r\n", ColorEnum.purple);
 
-        Interface.printMessage("Você se depara com uma decisão difícil em sua jornada. Escolha com sabedoria: ", ColorEnum.reset);
+        Interface.printMessage("Você se depara com uma decisão difícil em sua jornada. Escolha com sabedoria: ",
+                ColorEnum.reset);
 
         Random random = new Random();
         double prob0 = random.nextDouble(0.7, 0.9);
 
         Interface.printInline("\r\n0) Seleção/deleção de carta: \r\n", ColorEnum.yellow);
         Interface.printInline((int) (prob0 * 100) + "%", ColorEnum.green);
-        Interface.printInline(" de chance de selecionar uma carta nova para ser adicionada ao baralho. \r\n", ColorEnum.reset);
+        Interface.printInline(" de chance de selecionar uma carta nova para ser adicionada ao baralho. \r\n",
+                ColorEnum.reset);
         Interface.printInline(100 - (int) (prob0 * 100) + "%", ColorEnum.red);
         Interface.printInline(" de chance de deletar uma carta aleatória do baralho.\r\n", ColorEnum.reset);
 
@@ -37,9 +39,11 @@ public class Choice extends Event {
 
         Interface.printInline("\r\n1) Ganho/perda de vida: \r\n", ColorEnum.yellow);
         Interface.printInline((int) (prob1 * 100) + "%", ColorEnum.green);
-        Interface.printInline(" de chance de recuperar " + (int) (health * 100) + "% da sua vida máxima. \r\n", ColorEnum.reset);
+        Interface.printInline(" de chance de recuperar " + (int) (health * 100) + "% da sua vida máxima. \r\n",
+                ColorEnum.reset);
         Interface.printInline(100 - (int) (prob1 * 100) + "%", ColorEnum.red);
-        Interface.printInline(" de chance de perder " + (int) (health * 100) + "% da sua vida máxima.\r\n", ColorEnum.reset);
+        Interface.printInline(" de chance de perder " + (int) (health * 100) + "% da sua vida máxima.\r\n",
+                ColorEnum.reset);
 
         // outras oções
 
@@ -48,23 +52,28 @@ public class Choice extends Event {
         int option = 0;
         while (true) {
             try {
-                System.out.print("\r\nSelecione sua escolha: ");
-                option = Integer.parseInt(scanner.nextLine());
-                if (0 <= option && option <= 1) {
-                    boolean goodOption;
-
-                    switch (option) {
-                        case 0:
-                            goodOption = rollTheDices(prob0);
-                            selectCard(hero, possibleNewCards, goodOption);
-                            break;
-                        case 1:
-                            goodOption = rollTheDices(prob1);
-                            return gainHealth(hero, goodOption, health);
-                    }
-                    break;
+                System.out.print("\r\nSelecione sua escolha (D para ver deck e vida): ");
+                char response = scanner.next().charAt(0);
+                if (response == 'D') {
+                    Interface.printHeroInfo(hero);
                 } else {
-                    Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    option = Integer.parseInt(response + "");
+                    if (0 <= option && option <= 1) {
+                        boolean goodOption;
+
+                        switch (option) {
+                            case 0:
+                                goodOption = rollTheDices(prob0);
+                                selectCard(hero, possibleNewCards, goodOption);
+                                break;
+                            case 1:
+                                goodOption = rollTheDices(prob1);
+                                return gainHealth(hero, goodOption, health);
+                        }
+                        break;
+                    } else {
+                        Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    }
                 }
             } catch (Exception e) {
                 Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
@@ -80,8 +89,7 @@ public class Choice extends Event {
         if (thisProb <= prob) {
             Interface.printMessage("\r\nA sorte está com você.", ColorEnum.green);
             return true;
-        }
-        else {
+        } else {
             Interface.printMessage("\r\nHoje não é seu dia de sorte.", ColorEnum.red);
             return false;
         }
@@ -100,31 +108,37 @@ public class Choice extends Event {
             int option = 0;
             while (true) {
                 try {
-                    System.out.print("\r\nSelecione uma carta para adicionar ao seu deque (-1 para pular): ");
-                    option = Integer.parseInt(scanner.nextLine());
-                    if (-1 <= option && option < 3) {
-                        if (option == -1)
-                            break;
-                        
-                        CardStack deck = hero.getDeck();
-                        Card newCard = possibleNewCards.getStack().remove(option);
-                        deck.add(newCard);
-                        hero.setDeck(deck);
-
-                        Interface.clearScreen();
-
-                        Interface.printMessage("Carta " + newCard.getName() + " adicionada ao baralho.", ColorEnum.blue);
-
-                        break;
+                    System.out.print(
+                            "\r\nSelecione uma carta para adicionar ao seu deck (D para ver deck e vida, -1 para pular): ");
+                    char response = scanner.next().charAt(0);
+                    if (response == 'D') {
+                        Interface.printHeroInfo(hero);
                     } else {
-                        Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                        option = Integer.parseInt(response + "");
+                        if (-1 <= option && option < 3) {
+                            if (option == -1)
+                                break;
+
+                            CardStack deck = hero.getDeck();
+                            Card newCard = possibleNewCards.getStack().remove(option);
+                            deck.add(newCard);
+                            hero.setDeck(deck);
+
+                            Interface.clearScreen();
+
+                            Interface.printMessage("Carta " + newCard.getName() + " adicionada ao baralho.",
+                                    ColorEnum.blue);
+
+                            break;
+                        } else {
+                            Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                        }
                     }
                 } catch (Exception e) {
                     Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
                 }
             }
-        } 
-        else {
+        } else {
             CardStack deck = hero.getDeck();
             deck.shuffle();
             Card removedCard = deck.remove();
@@ -139,8 +153,7 @@ public class Choice extends Event {
             int healthIncrement = (int) (hero.getMaxHealth() * health);
             hero.gainHealth(healthIncrement);
             Interface.printMessage("Você recupera " + healthIncrement + " de vida.", ColorEnum.blue);
-        } 
-        else {
+        } else {
             int healthDecrement = (int) (hero.getMaxHealth() * health);
             hero.takeDamage(healthDecrement);
             return hero.isAlive();

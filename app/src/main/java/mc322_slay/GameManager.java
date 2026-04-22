@@ -32,7 +32,7 @@ public class GameManager {
     private void readPosssibleCards() {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..","data", "cards.json"));
+            String serialized = Files.readString(Paths.get("..", "data", "cards.json"));
             possibleNewCards = mapper.readValue(serialized, CardStack.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class GameManager {
     private void populateDeck() {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..","data", "deck.json"));
+            String serialized = Files.readString(Paths.get("..", "data", "deck.json"));
             hero.setDeck(mapper.readValue(serialized, CardStack.class));
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,7 +132,7 @@ public class GameManager {
 
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         int nOptions = playerNode.getChildCount();
-        if (nOptions == 0) { // reached end 
+        if (nOptions == 0) { // reached end
             end = true;
             return -1;
         }
@@ -140,25 +140,30 @@ public class GameManager {
         int option;
         while (true) {
             try {
-                System.out.print("Selecione o caminho que deseja seguir no mapa: ");
-                option = Integer.parseInt(scanner.nextLine());
-                if (0 < option && option <= nOptions) {
-                    break;
+                System.out.print("Selecione o caminho que deseja seguir no mapa (D para ver deck e vida): ");
+                char response = scanner.next().charAt(0);
+                if (response == 'D') {
+                    Interface.printHeroInfo(hero);
                 } else {
-                    Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    option = Integer.parseInt(response + "");
+                    if (0 < option && option <= nOptions) {
+                        break;
+                    } else {
+                        Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    }
                 }
             } catch (Exception e) {
                 Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
             }
         }
-        
+
         return option;
     }
 
     public boolean performEvent(int option) {
-        if (option == -1) 
+        if (option == -1)
             return true;
-        
+
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         EventNode playerEventNode = (EventNode) playerNode.getUserObject();
 

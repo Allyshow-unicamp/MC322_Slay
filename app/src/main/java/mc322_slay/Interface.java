@@ -178,6 +178,25 @@ public class Interface {
                 + " de Sincronização (Energia) disponível\r\n");
     }
 
+    public static void printHeroInfo(Hero hero) {
+        printInline("\r\n== Informações do herói ==\r\n", ColorEnum.yellow);
+
+        System.out.print("\r\nVida: ");
+        printInline(hero.getHealth() + "/" + hero.getMaxHealth(), ColorEnum.green);
+
+        hero.getDeck().getStack().sort((card1, card2) -> {
+            return -1 * (card1.getCost() > card2.getCost() ? 1 : card1.getCost() == card2.getCost() ? 0 : -1);
+        });
+
+        System.out.println("\r\ndeck: ");
+        for (int i = 0; i < hero.getDeck().getStack().size(); i++) {
+            Card card = hero.getDeck().getStack().get(i);
+            printCardInfo(card, i);
+        }
+
+        System.out.println();
+    }
+
     public static void printCardInfo(Card card, int i) {
          String cardType = "";
             if (card instanceof DamageCard)

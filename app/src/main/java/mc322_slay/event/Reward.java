@@ -27,20 +27,26 @@ public class Reward extends Event {
         int option = 0;
         while (true) {
             try {
-                System.out.print("\r\nSelecione a recompensa que deseja obter (-1 para pular recompensa): ");
-                option = Integer.parseInt(scanner.nextLine());
-                if (-1 <= option && option <= 0) {
-                    if (option == -1)
-                        break;
-                    
-                    switch (option) {
-                        case 0:
-                            selectCard(hero, possibleNewCards);
-                            break;
-                    }
-                    break;
+                System.out.print(
+                        "\r\nSelecione a recompensa que deseja obter (D para ver deck e vida, -1 para pular recompensa): ");
+                char response = scanner.next().charAt(0);
+                if (response == 'D') {
+                    Interface.printHeroInfo(hero);
                 } else {
-                    Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    option = Integer.parseInt(response + "");
+                    if (-1 <= option && option <= 0) {
+                        if (option == -1)
+                            break;
+
+                        switch (option) {
+                            case 0:
+                                selectCard(hero, possibleNewCards);
+                                break;
+                        }
+                        break;
+                    } else {
+                        Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    }
                 }
             } catch (Exception e) {
                 Interface.printMessage("Digite uma opção válida 2!", ColorEnum.yellow);
@@ -62,24 +68,31 @@ public class Reward extends Event {
         int option = 0;
         while (true) {
             try {
-                System.out.print("\r\nSelecione uma carta para adicionar ao seu deque (-1 para pular): ");
-                option = Integer.parseInt(scanner.nextLine());
-                if (-1 <= option && option < 3) {
-                    if (option == -1)
-                        break;
-                    
-                    CardStack deck = hero.getDeck();
-                    Card newCard = possibleNewCards.getStack().remove(option);
-                    deck.add(newCard);
-                    hero.setDeck(deck);
-
-                    Interface.clearScreen();
-
-                    Interface.printMessage("\r\nCarta " + newCard.getName() + " adicionada ao baralho.", ColorEnum.blue);
-
-                    break;
+                System.out.print(
+                        "\r\nSelecione uma carta para adicionar ao seu deck (D para ver deck e vida, -1 para pular): ");
+                char response = scanner.next().charAt(0);
+                if (response == 'D') {
+                    Interface.printHeroInfo(hero);
                 } else {
-                    Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    option = Integer.parseInt(response + "");
+                    if (-1 <= option && option < 3) {
+                        if (option == -1)
+                            break;
+
+                        CardStack deck = hero.getDeck();
+                        Card newCard = possibleNewCards.getStack().remove(option);
+                        deck.add(newCard);
+                        hero.setDeck(deck);
+
+                        Interface.clearScreen();
+
+                        Interface.printMessage("\r\nCarta " + newCard.getName() + " adicionada ao baralho.",
+                                ColorEnum.blue);
+
+                        break;
+                    } else {
+                        Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    }
                 }
             } catch (Exception e) {
                 Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
@@ -91,5 +104,5 @@ public class Reward extends Event {
     public String getDescription() {
         return "Recompensa da batalha";
     }
-    
+
 }
