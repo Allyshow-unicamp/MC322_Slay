@@ -9,10 +9,17 @@ import mc322_slay.card.Card;
 import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
 
+/**
+ * Evento de escolha com risco/recompensa para alterar deck ou vida do herói.
+ */
 public class Choice extends Event {
 
+    /** Scanner dedicado à interação textual deste evento. */
     Scanner scanner;
 
+    /**
+     * Executa o fluxo principal de escolhas.
+     */
     @Override
     public boolean init(Hero hero, CardStack possibleNewCards) {
         scanner = new Scanner(System.in);
@@ -83,6 +90,12 @@ public class Choice extends Event {
         return true;
     }
 
+    /**
+     * Realiza um sorteio Bernoulli com a probabilidade informada.
+     *
+     * @param prob probabilidade de sucesso.
+     * @return {@code true} em caso de sucesso.
+     */
     private boolean rollTheDices(double prob) {
         Random random = new Random();
         double thisProb = random.nextDouble();
@@ -95,6 +108,13 @@ public class Choice extends Event {
         }
     }
 
+    /**
+     * Resolve a opção de manipulação de deck: ganhar carta ou remover aleatória.
+     *
+     * @param hero herói atual.
+     * @param possibleNewCards pilha com cartas candidatas.
+     * @param goodOption resultado do sorteio de sorte.
+     */
     private void selectCard(Hero hero, CardStack possibleNewCards, boolean goodOption) {
         if (goodOption) {
             possibleNewCards.shuffle();
@@ -148,6 +168,14 @@ public class Choice extends Event {
         }
     }
 
+    /**
+     * Resolve ganho ou perda de vida percentual sobre vida máxima.
+     *
+     * @param hero herói alvo.
+     * @param goodOption resultado do sorteio.
+     * @param health percentual (0-1) aplicado sobre vida máxima.
+     * @return {@code true} se o herói permanecer vivo.
+     */
     public boolean gainHealth(Hero hero, boolean goodOption, double health) {
         if (goodOption) {
             int healthIncrement = (int) (hero.getMaxHealth() * health);
@@ -161,6 +189,9 @@ public class Choice extends Event {
         return true;
     }
 
+    /**
+     * @return descrição curta do evento para o mapa.
+     */
     @Override
     public String getDescription() {
         return "Escolha";

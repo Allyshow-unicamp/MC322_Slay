@@ -31,7 +31,10 @@ public class Battle extends Event {
     /** Inimigo (anjo) enfrentado nesta batalha. */
     @JsonProperty("angel")
     private Enemy angel;
-    
+
+    /**
+     * @return inimigo associado a esta batalha.
+     */
     public Enemy getAngel() {
         return angel;
     }
@@ -53,21 +56,23 @@ public class Battle extends Event {
     private CardStack discardPile;
     /** Efeitos ativos que recebem eventos do ciclo de batalha. */
     private ArrayList<Effect> subscribers;
+    /** Leitor de entrada de ações do jogador no terminal. */
     private Scanner scanner;
     /** Mensagem textual com a intenção do inimigo no turno atual (exibida ao jogador). */
     private String enemyPlanning;
 
     /**
-     * Cria uma batalha com o herói, o anjo e o baralho compartilhado (cópia para compra/descarte).
+     * Cria uma batalha com o inimigo especificado.
      *
-     * @param hero  herói do jogador.
      * @param angel inimigo desta luta.
-     * @param deck  baralho base da partida (será copiado para a pilha de compra).
      */
     public Battle(Enemy angel) {
         this.angel = angel;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public Battle() {
         super();
     }

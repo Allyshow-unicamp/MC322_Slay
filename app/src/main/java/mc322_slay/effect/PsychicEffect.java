@@ -110,15 +110,26 @@ public class PsychicEffect extends Effect {
         this.startPoints = effect.startPoints;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public PsychicEffect() {
         super();
     }
 
+    /**
+     * @return cópia do efeito psicológico.
+     */
     @Override
     public PsychicEffect cloneEffect() {
         return new PsychicEffect(this);
     }
 
+    /**
+     * Mescla dano psicológico mantendo o maior dano por turno.
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         PsychicEffect tE = (PsychicEffect) effect;

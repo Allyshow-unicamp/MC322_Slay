@@ -81,6 +81,9 @@ public class LowSyncRate extends Effect {
         this.deboost = deboost;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public LowSyncRate() {
         super();
     }
@@ -103,6 +106,11 @@ public class LowSyncRate extends Effect {
         return new LowSyncRate(this);
     }
 
+    /**
+     * Mescla baixa sincronização mantendo o menor fator (maior penalidade).
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         LowSyncRate tE = (LowSyncRate) effect;

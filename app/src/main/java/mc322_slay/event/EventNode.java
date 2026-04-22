@@ -5,14 +5,23 @@ package mc322_slay.event;
  * Cada nó representa uma batalha contra um inimigo e mantém o estado de visita.
  */
 public class EventNode {
+    /** Identificador único do nó na malha do mapa. */
     private char id;
+    /** Evento associado ao nó (batalha, escolha, etc.). */
     private Event event;
+    /** Flag de controle para indicar se o jogador já passou por este nó. */
     private boolean visited;
-    
+
+    /**
+     * @return evento associado ao nó.
+     */
     public Event getEvent() {
         return event;
     }
 
+    /**
+     * @param event novo evento associado ao nó.
+     */
     public void setEvent(Event event) {
         this.event = event;
     }
@@ -56,7 +65,7 @@ public class EventNode {
      * Cria um nó de batalha completo.
      *
      * @param id identificador do nó.
-     * @param enemy inimigo da batalha.
+     * @param event evento associado ao nó.
      * @param visited estado inicial de visita.
      */
     public EventNode(char id, Event event, boolean visited) {

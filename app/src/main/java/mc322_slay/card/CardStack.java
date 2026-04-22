@@ -15,7 +15,7 @@ import mc322_slay.serializer.CardStackSerializer;
 @JsonSerialize(using = CardStackSerializer.class)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class CardStack {
-    
+    /** Estrutura LIFO com as cartas da pilha. */
     @JsonProperty("cards")
     private Stack<Card> cardsStack;
 
@@ -58,6 +58,9 @@ public class CardStack {
         this.cardsStack = new Stack<>();
     }
 
+    /**
+     * @return pilha interna de cartas.
+     */
     public Stack<Card> getStack() {
         return cardsStack;
     }

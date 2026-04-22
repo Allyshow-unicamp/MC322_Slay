@@ -95,6 +95,11 @@ public abstract class Effect {
      */
     public abstract String getString();
 
+    /**
+     * Retorna descrição funcional do efeito para telas de inspeção/cartas.
+     *
+     * @return texto descritivo do efeito.
+     */
     public abstract String getDescription();
 
     /**

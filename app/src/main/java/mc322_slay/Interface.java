@@ -53,6 +53,12 @@ public class Interface {
         sleep();
     }
 
+    /**
+     * Imprime texto sem quebra de linha com cor ANSI.
+     *
+     * @param message texto a imprimir.
+     * @param color cor do texto.
+     */
     public static void printInline(String message, ColorEnum color) {
         System.out.print(color.getColor() + message + ColorEnum.reset.getColor());
     }
@@ -61,6 +67,7 @@ public class Interface {
      * Imprime o conteúdo de um arquivo de texto da pasta de assets.
      *
      * @param text nome do arquivo a ser exibido.
+     * @param colorEnum cor aplicada à arte/mensagem do arquivo.
      */
     public static void printFile(String text, ColorEnum colorEnum) {
 
@@ -178,6 +185,11 @@ public class Interface {
                 + " de Sincronização (Energia) disponível\r\n");
     }
 
+    /**
+     * Mostra resumo do herói (vida e deck atual) para consultas durante escolhas.
+     *
+     * @param hero herói atual da partida.
+     */
     public static void printHeroInfo(Hero hero) {
         printInline("\r\n== Informações do herói ==\r\n", ColorEnum.yellow);
 
@@ -197,6 +209,12 @@ public class Interface {
         System.out.println();
     }
 
+    /**
+     * Imprime uma carta formatada com índice, tipo, custo e descrição.
+     *
+     * @param card carta a ser exibida.
+     * @param i índice da carta na lista atual.
+     */
     public static void printCardInfo(Card card, int i) {
          String cardType = "";
             if (card instanceof DamageCard)

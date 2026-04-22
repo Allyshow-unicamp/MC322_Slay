@@ -75,8 +75,8 @@ public class PlayerHand {
      * @return custo de energia da carta.
      */
     public int seeCardCost(int card) {
-        Card Card = hand.get(card);
-        int cost = Card.getCost();
+        Card selectedCard = hand.get(card);
+        int cost = selectedCard.getCost();
         return cost;
     }
     /**

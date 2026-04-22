@@ -8,10 +8,17 @@ import mc322_slay.card.Card;
 import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
 
+/**
+ * Evento de recompensa pós-batalha para adicionar cartas ao deck do herói.
+ */
 public class Reward extends Event {
 
+    /** Scanner dedicado à interação textual deste evento. */
     Scanner scanner;
 
+    /**
+     * Exibe e processa as opções de recompensa disponíveis.
+     */
     @Override
     public boolean init(Hero hero, CardStack possibleNewCards) {
         scanner = new Scanner(System.in);
@@ -56,6 +63,12 @@ public class Reward extends Event {
         return true;
     }
 
+    /**
+     * Mostra três cartas aleatórias e permite selecionar uma para o deck.
+     *
+     * @param hero herói que receberá a carta.
+     * @param possibleNewCards pilha de cartas candidatas.
+     */
     private void selectCard(Hero hero, CardStack possibleNewCards) {
         possibleNewCards.shuffle();
 
@@ -100,6 +113,9 @@ public class Reward extends Event {
         }
     }
 
+    /**
+     * @return descrição curta do evento para o mapa.
+     */
     @Override
     public String getDescription() {
         return "Recompensa da batalha";

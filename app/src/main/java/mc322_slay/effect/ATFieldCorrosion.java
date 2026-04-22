@@ -61,6 +61,9 @@ public class ATFieldCorrosion extends Effect {
         this.startPoints = turns;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public ATFieldCorrosion() {
         super();
     }
@@ -82,6 +85,11 @@ public class ATFieldCorrosion extends Effect {
         return new ATFieldCorrosion(this);
     }
 
+    /**
+     * Não possui atributos mescláveis além da duração, já tratada por {@link #incrementPoints(int)}.
+     *
+     * @param effect efeito recebido (ignorado).
+     */
     @Override 
     public void merge(Effect effect) {}
 }

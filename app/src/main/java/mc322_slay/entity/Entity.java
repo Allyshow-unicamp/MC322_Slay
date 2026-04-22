@@ -25,8 +25,9 @@ import mc322_slay.effect.LowSyncRate;
 })
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public abstract class Entity {
-
+    /** Multiplicador ofensivo aplicado no cálculo de dano da entidade. */
     protected double boost = 1;
+    /** Multiplicador secundário aplicado junto ao boost (debuff/buff adicional). */
     protected double deboost = 1;
 
     @JsonProperty("name")
@@ -209,7 +210,6 @@ public abstract class Entity {
      * Aplica um efeito à entidade ou incrementa os pontos se o efeito já existir.
      * 
      * @param effect O efeito a ser aplicado.
-     * @param points A quantidade de pontos/intensidade do efeito.
      */
     public void applyEffect(Effect effect) {
         boolean contains = false;

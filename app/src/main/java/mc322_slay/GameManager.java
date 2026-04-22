@@ -2,6 +2,7 @@ package mc322_slay;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -24,11 +25,16 @@ public class GameManager {
     private Hero hero;
     /** Leitura de entradas do teclado. */
     private Scanner scanner;
-    /** Baralho principal de compra (pilha de cartas). */
+    /** Mapa de progressão e posição atual do jogador. */
     private GameMap map;
+    /** Cartas candidatas para recompensas após vitórias. */
     private CardStack possibleNewCards;
+    /** Sinaliza término da campanha ao alcançar folha do mapa. */
     private boolean end = false;
 
+    /**
+     * Carrega do arquivo a pilha de cartas possíveis de recompensa.
+     */
     private void readPosssibleCards() {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
@@ -65,7 +71,9 @@ public class GameManager {
         this.readPosssibleCards();
         this.scanner = new Scanner(System.in);
         this.map = new GameMap();
-        this.map.buildMap("map.json", "battles.json");
+        Random random = new Random();
+        int n = random.nextInt(1, 5);
+        this.map.buildMap("map"+n+".json", "battles.json");
     }
 
     /**
@@ -123,10 +131,18 @@ public class GameManager {
         this.hero.resetEffects();
     }
 
+    /**
+     * @return {@code true} enquanto o herói estiver vivo e a campanha não tiver terminado.
+     */
     public boolean isRunning() {
         return hero.isAlive() && !end;
     }
 
+    /**
+     * Mostra o mapa e solicita a próxima rota do jogador.
+     *
+     * @return índice da opção escolhida (1..N) ou {@code -1} quando já não há nós seguintes.
+     */
     public int selectPathOnMap() {
         this.map.printMap();
 
@@ -160,6 +176,12 @@ public class GameManager {
         return option;
     }
 
+    /**
+     * Executa o evento correspondente ao caminho escolhido e avança o nó atual.
+     *
+     * @param option índice da opção escolhida no mapa.
+     * @return {@code true} quando o herói permanece vivo após o evento.
+     */
     public boolean performEvent(int option) {
         if (option == -1)
             return true;
@@ -181,6 +203,11 @@ public class GameManager {
         return alive;
     }
 
+    /**
+     * Exibe tela final de vitória/derrota e encerra leitura do teclado.
+     *
+     * @param won indica se o jogador venceu a campanha.
+     */
     public void printResults(boolean won) {
         scanner.close();
 

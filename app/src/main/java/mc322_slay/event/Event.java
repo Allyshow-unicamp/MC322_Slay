@@ -13,8 +13,24 @@ import mc322_slay.entity.Hero;
     @JsonSubTypes.Type(value = Battle.class, name = "battle")
 })
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
+/**
+ * Tipo base de eventos do mapa (ex.: batalhas), com inicialização própria e
+ * descrição para exibição na interface.
+ */
 public abstract class Event {
+    /**
+     * Executa o evento.
+     *
+     * @param hero herói da partida.
+     * @param possibleNewCards pilha de cartas possíveis para recompensas/efeitos do evento.
+     * @return {@code true} quando o herói sobrevive ao evento.
+     */
     public abstract boolean init(Hero hero, CardStack possibleNewCards);
 
+    /**
+     * Retorna descrição curta do evento para listagem no mapa.
+     *
+     * @return texto de descrição do evento.
+     */
     public abstract String getDescription();
 }

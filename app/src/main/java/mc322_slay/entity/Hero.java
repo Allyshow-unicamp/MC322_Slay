@@ -9,12 +9,19 @@ import mc322_slay.card.CardStack;
  */
 public class Hero extends Entity {
 
+    /** Baralho permanente do herói na campanha. */
     private CardStack deck;
 
+    /**
+     * @return baralho atual do herói.
+     */
     public CardStack getDeck() {
         return deck;
     }
 
+    /**
+     * @param deck novo baralho do herói.
+     */
     public void setDeck(CardStack deck) {
         this.deck = deck;
     }
@@ -48,6 +55,7 @@ public class Hero extends Entity {
      * @param name       nome inicial.
      * @param health     vida inicial.
      * @param ATField    valor inicial do campo AT (escudo).
+     * @param deck       baralho inicial do herói.
      * @param imageAsset arte associada ao herói.
      */
     public Hero(String name, int health, int ATField, CardStack deck, String imageAsset) {

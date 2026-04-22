@@ -29,8 +29,8 @@ public class EffectCard extends Card {
     /**
      * Aplica o efeito configurado desta carta em uma entidade.
      *
-     * @param entity entidade alvo.
-     * @param points duração ou intensidade do efeito.
+     * @param player entidade que joga a carta.
+     * @param enemy entidade inimiga potencialmente alvo do efeito.
      */
     @Override
     public void useCard(Entity player, Entity enemy) {
@@ -72,6 +72,9 @@ public class EffectCard extends Card {
         return effect.getDescription();
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public EffectCard() {
         super();
     }

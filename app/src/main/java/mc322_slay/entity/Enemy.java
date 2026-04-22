@@ -38,21 +38,35 @@ public class Enemy extends Entity {
     /** Protótipo de efeito: alta sincronização no próprio anjo. */
     private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 2, 2);
 
+    /** Limite inferior de dano base sorteado por turno. */
     private int minDamage;
+    /** Limite superior (exclusivo) de dano base sorteado por turno. */
     private int maxDamage;
 
+    /**
+     * @return dano mínimo base sorteável.
+     */
     public int getMinDamage() {
         return minDamage;
     }
 
+    /**
+     * @param minDamage novo dano mínimo base sorteável.
+     */
     public void setMinDamage(int minDamage) {
         this.minDamage = minDamage;
     }
 
+    /**
+     * @return dano máximo base sorteável.
+     */
     public int getMaxDamage() {
         return maxDamage;
     }
 
+    /**
+     * @param maxDamage novo dano máximo base sorteável.
+     */
     public void setMaxDamage(int maxDamage) {
         this.maxDamage = maxDamage;
     }
@@ -150,6 +164,9 @@ public class Enemy extends Entity {
         return EnemyActions.useEffect.getValue();
     }
 
+    /**
+     * Recupera uma quantidade aleatória de escudo (AT Field).
+     */
     public void gainATField() {
         gainATField(random.nextInt(maxHealth / 8, maxHealth / 4));
         Interface.printMessage(getName() + " fortalece seu escudo.", ColorEnum.red);
@@ -175,6 +192,9 @@ public class Enemy extends Entity {
         this.maxDamage = maxDamage;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public Enemy() {
         super();
     }

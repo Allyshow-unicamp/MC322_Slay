@@ -17,12 +17,19 @@ import mc322_slay.serializer.DamageCardSerializer;
 @JsonSerialize(using = DamageCardSerializer.class)
 public class DamageCard extends Card {
 
+    /** Multiplicador base aplicado sobre o custo para calcular dano. */
     private int multiplier = 10;
 
+    /**
+     * @return multiplicador de dano atual da carta.
+     */
     public int getMultiplier() {
         return multiplier;
     }
 
+    /**
+     * @param multiplier novo multiplicador base de dano da carta.
+     */
     public void setMultiplier(int multiplier) {
         this.multiplier = multiplier;
     }
@@ -30,8 +37,8 @@ public class DamageCard extends Card {
     /**
      * Aplica dano na entidade alvo.
      *
-     * @param entity entidade que receberá o dano.
-     * @param damage valor de dano aplicado.
+     * @param player entidade que joga a carta.
+     * @param enemy entidade alvo que receberá o dano.
      */
     @Override
     public void useCard(Entity player, Entity enemy) {
@@ -68,6 +75,9 @@ public class DamageCard extends Card {
         return "Use-a para dar entre " + energyCost * multiplier + " e " + 2 * energyCost * multiplier + " de dano.";
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public DamageCard() {
         super();
     }

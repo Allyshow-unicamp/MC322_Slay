@@ -19,7 +19,7 @@ public class GameMapTest {
     public void buildMapInitializesTreeAndPlayerOnRootNode() {
         GameMap map = new GameMap();
 
-        map.buildMap("map.json", "battles.json");
+        map.buildMap("map1.json", "battles.json");
 
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         assertNotNull(playerNode);
@@ -33,7 +33,7 @@ public class GameMapTest {
     @Test
     public void setPlayerNodeUpdatesCurrentNodeReference() {
         GameMap map = new GameMap();
-        map.buildMap("map.json", "battles.json");
+        map.buildMap("map1.json", "battles.json");
 
         DefaultMutableTreeNode child = (DefaultMutableTreeNode) map.getPlayerNode().getChildAt(0);
         map.setPlayerNode(child);

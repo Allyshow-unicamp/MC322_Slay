@@ -21,9 +21,12 @@ import mc322_slay.event.EventNode;
  * Também mantém o nó atual do jogador e as opções de avanço na árvore.
  */
 public class GameMap {
+    /** Dimensões da malha textual carregada de arquivo. */
     private int rows = 0, cols = 0;
+    /** Matriz ASCII do mapa com nós e conectores. */
     private char[][] map;
 
+    /** Identificador incremental usado para eventos aleatórios (nós 'R'). */
     private char cur_random_id = 'a';
 
     /**
@@ -32,17 +35,29 @@ public class GameMap {
     public record pos(int x, int y) {
     }
 
+    /** Índice de coordenadas de cada identificador de sala. */
     private Hashtable<Character, pos> mapCoords;
 
+    /** Catálogo de nós/eventos disponíveis na campanha. */
     private Hashtable<Character, EventNode> events;
 
+    /** Raiz da árvore de progressão do mapa. */
     private DefaultMutableTreeNode tree;
+    /** Nó atual onde o jogador se encontra. */
     private DefaultMutableTreeNode playerNode;
 
+    /**
+     * @return nó atual do jogador na árvore.
+     */
     public DefaultMutableTreeNode getPlayerNode() {
         return playerNode;
     }
 
+    /**
+     * Atualiza o nó atual do jogador.
+     *
+     * @param playerNode novo nó atual.
+     */
     public void setPlayerNode(DefaultMutableTreeNode playerNode) {
         this.playerNode = playerNode;
     }
@@ -141,6 +156,11 @@ public class GameMap {
         }
     }
 
+    /**
+     * Gera um evento aleatório para posições especiais do mapa ('R').
+     *
+     * @return nó recém-criado com id único incremental.
+     */
     public EventNode generateRandomEvent() {
         Random random = new Random();
         int n = random.nextInt(3);

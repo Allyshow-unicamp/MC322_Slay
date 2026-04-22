@@ -94,6 +94,9 @@ public class HealthRegeneration extends Effect {
         this.startPoints = points;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public HealthRegeneration() {
         super();
     }
@@ -116,6 +119,11 @@ public class HealthRegeneration extends Effect {
         return new HealthRegeneration(this);
     }
 
+    /**
+     * Mescla regenerações mantendo o maior valor de cura por turno.
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         HealthRegeneration hE = (HealthRegeneration) effect;

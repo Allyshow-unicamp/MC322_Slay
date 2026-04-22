@@ -93,6 +93,9 @@ public class HighSyncRate extends Effect {
         this.boost = boost;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public HighSyncRate() {
         super();
     }
@@ -115,6 +118,11 @@ public class HighSyncRate extends Effect {
         return new HighSyncRate(this);
     }
 
+    /**
+     * Mescla alta sincronização mantendo o maior multiplicador de dano.
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         HighSyncRate hE = (HighSyncRate) effect;
