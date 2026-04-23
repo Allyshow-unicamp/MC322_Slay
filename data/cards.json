@@ -146,8 +146,8 @@
     "effect" : {
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
-      "turns" : 2,
-      "startTurns": 2,
+      "turns" : 3,
+      "startTurns": 3,
       "boost" : 2
     }
   }, {
@@ -168,8 +168,8 @@
     "effect" : {
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
-      "turns" : 2,
-      "startTurns": 2,
+      "turns" : 3,
+      "startTurns": 3,
       "deboost" : 0.25
     }
   }, {

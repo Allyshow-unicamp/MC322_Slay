@@ -1,7 +1,7 @@
-===============================================
+=========================================================================================
 
-        1 - Shinji Ikari
-        2 - Rei Ayanami
-        3 - Asuka Langley Soryu
+        1 - Shinji Ikari: comece com 3 cartas de dano, 3 de escudo e 2 de efeito
+        2 - Rei Ayanami : comece com 3 cartas de dano, 1 de escudo e 4 de efeito
+        3 - Asuka Soryu : comece com 4 cartas de dano, 2 de escudo e 2 de efeito
 
-===============================================
+=========================================================================================

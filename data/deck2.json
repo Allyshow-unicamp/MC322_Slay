@@ -15,35 +15,31 @@
     "cost" : 4,
     "multiplier": 10
   }, {
-    "type" : "damage",
-    "name" : "N2 Weapon II",
-    "cost" : 2,
-    "multiplier": 10
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 1",
-    "cost" : 2,
-    "multiplier": 4
-  }, {
-    "type" : "shield",
-    "name" : "Regeneração do Campo de Terror Absoluto 2",
-    "cost" : 4,
-    "multiplier": 4
-  }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 3",
     "cost" : 6,
     "multiplier": 4
   }, {
     "type" : "effect",
-    "name" : "Restauração Forçada do pulso vital 1",
+    "name" : "Dano psicológico 1",
     "cost" : 3,
+    "effect" : {
+      "type" : "poison",
+      "name" : "Dano psicológico",
+      "turns" : 3,
+      "startTurns": 3,
+      "damage" : 30
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Restauração Forçada do pulso vital 2",
+    "cost" : 6,
     "effect" : {
       "type" : "regeneration",
       "name" : "Restauração Forçada do pulso vital",
       "turns" : 3,
       "startTurns": 3,
-      "health" : 10
+      "health" : 20
     }
   }, {
     "type" : "effect",
@@ -56,5 +52,15 @@
       "startTurns": 2,
       "boost" : 2
     }
-  } ]
+  }, {
+    "type" : "effect",
+    "name" : "Corrosão do campo AT 1",
+    "cost" : 4,
+    "effect" : {
+      "type" : "corrosion",
+      "name" : "Corrosão do campo AT",
+      "turns" : 2,
+      "startTurns": 2
+    }
+  }]
 }

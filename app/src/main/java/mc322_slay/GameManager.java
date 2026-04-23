@@ -48,10 +48,10 @@ public class GameManager {
     /**
      * Preenche o baralho de compra com cartas iniciais da partida.
      */
-    private void populateDeck() {
+    private void populateDeck(String deckName) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..", "data", "deck.json"));
+            String serialized = Files.readString(Paths.get("..", "data", deckName + ".json"));
             hero.setDeck(mapper.readValue(serialized, CardStack.class));
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +67,6 @@ public class GameManager {
      */
     public void start() {
         this.hero = new Hero("", 50, 0, new CardStack(), "eva.txt");
-        this.populateDeck();
         this.readPosssibleCards();
         this.scanner = new Scanner(System.in);
         this.map = new GameMap();
@@ -106,18 +105,23 @@ public class GameManager {
                 Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
             }
         }
+        String deckName = "deck";
         switch (option) {
             case 1:
                 name = "Shinji Ikari";
+                deckName += "1";
                 break;
             case 2:
                 name = "Rei Ayanami";
+                deckName += "2";
                 break;
             case 3:
-                name = "Asuka Langley Soryu";
+                name = "Asuka Soryu";
+                deckName += "3";
                 break;
         }
         hero.setName(name);
+        this.populateDeck(deckName);
 
         Interface.clearScreen();
 
