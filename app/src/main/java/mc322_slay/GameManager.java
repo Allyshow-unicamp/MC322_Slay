@@ -2,6 +2,7 @@ package mc322_slay;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -11,6 +12,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Event;
+import mc322_slay.event.EventNode;
 
 /**
  * Orquestra o estado do jogo: inicialização, seleção de personagem, montagem do
@@ -22,24 +25,39 @@ public class GameManager {
     private Hero hero;
     /** Leitura de entradas do teclado. */
     private Scanner scanner;
-    /** Baralho principal de compra (pilha de cartas). */
-    private CardStack deck;
+    /** Mapa de progressão e posição atual do jogador. */
     private GameMap map;
+    /** Cartas candidatas para recompensas após vitórias. */
+    private CardStack possibleNewCards;
+    /** Sinaliza término da campanha ao alcançar folha do mapa. */
     private boolean end = false;
+
+    /**
+     * Carrega do arquivo a pilha de cartas possíveis de recompensa.
+     */
+    private void readPosssibleCards() {
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            String serialized = Files.readString(Paths.get("..", "data", "cards.json"));
+            possibleNewCards = mapper.readValue(serialized, CardStack.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Preenche o baralho de compra com cartas iniciais da partida.
      */
-    void populateDeck() {
+    private void populateDeck(String deckName) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            String serialized = Files.readString(Paths.get("..","data", "deck.json"));
-            deck = mapper.readValue(serialized, CardStack.class);
+            String serialized = Files.readString(Paths.get("..", "data", deckName + ".json"));
+            hero.setDeck(mapper.readValue(serialized, CardStack.class));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        deck.shuffle();
+        hero.getDeck().shuffle();
 
         Interface.printMessage("O baralho foi embaralhado!", ColorEnum.blue);
     }
@@ -48,11 +66,13 @@ public class GameManager {
      * Inicializa os objetos principais e variáveis de estado da partida.
      */
     public void start() {
-        this.hero = new Hero("", 50, 0, "eva.txt");
-        this.deck = new CardStack();
+        this.hero = new Hero("", 50, 0, new CardStack(), "eva.txt");
+        this.readPosssibleCards();
         this.scanner = new Scanner(System.in);
         this.map = new GameMap();
-        this.map.buildMap("map.json", "battles.json");
+        Random random = new Random();
+        int n = random.nextInt(1, 5);
+        this.map.buildMap("map"+n+".json", "battles.json");
     }
 
     /**
@@ -85,18 +105,23 @@ public class GameManager {
                 Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
             }
         }
+        String deckName = "deck";
         switch (option) {
             case 1:
                 name = "Shinji Ikari";
+                deckName += "1";
                 break;
             case 2:
                 name = "Rei Ayanami";
+                deckName += "2";
                 break;
             case 3:
-                name = "Asuka Langley Soryu";
+                name = "Asuka Soryu";
+                deckName += "3";
                 break;
         }
         hero.setName(name);
+        this.populateDeck(deckName);
 
         Interface.clearScreen();
 
@@ -106,20 +131,28 @@ public class GameManager {
     /**
      * Limpa efeitos persistentes do herói entre uma batalha e outra.
      */
-    private void resetBattle() {
+    private void resetEffects() {
         this.hero.resetEffects();
     }
 
+    /**
+     * @return {@code true} enquanto o herói estiver vivo e a campanha não tiver terminado.
+     */
     public boolean isRunning() {
         return hero.isAlive() && !end;
     }
 
+    /**
+     * Mostra o mapa e solicita a próxima rota do jogador.
+     *
+     * @return índice da opção escolhida (1..N) ou {@code -1} quando já não há nós seguintes.
+     */
     public int selectPathOnMap() {
         this.map.printMap();
 
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
         int nOptions = playerNode.getChildCount();
-        if (nOptions == 0) { // reached end 
+        if (nOptions == 0) { // reached end
             end = true;
             return -1;
         }
@@ -127,43 +160,61 @@ public class GameManager {
         int option;
         while (true) {
             try {
-                System.out.print("Selecione o caminho que deseja seguir no mapa: ");
-                option = Integer.parseInt(scanner.nextLine());
-                if (0 < option && option <= nOptions) {
-                    break;
+                System.out.print("Selecione o caminho que deseja seguir no mapa (D para ver deck e vida): ");
+                char response = scanner.next().charAt(0);
+                if (response == 'D') {
+                    Interface.printHeroInfo(hero);
                 } else {
-                    Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    option = Integer.parseInt(response + "");
+                    if (0 < option && option <= nOptions) {
+                        break;
+                    } else {
+                        Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
+                    }
                 }
             } catch (Exception e) {
                 Interface.printMessage("Digite uma opção válida!", ColorEnum.yellow);
             }
         }
-        
+
         return option;
     }
 
-    public boolean performBattle(int option) {
-        if (option == -1) 
+    /**
+     * Executa o evento correspondente ao caminho escolhido e avança o nó atual.
+     *
+     * @param option índice da opção escolhida no mapa.
+     * @return {@code true} quando o herói permanece vivo após o evento.
+     */
+    public boolean performEvent(int option) {
+        if (option == -1)
             return true;
-        
+
         DefaultMutableTreeNode playerNode = map.getPlayerNode();
-        BattleNode playerBattleNode = (BattleNode) playerNode.getUserObject();
+        EventNode playerEventNode = (EventNode) playerNode.getUserObject();
 
         DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(option - 1);
-        BattleNode childBattleNode = (BattleNode) childNode.getUserObject();
+        EventNode childEventNode = (EventNode) childNode.getUserObject();
 
-        Battle battle = new Battle(hero, childBattleNode.getEnemy(), deck);
-        boolean won = battle.performFight();
-        if (won) {
-            playerBattleNode.setVisited(true);
-            playerNode.setUserObject(playerBattleNode);
+        Event event = childEventNode.getEvent();
+        boolean alive = event.init(hero, possibleNewCards);
+        if (alive) {
+            playerEventNode.setVisited(true);
+            playerNode.setUserObject(playerEventNode);
             map.setPlayerNode(childNode);
-            resetBattle();
+            resetEffects();
         }
-        return won;
+        return alive;
     }
 
+    /**
+     * Exibe tela final de vitória/derrota e encerra leitura do teclado.
+     *
+     * @param won indica se o jogador venceu a campanha.
+     */
     public void printResults(boolean won) {
+        scanner.close();
+
         Interface.clearScreen();
 
         if (won)

@@ -1,0 +1,55 @@
+{
+  "cards" : [ {
+    "type" : "damage",
+    "name" : "Positron Sniper Rifle",
+    "cost" : 8,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Magokoru Sword",
+    "cost" : 6,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Azumaterasu",
+    "cost" : 4,
+    "multiplier": 10
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 1",
+    "cost" : 2,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 2",
+    "cost" : 4,
+    "multiplier": 4
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 3",
+    "cost" : 6,
+    "multiplier": 4
+  }, {
+    "type" : "effect",
+    "name" : "Dano psicológico 2",
+    "cost" : 3,
+    "effect" : {
+      "type" : "poison",
+      "name" : "Dano psicológico",
+      "turns" : 3,
+      "startTurns": 3,
+      "damage" : 60
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Alta taxa de sincronização",
+    "cost" : 6,
+    "effect" : {
+      "type" : "strength",
+      "name" : "Alta taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "boost" : 2
+    }
+  } ]
+}

@@ -3,7 +3,7 @@ package mc322_slay;
 /**
  * Ponto de entrada da aplicação em modo texto.
  * Configura saída UTF-8, inicializa o {@link GameManager}, a tela de abertura,
- * a escolha do piloto, o baralho e uma sequência fixa de batalhas.
+ * a escolha do piloto, o baralho e a progressão pela árvore de eventos do mapa.
  */
 public class App {
     /**
@@ -25,12 +25,11 @@ public class App {
         game.start();
         game.initialScreen();
         game.selectCharacter();
-        game.populateDeck();
 
         boolean won = true;
         while (game.isRunning()) {
             int option = game.selectPathOnMap();
-            if (!game.performBattle(option))
+            if (!game.performEvent(option))
                 won = false;
         }
         game.printResults(won);

@@ -4,12 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
-import mc322_slay.card.CardStack;
 import mc322_slay.effect.ATFieldCorrosion;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 
 /**
  * Testes de {@link mc322_slay.effect.ATFieldCorrosion}: notificação e expiração ao fim do turno.
@@ -17,22 +16,22 @@ import mc322_slay.entity.Hero;
 public class ATFieldCorrosionTest {
     @Test
     public void beNotifiedNotFinishedEffect() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
 
         ATFieldCorrosion atFieldCorrosion = new ATFieldCorrosion("Corrosão", 3);
         atFieldCorrosion.setOwner(hero);
 
-        Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
+        Battle battle = new Battle(new Enemy("Anjo", 200, 100, 20, 40, null));
 
         assertFalse(atFieldCorrosion.beNotified(EventEnum.playerEndOfTurn, battle));
     }
 
     @Test
     public void beNotifiedFinishedEffect() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão", 1));
 
-        Battle battle = new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
+        Battle battle = new Battle(new Enemy("Anjo", 200, 100, 20, 40, null));
     
         ATFieldCorrosion corrosion = (ATFieldCorrosion) hero.getLastEffect();
         assertTrue(corrosion.beNotified(EventEnum.playerEndOfTurn, battle));
@@ -41,7 +40,7 @@ public class ATFieldCorrosionTest {
 
     @Test
     public void corrosionWhileActiveDamageBypassesShield() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão", 2));
 
         hero.takeDamage(10);
@@ -51,7 +50,7 @@ public class ATFieldCorrosionTest {
 
     @Test
     public void beNotifiedWrongEvent() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão", 2));
         ATFieldCorrosion corrosion = (ATFieldCorrosion) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -62,7 +61,7 @@ public class ATFieldCorrosionTest {
 
     @Test
     public void beNotifiedTurnsDecreased() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão", 2));
         ATFieldCorrosion corrosion = (ATFieldCorrosion) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -73,7 +72,7 @@ public class ATFieldCorrosionTest {
 
     @Test
     public void shieldReabsorbsAfterCorrosion() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
         hero.applyEffect(new ATFieldCorrosion("Corrosão", 1));
         ATFieldCorrosion corrosion = (ATFieldCorrosion) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -90,6 +89,6 @@ public class ATFieldCorrosionTest {
     }
 
     private static Battle battleFor(Hero hero) {
-        return new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
+        return new Battle(new Enemy("Anjo", 200, 100, 20, 40, null));
     }
 }

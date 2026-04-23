@@ -1,15 +1,30 @@
-package mc322_slay;
-
-import mc322_slay.entity.Enemy;
+package mc322_slay.event;
 
 /**
  * Nó lógico de um caminho do mapa.
  * Cada nó representa uma batalha contra um inimigo e mantém o estado de visita.
  */
-public class BattleNode {
+public class EventNode {
+    /** Identificador único do nó na malha do mapa. */
     private char id;
-    private Enemy enemy;
+    /** Evento associado ao nó (batalha, escolha, etc.). */
+    private Event event;
+    /** Flag de controle para indicar se o jogador já passou por este nó. */
     private boolean visited;
+
+    /**
+     * @return evento associado ao nó.
+     */
+    public Event getEvent() {
+        return event;
+    }
+
+    /**
+     * @param event novo evento associado ao nó.
+     */
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
     /**
      * @return identificador único do nó no mapa.
@@ -23,20 +38,6 @@ public class BattleNode {
      */
     public void setId(char id) {
         this.id = id;
-    }
-
-    /**
-     * @return inimigo associado à batalha deste nó.
-     */
-    public Enemy getEnemy() {
-        return enemy;
-    }
-
-    /**
-     * @param enemy novo inimigo associado à batalha.
-     */
-    public void setEnemy(Enemy enemy) {
-        this.enemy = enemy;
     }
 
     /**
@@ -56,7 +57,7 @@ public class BattleNode {
     /**
      * Constrói um nó vazio para desserialização.
      */
-    public BattleNode() {
+    public EventNode() {
         super();
     }
 
@@ -64,12 +65,12 @@ public class BattleNode {
      * Cria um nó de batalha completo.
      *
      * @param id identificador do nó.
-     * @param enemy inimigo da batalha.
+     * @param event evento associado ao nó.
      * @param visited estado inicial de visita.
      */
-    public BattleNode(char id, Enemy enemy, boolean visited) {
+    public EventNode(char id, Event event, boolean visited) {
         this.id = id;
-        this.enemy = enemy;
+        this.event = event;
         this.visited = visited;
     }
 }

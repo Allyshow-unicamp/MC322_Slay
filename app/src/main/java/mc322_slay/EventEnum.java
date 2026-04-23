@@ -19,6 +19,7 @@ public enum EventEnum {
     /** Fim do turno do inimigo (ex.: dano psicológico com dono {@link mc322_slay.entity.Enemy}). */
     enemyEndOfTurn(6);
 
+    /** Identificador numérico do evento para integrações legadas. */
     private final int value;
     
     /**

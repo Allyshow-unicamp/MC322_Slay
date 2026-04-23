@@ -29,12 +29,12 @@ public abstract class Card {
     protected String cardDescription;
 
     /**
-     * Aplica o efeito da carta em uma entidade.
+     * Executa o efeito da carta no contexto da batalha.
      *
-     * @param entity entidade alvo da carta.
-     * @param amount magnitude associada ao uso da carta.
+     * @param player entidade que está jogando a carta.
+     * @param enemy entidade inimiga (alvo para cartas ofensivas).
      */
-    public abstract void useCard(Entity entity, int amount);
+    public abstract void useCard(Entity player, Entity enemy);
 
     /**
      * Retorna o nome da carta.

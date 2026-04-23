@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 import mc322_slay.serializer.HighSyncRateSerializer;
 
 /**
@@ -93,6 +93,9 @@ public class HighSyncRate extends Effect {
         this.boost = boost;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public HighSyncRate() {
         super();
     }
@@ -115,6 +118,11 @@ public class HighSyncRate extends Effect {
         return new HighSyncRate(this);
     }
 
+    /**
+     * Mescla alta sincronização mantendo o maior multiplicador de dano.
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         HighSyncRate hE = (HighSyncRate) effect;

@@ -49,10 +49,11 @@ public class PlayerHand {
      * @param discardPile pilha que receberá as cartas descartadas.
      */
     public void discardCards(CardStack discardPile) {
+        if (!hand.isEmpty())
+            Interface.printMessage("Você descarta todas as suas cartas e as coloca na pilha de descarte.", ColorEnum.blue);
         while (!hand.isEmpty()) {
             discardPile.add(hand.remove(0));
         }
-        Interface.printMessage("Você descarta todas as suas cartas e as coloca na pilha de descarte.", ColorEnum.blue);
     }
     /**
      * Move cartas do descarte para a pilha de compra após embaralhar.
@@ -74,8 +75,8 @@ public class PlayerHand {
      * @return custo de energia da carta.
      */
     public int seeCardCost(int card) {
-        Card Card = hand.get(card);
-        int cost = Card.getCost();
+        Card selectedCard = hand.get(card);
+        int cost = selectedCard.getCost();
         return cost;
     }
     /**

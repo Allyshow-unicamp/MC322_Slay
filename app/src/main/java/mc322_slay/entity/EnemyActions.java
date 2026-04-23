@@ -6,6 +6,7 @@ package mc322_slay.entity;
 public enum EnemyActions {
     attack(0), gainShield(1), useEffect(2);
 
+    /** Identificador numérico da ação para persistência e seleção por índice. */
     private final int value;
 
     /**

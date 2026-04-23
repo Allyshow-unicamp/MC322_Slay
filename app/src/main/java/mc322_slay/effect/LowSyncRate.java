@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 import mc322_slay.serializer.LowSyncRateSerializer;
 
 /**
  * Efeito que reduz (ou altera) o multiplicador {@link mc322_slay.entity.Entity#getDeboost()} do herói,
- * diminuindo o dano das cartas de dano enquanto ativo (vide {@link mc322_slay.Battle}).
+ * diminuindo o dano das cartas de dano enquanto ativo (vide {@link mc322_slay.event.Battle}).
  * A duração é decrementada ao fim do turno do jogador quando o dono é o herói.
  */
 @JsonSerialize(using = LowSyncRateSerializer.class)
@@ -81,6 +81,9 @@ public class LowSyncRate extends Effect {
         this.deboost = deboost;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public LowSyncRate() {
         super();
     }
@@ -103,6 +106,11 @@ public class LowSyncRate extends Effect {
         return new LowSyncRate(this);
     }
 
+    /**
+     * Mescla baixa sincronização mantendo o menor fator (maior penalidade).
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         LowSyncRate tE = (LowSyncRate) effect;

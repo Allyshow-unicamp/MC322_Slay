@@ -1,7 +1,11 @@
 package mc322_slay.card;
 
+import java.util.Random;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import mc322_slay.ColorEnum;
+import mc322_slay.Interface;
 import mc322_slay.entity.Entity;
 import mc322_slay.serializer.ShieldCardSerializer;
 
@@ -11,17 +15,35 @@ import mc322_slay.serializer.ShieldCardSerializer;
 @JsonSerialize(using = ShieldCardSerializer.class)
 public class ShieldCard extends Card {
 
-    public static final int multiplier = 4;
+    /** Multiplicador base aplicado sobre o custo para calcular escudo ganho. */
+    private int multiplier = 4;
+
+    /**
+     * @return multiplicador de escudo atual da carta.
+     */
+    public int getMultiplier() {
+        return multiplier;
+    }
+
+    /**
+     * @param multiplier novo multiplicador base de escudo da carta.
+     */
+    public void setMultiplier(int multiplier) {
+        this.multiplier = multiplier;
+    }
 
     /**
      * Aumenta o campo AT (escudo) da entidade alvo.
      *
-     * @param entity entidade que receberá o escudo.
-     * @param amount quantidade de pontos de campo AT concedidos.
+     * @param player entidade que joga/recebe o escudo.
+     * @param enemy parâmetro não utilizado por cartas defensivas.
      */
     @Override
-    public void useCard(Entity entity, int amount) {
-        entity.gainATField(amount);
+    public void useCard(Entity player, Entity enemy) {
+        Random random = new Random();
+        int shield = getCost() * multiplier + random.nextInt(getCost() * multiplier);
+        Interface.printMessage(player.getName() + " usa " + getName() + " em si mesm*.", ColorEnum.green);
+        player.gainATField(shield);
     }
 
     /**
@@ -44,6 +66,9 @@ public class ShieldCard extends Card {
                 + 2 * this.energyCost * multiplier + " do seu campo AT (escudo).";
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public ShieldCard() {
         super();
     }

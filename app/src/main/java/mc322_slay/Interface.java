@@ -53,6 +53,12 @@ public class Interface {
         sleep();
     }
 
+    /**
+     * Imprime texto sem quebra de linha com cor ANSI.
+     *
+     * @param message texto a imprimir.
+     * @param color cor do texto.
+     */
     public static void printInline(String message, ColorEnum color) {
         System.out.print(color.getColor() + message + ColorEnum.reset.getColor());
     }
@@ -61,6 +67,7 @@ public class Interface {
      * Imprime o conteúdo de um arquivo de texto da pasta de assets.
      *
      * @param text nome do arquivo a ser exibido.
+     * @param colorEnum cor aplicada à arte/mensagem do arquivo.
      */
     public static void printFile(String text, ColorEnum colorEnum) {
 
@@ -170,7 +177,46 @@ public class Interface {
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
 
-            String cardType = "";
+            printCardInfo(card, i);
+        }
+
+        System.out.println("===================\r\n" + //
+                ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
+                + " de Sincronização (Energia) disponível\r\n");
+    }
+
+    /**
+     * Mostra resumo do herói (vida e deck atual) para consultas durante escolhas.
+     *
+     * @param hero herói atual da partida.
+     */
+    public static void printHeroInfo(Hero hero) {
+        printInline("\r\n== Informações do herói ==\r\n", ColorEnum.yellow);
+
+        System.out.print("\r\nVida: ");
+        printInline(hero.getHealth() + "/" + hero.getMaxHealth(), ColorEnum.green);
+
+        hero.getDeck().getStack().sort((card1, card2) -> {
+            return -1 * (card1.getCost() > card2.getCost() ? 1 : card1.getCost() == card2.getCost() ? 0 : -1);
+        });
+
+        System.out.println("\r\ndeck: ");
+        for (int i = 0; i < hero.getDeck().getStack().size(); i++) {
+            Card card = hero.getDeck().getStack().get(i);
+            printCardInfo(card, i);
+        }
+
+        System.out.println();
+    }
+
+    /**
+     * Imprime uma carta formatada com índice, tipo, custo e descrição.
+     *
+     * @param card carta a ser exibida.
+     * @param i índice da carta na lista atual.
+     */
+    public static void printCardInfo(Card card, int i) {
+         String cardType = "";
             if (card instanceof DamageCard)
                 cardType = "Carta de Dano  ";
             else if (card instanceof ShieldCard)
@@ -183,10 +229,5 @@ public class Interface {
                             + ColorEnum.reset.getColor() + ": " + card.getName() +
                             ColorEnum.yellow.getColor() + " (Custo: " + card.getCost() + ")"
                             + ColorEnum.reset.getColor() + ": " + card.getDescription());
-        }
-
-        System.out.println("===================\r\n" + //
-                ColorEnum.yellow.getColor() + syncRate + "/" + initialSync + ColorEnum.reset.getColor()
-                + " de Sincronização (Energia) disponível\r\n");
     }
 }

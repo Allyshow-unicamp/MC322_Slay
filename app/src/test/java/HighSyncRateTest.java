@@ -4,12 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
-import mc322_slay.card.CardStack;
 import mc322_slay.effect.HighSyncRate;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 
 /**
  * Testes de {@link mc322_slay.effect.HighSyncRate}: multiplicador de dano do dono; duração decresce no
@@ -18,7 +17,7 @@ import mc322_slay.entity.Hero;
 public class HighSyncRateTest {
     @Test
     public void beNotifiedNotFinishedEffect() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
 
         HighSyncRate highSyncRate = new HighSyncRate("Força", 3, 1.5);
         highSyncRate.setOwner(hero);
@@ -30,7 +29,7 @@ public class HighSyncRateTest {
 
     @Test
     public void beNotifiedFinishedEffect() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HighSyncRate("Força", 1, 1.5));
         HighSyncRate high = (HighSyncRate) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -41,7 +40,7 @@ public class HighSyncRateTest {
 
     @Test
     public void boostWhileEffectActive() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HighSyncRate("Força", 2, 1.5));
 
         assertEquals(1.5, hero.getBoost(), 1e-9);
@@ -49,7 +48,7 @@ public class HighSyncRateTest {
 
     @Test
     public void beNotifiedWrongEvent() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HighSyncRate("Força", 2, 1.5));
         HighSyncRate high = (HighSyncRate) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -62,7 +61,7 @@ public class HighSyncRateTest {
 
     @Test
     public void beNotifiedTurnsDecreased() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new HighSyncRate("Força", 2, 1.5));
         HighSyncRate high = (HighSyncRate) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -75,11 +74,10 @@ public class HighSyncRateTest {
 
     @Test
     public void beNotifiedEnemyEndOfTurn() {
-        Hero hero = new Hero("Herói", 50, 0, null);
         Enemy angel = new Enemy("Anjo", 200, 100, 20, 40, null);
         angel.applyEffect(new HighSyncRate("Força", 2, 1.5));
         HighSyncRate high = (HighSyncRate) angel.getLastEffect();
-        Battle battle = new Battle(hero, angel, new CardStack());
+        Battle battle = new Battle(angel);
 
         assertEquals(1.5, angel.getBoost(), 1e-9);
 
@@ -89,6 +87,6 @@ public class HighSyncRateTest {
     }
 
     private static Battle battleFor(Hero hero) {
-        return new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
+        return new Battle(new Enemy("Anjo", 200, 100, 20, 40, null));
     }
 }

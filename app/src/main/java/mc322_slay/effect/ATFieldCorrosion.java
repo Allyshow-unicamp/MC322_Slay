@@ -2,8 +2,8 @@ package mc322_slay.effect;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
+import mc322_slay.event.Battle;
 import mc322_slay.serializer.ATFieldCorrosionSerializer;
 
 /**
@@ -61,6 +61,9 @@ public class ATFieldCorrosion extends Effect {
         this.startPoints = turns;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public ATFieldCorrosion() {
         super();
     }
@@ -82,6 +85,11 @@ public class ATFieldCorrosion extends Effect {
         return new ATFieldCorrosion(this);
     }
 
+    /**
+     * Não possui atributos mescláveis além da duração, já tratada por {@link #incrementPoints(int)}.
+     *
+     * @param effect efeito recebido (ignorado).
+     */
     @Override 
     public void merge(Effect effect) {}
 }

@@ -26,33 +26,47 @@ public class Enemy extends Entity {
     public Random random = new Random();
 
     /** Dano base do próximo ataque (definido por {@link #nextAction()}). */
-    private int damage;
+    private int damage;    
     /** Protótipo de efeito: dano psicológico aplicado ao herói. */
-    private PsychicEffect p = new PsychicEffect("Dano psicológico", 20, 3);
+    private PsychicEffect p;
     /** Protótipo de efeito: corrosão do campo AT no herói. */
     private ATFieldCorrosion c = new ATFieldCorrosion("Corrosão de campo AT", 2);
     /** Protótipo de efeito: regeneração aplicada ao próprio anjo. */
-    private HealthRegeneration h = new HealthRegeneration("Regeneração de vida", 50, 3);
+    private HealthRegeneration h;
     /** Protótipo de efeito: baixa sincronização no herói. */
-    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 3, 0.25);
+    private LowSyncRate w = new LowSyncRate("Baixa taxa de sincronização", 2, 0.25);
     /** Protótipo de efeito: alta sincronização no próprio anjo. */
-    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 3, 2);
+    private HighSyncRate hs = new HighSyncRate("Alta taxa de sincronização", 2, 2);
 
+    /** Limite inferior de dano base sorteado por turno. */
     private int minDamage;
+    /** Limite superior (exclusivo) de dano base sorteado por turno. */
     private int maxDamage;
 
+    /**
+     * @return dano mínimo base sorteável.
+     */
     public int getMinDamage() {
         return minDamage;
     }
 
+    /**
+     * @param minDamage novo dano mínimo base sorteável.
+     */
     public void setMinDamage(int minDamage) {
         this.minDamage = minDamage;
     }
 
+    /**
+     * @return dano máximo base sorteável.
+     */
     public int getMaxDamage() {
         return maxDamage;
     }
 
+    /**
+     * @param maxDamage novo dano máximo base sorteável.
+     */
     public void setMaxDamage(int maxDamage) {
         this.maxDamage = maxDamage;
     }
@@ -98,6 +112,9 @@ public class Enemy extends Entity {
      */
     public boolean useEffect(Hero hero) {
         int effect = random.nextInt(5);
+
+        p = new PsychicEffect("Dano psicológico", maxDamage * 2, 2);
+        h = new HealthRegeneration("Regeneração de vida", maxHealth / 5, 2);
 
         boolean selfInflicted = false;
         switch (effect) {
@@ -148,6 +165,14 @@ public class Enemy extends Entity {
     }
 
     /**
+     * Recupera uma quantidade aleatória de escudo (AT Field).
+     */
+    public void gainATField() {
+        gainATField(random.nextInt(maxHealth / 8, maxHealth / 4));
+        Interface.printMessage(getName() + " fortalece seu escudo.", ColorEnum.red);
+    }
+
+    /**
      * Cria um anjo com vida, escudo inicial e arte ASCII.
      *
      * @param name       nome exibido na interface.
@@ -167,6 +192,9 @@ public class Enemy extends Entity {
         this.maxDamage = maxDamage;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public Enemy() {
         super();
     }

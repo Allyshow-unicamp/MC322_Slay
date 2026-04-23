@@ -3,6 +3,7 @@ package mc322_slay;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Hashtable;
+import java.util.Random;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -10,13 +11,23 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import mc322_slay.event.Battle;
+import mc322_slay.event.Choice;
+import mc322_slay.event.Event;
+import mc322_slay.event.EventNode;
+
 /**
  * Constrói e renderiza o mapa de progressão entre batalhas.
  * Também mantém o nó atual do jogador e as opções de avanço na árvore.
  */
 public class GameMap {
+    /** Dimensões da malha textual carregada de arquivo. */
     private int rows = 0, cols = 0;
+    /** Matriz ASCII do mapa com nós e conectores. */
     private char[][] map;
+
+    /** Identificador incremental usado para eventos aleatórios (nós 'R'). */
+    private char cur_random_id = 'a';
 
     /**
      * Coordenada de um identificador de batalha dentro da malha textual do mapa.
@@ -24,17 +35,29 @@ public class GameMap {
     public record pos(int x, int y) {
     }
 
+    /** Índice de coordenadas de cada identificador de sala. */
     private Hashtable<Character, pos> mapCoords;
 
-    private Hashtable<Character, BattleNode> battles;
+    /** Catálogo de nós/eventos disponíveis na campanha. */
+    private Hashtable<Character, EventNode> events;
 
+    /** Raiz da árvore de progressão do mapa. */
     private DefaultMutableTreeNode tree;
+    /** Nó atual onde o jogador se encontra. */
     private DefaultMutableTreeNode playerNode;
 
+    /**
+     * @return nó atual do jogador na árvore.
+     */
     public DefaultMutableTreeNode getPlayerNode() {
         return playerNode;
     }
 
+    /**
+     * Atualiza o nó atual do jogador.
+     *
+     * @param playerNode novo nó atual.
+     */
     public void setPlayerNode(DefaultMutableTreeNode playerNode) {
         this.playerNode = playerNode;
     }
@@ -42,51 +65,44 @@ public class GameMap {
     /**
      * Carrega matriz visual do mapa e monta a árvore de batalhas.
      *
-     * @param mapFile    arquivo JSON da matriz de caracteres do mapa.
-     * @param battleFile arquivo JSON com metadados dos nós de batalha.
+     * @param mapFile   arquivo JSON da matriz de caracteres do mapa.
+     * @param eventFile arquivo JSON com metadados dos nós de batalha.
      */
-    public void buildMap(String mapFile, String battleFile) {
-        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    public void buildMap(String mapFile, String eventFile) {
         try {
+            ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
             String serialized = Files.readString(Path.of("..", "data", mapFile));
             this.map = mapper.readValue(serialized, char[][].class);
             this.rows = this.map.length;
             this.cols = this.map[0].length;
 
-            mapCoords = new Hashtable<>();
+            mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+            serialized = Files.readString(Path.of("..", "data", eventFile));
+            this.events = mapper.readValue(serialized, new TypeReference<Hashtable<Character, EventNode>>() {
+            });
+
+            this.events.put('P', new EventNode('P', null, false));
+
+            this.mapCoords = new Hashtable<>();
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     char value = map[i][j];
-                    if (value != ' ' && value != '|' && value != '\\' && value != '/') {
+                    if (value != ' ' && value != '|' && value != '\\' && value != '/' && value != 'R') {
                         mapCoords.put(value, new pos(j, i));
                     }
+                    else if (value == 'R') {
+                        EventNode eventNode = generateRandomEvent();
+                        map[i][j] = eventNode.getId();
+                        events.put(eventNode.getId(), eventNode);
+                        mapCoords.put(eventNode.getId(), new pos(j, i));
+                    }
                 }
-                System.out.println();
             }
 
-            this.buildTree(battleFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Carrega os nós de batalha e cria a árvore conectada a partir do nó inicial.
-     *
-     * @param battleFile arquivo JSON com o dicionário id -> {@link BattleNode}.
-     */
-    public void buildTree(String battleFile) {
-        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-        try {
-            String serialized = Files.readString(Path.of("..", "data", battleFile));
-            battles = mapper.readValue(serialized, new TypeReference<Hashtable<Character, BattleNode>>() {
-            });
-
-            tree = new DefaultMutableTreeNode(battles.get('P'));
+            tree = new DefaultMutableTreeNode(events.get('P'));
             buildTreeRec('P', tree);
 
-            playerNode = tree;
-
+            this.playerNode = tree;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,13 +147,36 @@ public class GameMap {
                     }
 
                     if (nextId != '*') {
-                        DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(battles.get(nextId));
+                        DefaultMutableTreeNode nextNode = new DefaultMutableTreeNode(events.get(nextId));
                         currentNode.add(nextNode);
                         buildTreeRec(nextId, nextNode);
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Gera um evento aleatório para posições especiais do mapa ('R').
+     *
+     * @return nó recém-criado com id único incremental.
+     */
+    public EventNode generateRandomEvent() {
+        Random random = new Random();
+        int n = random.nextInt(3);
+
+        Event event = new Choice();
+        if (n == 0) {
+            // loja
+        } else if (n == 1) {
+            // fogueira
+        } else if (n == 2) {
+            // escolha
+        }
+
+        EventNode node = new EventNode(cur_random_id, event, false);
+        cur_random_id++;
+        return node;
     }
 
     /**
@@ -154,8 +193,8 @@ public class GameMap {
                     System.out.print(c);
                 } // connections or empty spaces
                 else {
-                    BattleNode nodeP = (BattleNode) playerNode.getUserObject();
-                    BattleNode nodeX = battles.get(c);
+                    EventNode nodeP = (EventNode) playerNode.getUserObject();
+                    EventNode nodeX = events.get(c);
                     if (nodeX.getId() == nodeP.getId()) {
                         c = 'P'; // player position
                         Interface.printInline(c + "", ColorEnum.yellow);
@@ -166,7 +205,7 @@ public class GameMap {
                         boolean nextOption = false;
                         for (int k = 0; k < playerNode.getChildCount(); k++) {
                             DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(k);
-                            BattleNode nodeC = (BattleNode) childNode.getUserObject();
+                            EventNode nodeC = (EventNode) childNode.getUserObject();
                             if (nodeX.getId() == nodeC.getId()) {
                                 c = (char) ('0' + counter); // options to select position
                                 counter++;
@@ -176,8 +215,14 @@ public class GameMap {
                             }
                         }
                         if (!nextOption) {
-                            c = 'o'; // normal position
-                            Interface.printInline(c + "", ColorEnum.blue);
+                            if (nodeX.getEvent() instanceof Battle) {
+                                c = 'o';
+                                Interface.printInline(c + "", ColorEnum.blue);
+                            } else if (nodeX.getEvent() instanceof Choice) {
+                                c = 'c';
+                                Interface.printInline(c + "", ColorEnum.green);
+                            }
+                            // outros eventos
                         }
                     }
                 }
@@ -186,11 +231,31 @@ public class GameMap {
         }
 
         Interface.printInline("========\r\n", ColorEnum.purple);
-        System.out.println("Legenda: ");
-        System.out.println("P: Sua posição (player)");
-        System.out.println("o: Batalhas ainda não travadas");
-        System.out.println("x: Batalhas já vencidas");
-        System.out.println("1 a n: Caminhos disponíveis");
+
+        Interface.printInline("Legenda: \r\n", ColorEnum.purple);
+        Interface.printInline("P", ColorEnum.yellow);
+        System.out.println(": Sua posição (player)");
+        Interface.printInline("o", ColorEnum.blue);
+        System.out.println(": Batalhas ainda não travadas");
+        Interface.printInline("s", ColorEnum.purple);
+        System.out.println(": NERV HQ (loja)");
+        Interface.printInline("f", ColorEnum.yellow);
+        System.out.println(": Divisões da NERV (fogueiras)");
+        Interface.printInline("c", ColorEnum.green);
+        System.out.println(": Escolhas");
+        Interface.printInline("x", ColorEnum.red);
+        System.out.println(": Salas já visitadas");
+
         Interface.printInline("========\r\n", ColorEnum.purple);
+
+        Interface.printInline("Escolhas disponíveis: \r\n", ColorEnum.purple);
+        for (int k = 0; k < playerNode.getChildCount(); k++) {
+            DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) playerNode.getChildAt(k);
+            EventNode nodeC = (EventNode) childNode.getUserObject();
+            Interface.printInline(k + 1 + "", ColorEnum.yellow);
+            System.out.println(": " + nodeC.getEvent().getDescription());
+        }
+
+        Interface.printInline("========\r\n\r\n", ColorEnum.purple);
     }
 }

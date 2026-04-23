@@ -4,12 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import mc322_slay.Battle;
 import mc322_slay.EventEnum;
-import mc322_slay.card.CardStack;
 import mc322_slay.effect.LowSyncRate;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 
 /**
  * Testes de {@link mc322_slay.effect.LowSyncRate}: multiplicador de debuff do dono; duração decresce no
@@ -18,7 +17,7 @@ import mc322_slay.entity.Hero;
 public class LowSyncRateTest {
     @Test
     public void beNotifiedNotFinishedEffect() {
-        Hero hero = new Hero("Herói", 50, 20, null);
+        Hero hero = new Hero("Herói", 50, 20, null, null);
 
         LowSyncRate lowSyncRate = new LowSyncRate("Fraqueza", 3, 0.5);
         lowSyncRate.setOwner(hero);
@@ -30,7 +29,7 @@ public class LowSyncRateTest {
 
     @Test
     public void beNotifiedFinishedEffect() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new LowSyncRate("Fraqueza", 1, 0.5));
         LowSyncRate low = (LowSyncRate) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -41,7 +40,7 @@ public class LowSyncRateTest {
 
     @Test
     public void deboostWhileEffectActive() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new LowSyncRate("Fraqueza", 2, 0.5));
 
         assertEquals(0.5, hero.getDeboost(), 1e-9);
@@ -49,7 +48,7 @@ public class LowSyncRateTest {
 
     @Test
     public void beNotifiedWrongEvent() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new LowSyncRate("Fraqueza", 2, 0.5));
         LowSyncRate low = (LowSyncRate) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -62,7 +61,7 @@ public class LowSyncRateTest {
 
     @Test
     public void beNotifiedTurnsDecreased() {
-        Hero hero = new Hero("Herói", 50, 0, null);
+        Hero hero = new Hero("Herói", 50, 0, null, null);
         hero.applyEffect(new LowSyncRate("Fraqueza", 2, 0.5));
         LowSyncRate low = (LowSyncRate) hero.getLastEffect();
         Battle battle = battleFor(hero);
@@ -75,11 +74,10 @@ public class LowSyncRateTest {
 
     @Test
     public void beNotifiedEnemyEndOfTurn() {
-        Hero hero = new Hero("Herói", 50, 0, null);
         Enemy angel = new Enemy("Anjo", 200, 100, 20, 40, null);
         angel.applyEffect(new LowSyncRate("Fraqueza", 2, 0.5));
         LowSyncRate low = (LowSyncRate) angel.getLastEffect();
-        Battle battle = new Battle(hero, angel, new CardStack());
+        Battle battle = new Battle(angel);
 
         assertEquals(0.5, angel.getDeboost(), 1e-9);
 
@@ -89,6 +87,6 @@ public class LowSyncRateTest {
     }
 
     private static Battle battleFor(Hero hero) {
-        return new Battle(hero, new Enemy("Anjo", 200, 100, 20, 40, null), new CardStack());
+        return new Battle(new Enemy("Anjo", 200, 100, 20, 40, null));
     }
 }

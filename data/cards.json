@@ -2,71 +2,88 @@
   "cards" : [ {
     "type" : "damage",
     "name" : "Longinus Spear",
-    "cost" : 10
+    "cost" : 10,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Cassius Spear",
-    "cost" : 9
+    "cost" : 9,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Positron Sniper Rifle",
-    "cost" : 8
+    "cost" : 8,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Prog Knife",
-    "cost" : 7
+    "cost" : 7,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Magokoru Sword",
-    "cost" : 6
+    "cost" : 6,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Pallet Rifle",
-    "cost" : 5
+    "cost" : 5,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Azumaterasu",
-    "cost" : 4
+    "cost" : 4,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "Smash Hawk",
-    "cost" : 3
+    "cost" : 3,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "N2 Weapon II",
-    "cost" : 2
+    "cost" : 2,
+    "multiplier": 10
   }, {
     "type" : "damage",
     "name" : "N2 Weapon",
-    "cost" : 1
+    "cost" : 1,
+    "multiplier": 10
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 1",
-    "cost" : 2
+    "cost" : 2,
+    "multiplier": 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 1",
-    "cost" : 2
+    "cost" : 2,
+    "multiplier": 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 2",
-    "cost" : 4
+    "cost" : 4,
+    "multiplier": 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 2",
-    "cost" : 4
+    "cost" : 4,
+    "multiplier": 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 3",
-    "cost" : 6
+    "cost" : 6,
+    "multiplier": 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 4",
-    "cost" : 8
+    "cost" : 8,
+    "multiplier": 4
   }, {
     "type" : "shield",
     "name" : "Regeneração do Campo de Terror Absoluto 5",
-    "cost" : 10
+    "cost" : 10,
+    "multiplier": 4
   }, {
     "type" : "effect",
     "name" : "Dano psicológico 1",
@@ -129,8 +146,8 @@
     "effect" : {
       "type" : "strength",
       "name" : "Alta taxa de sincronização",
-      "turns" : 2,
-      "startTurns": 2,
+      "turns" : 3,
+      "startTurns": 3,
       "boost" : 2
     }
   }, {
@@ -151,8 +168,8 @@
     "effect" : {
       "type" : "weakness",
       "name" : "Baixa taxa de sincronização",
-      "turns" : 2,
-      "startTurns": 2,
+      "turns" : 3,
+      "startTurns": 3,
       "deboost" : 0.25
     }
   }, {

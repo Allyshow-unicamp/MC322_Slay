@@ -1,0 +1,66 @@
+{
+  "cards" : [ {
+    "type" : "damage",
+    "name" : "Positron Sniper Rifle",
+    "cost" : 8,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Magokoru Sword",
+    "cost" : 6,
+    "multiplier": 10
+  }, {
+    "type" : "damage",
+    "name" : "Azumaterasu",
+    "cost" : 4,
+    "multiplier": 10
+  }, {
+    "type" : "shield",
+    "name" : "Regeneração do Campo de Terror Absoluto 3",
+    "cost" : 6,
+    "multiplier": 4
+  }, {
+    "type" : "effect",
+    "name" : "Dano psicológico 1",
+    "cost" : 3,
+    "effect" : {
+      "type" : "poison",
+      "name" : "Dano psicológico",
+      "turns" : 3,
+      "startTurns": 3,
+      "damage" : 30
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Restauração Forçada do pulso vital 2",
+    "cost" : 6,
+    "effect" : {
+      "type" : "regeneration",
+      "name" : "Restauração Forçada do pulso vital",
+      "turns" : 3,
+      "startTurns": 3,
+      "health" : 20
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Alta taxa de sincronização",
+    "cost" : 6,
+    "effect" : {
+      "type" : "strength",
+      "name" : "Alta taxa de sincronização",
+      "turns" : 2,
+      "startTurns": 2,
+      "boost" : 2
+    }
+  }, {
+    "type" : "effect",
+    "name" : "Corrosão do campo AT 1",
+    "cost" : 4,
+    "effect" : {
+      "type" : "corrosion",
+      "name" : "Corrosão do campo AT",
+      "turns" : 2,
+      "startTurns": 2
+    }
+  }]
+}

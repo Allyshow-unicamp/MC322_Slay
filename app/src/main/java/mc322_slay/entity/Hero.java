@@ -2,10 +2,29 @@ package mc322_slay.entity;
 
 import java.util.ArrayList;
 
+import mc322_slay.card.CardStack;
+
 /**
  * Representa o personagem controlado pelo jogador.
  */
 public class Hero extends Entity {
+
+    /** Baralho permanente do herói na campanha. */
+    private CardStack deck;
+
+    /**
+     * @return baralho atual do herói.
+     */
+    public CardStack getDeck() {
+        return deck;
+    }
+
+    /**
+     * @param deck novo baralho do herói.
+     */
+    public void setDeck(CardStack deck) {
+        this.deck = deck;
+    }
 
     /**
      * Define o nome do herói.
@@ -36,13 +55,15 @@ public class Hero extends Entity {
      * @param name       nome inicial.
      * @param health     vida inicial.
      * @param ATField    valor inicial do campo AT (escudo).
+     * @param deck       baralho inicial do herói.
      * @param imageAsset arte associada ao herói.
      */
-    public Hero(String name, int health, int ATField, String imageAsset) {
+    public Hero(String name, int health, int ATField, CardStack deck, String imageAsset) {
         this.name = name;
         this.health = health;
         this.ATField = ATField;
         this.effects = new ArrayList<>();
+        this.deck = deck;
         this.imageAsset = imageAsset;
         this.maxHealth = health;
     }

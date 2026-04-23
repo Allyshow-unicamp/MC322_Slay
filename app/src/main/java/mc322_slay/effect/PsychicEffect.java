@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import mc322_slay.Battle;
 import mc322_slay.ColorEnum;
 import mc322_slay.EventEnum;
 import mc322_slay.Interface;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 import mc322_slay.serializer.PsychicEffectSerializer;
 
 /**
@@ -110,15 +110,26 @@ public class PsychicEffect extends Effect {
         this.startPoints = effect.startPoints;
     }
 
+    /**
+     * Construtor vazio para desserialização.
+     */
     public PsychicEffect() {
         super();
     }
 
+    /**
+     * @return cópia do efeito psicológico.
+     */
     @Override
     public PsychicEffect cloneEffect() {
         return new PsychicEffect(this);
     }
 
+    /**
+     * Mescla dano psicológico mantendo o maior dano por turno.
+     *
+     * @param effect outro efeito do mesmo tipo.
+     */
     @Override
     public void merge(Effect effect) {
         PsychicEffect tE = (PsychicEffect) effect;
