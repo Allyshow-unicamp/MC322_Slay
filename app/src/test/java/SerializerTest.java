@@ -82,7 +82,7 @@ public class SerializerTest {
     }
 
     @Test
-    public void damageCardSerializerWritesNameCostAndDescription() throws Exception {
+    public void damageCardSerializerWritesNameCost() throws Exception {
         DamageCard card = new DamageCard("Ataque", 2);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
@@ -92,7 +92,7 @@ public class SerializerTest {
     }
 
     @Test
-    public void shieldCardSerializerWritesNameCostAndDescription() throws Exception {
+    public void shieldCardSerializerWritesNameCost() throws Exception {
         ShieldCard card = new ShieldCard("Escudo", 1);
         JsonNode root = mapper.readTree(mapper.writeValueAsString(card));
 
@@ -110,7 +110,7 @@ public class SerializerTest {
         assertEquals("effect", root.get("type").asText());
         assertEquals("Carta tóxica", root.get("name").asText());
         assertEquals(3, root.get("cost").asInt());
-        
+
         JsonNode effectNode = root.get("effect");
         assertEquals("poison", effectNode.get("type").asText());
         assertEquals("veneno", effectNode.get("name").asText());
