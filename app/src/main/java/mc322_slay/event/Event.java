@@ -1,5 +1,7 @@
 package mc322_slay.event;
 
+import java.util.Scanner;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -18,6 +20,9 @@ import mc322_slay.entity.Hero;
  * descrição para exibição na interface.
  */
 public abstract class Event {
+    /** Leitor de entrada de ações do jogador no terminal. */
+    protected Scanner scanner;
+
     /**
      * Executa o evento.
      *
@@ -33,4 +38,6 @@ public abstract class Event {
      * @return texto de descrição do evento.
      */
     public abstract String getDescription();
+
+    public abstract void printChar();
 }

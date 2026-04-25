@@ -12,8 +12,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
+import mc322_slay.event.Battle;
 import mc322_slay.event.Event;
 import mc322_slay.event.EventNode;
+import mc322_slay.event.Reward;
 
 /**
  * Orquestra o estado do jogo: inicialização, seleção de personagem, montagem do
@@ -199,6 +201,11 @@ public class GameManager {
         Event event = childEventNode.getEvent();
         boolean alive = event.init(hero, possibleNewCards);
         if (alive) {
+            if (event instanceof Battle) {
+                Reward reward = new Reward();
+                reward.init(hero, possibleNewCards);
+            }
+
             playerEventNode.setVisited(true);
             playerNode.setUserObject(playerEventNode);
             map.setPlayerNode(childNode);

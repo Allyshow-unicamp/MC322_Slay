@@ -9,6 +9,7 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.event.Battle;
 import mc322_slay.serializer.LowSyncRateSerializer;
+import mc322_slay.visitor.EffectVisitor;
 
 /**
  * Efeito que reduz (ou altera) o multiplicador {@link mc322_slay.entity.Entity#getDeboost()} do herói,
@@ -115,5 +116,9 @@ public class LowSyncRate extends Effect {
     public void merge(Effect effect) {
         LowSyncRate tE = (LowSyncRate) effect;
         this.setDeboost(Math.min(tE.getDeboost(), this.getDeboost()));
+    }
+    
+    public void accept(EffectVisitor visitor) {
+        visitor.visit(this);
     }
 }

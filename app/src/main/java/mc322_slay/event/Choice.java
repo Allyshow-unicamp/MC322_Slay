@@ -13,10 +13,6 @@ import mc322_slay.entity.Hero;
  * Evento de escolha com risco/recompensa para alterar deck ou vida do herói.
  */
 public class Choice extends Event {
-
-    /** Scanner dedicado à interação textual deste evento. */
-    Scanner scanner;
-
     /**
      * Executa o fluxo principal de escolhas.
      */
@@ -27,7 +23,7 @@ public class Choice extends Event {
         Interface.clearScreen();
 
         Interface.printInline("\r\n== ESCOLHA ==\r\n", ColorEnum.purple);
-
+        Interface.printFile("choice.txt", ColorEnum.reset);
         Interface.printMessage("Você se depara com uma decisão difícil em sua jornada. Escolha com sabedoria: ",
                 ColorEnum.reset);
 
@@ -119,6 +115,8 @@ public class Choice extends Event {
         if (goodOption) {
             possibleNewCards.shuffle();
 
+            Interface.clearScreen();
+
             Interface.printInline("\r\n== SELEÇÃO DE CARTA ==\r\n", ColorEnum.yellow);
             for (int i = 0; i < 3; i++) {
                 Interface.printCardInfo(possibleNewCards.getStack().get(i), i);
@@ -129,12 +127,13 @@ public class Choice extends Event {
             while (true) {
                 try {
                     System.out.print(
-                            "\r\nSelecione uma carta para adicionar ao seu deck (D para ver deck e vida, -1 para pular): ");
-                    char response = scanner.next().charAt(0);
-                    if (response == 'D') {
+                            "\r\nSelecione uma das 3 cartas para adicionar ao seu deck (D para ver deck e vida, -1 para pular): ");
+                    String response = scanner.next();
+                    char opt = response.charAt(0);
+                    if (opt == 'D') {
                         Interface.printHeroInfo(hero);
                     } else {
-                        option = Integer.parseInt(response + "");
+                        option = Integer.parseInt(response);
                         if (-1 <= option && option < 3) {
                             if (option == -1)
                                 break;
@@ -195,5 +194,9 @@ public class Choice extends Event {
     @Override
     public String getDescription() {
         return "Escolha";
+    }
+
+    public void printChar() {
+        Interface.printInline("c", ColorEnum.green);
     }
 }

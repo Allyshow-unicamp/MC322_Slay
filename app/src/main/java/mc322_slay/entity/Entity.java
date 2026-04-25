@@ -78,7 +78,9 @@ public abstract class Entity {
      * @param amount A quantidade de vida a ser ganha.
      */
     public void gainHealth(int amount) {
-        this.health = (health + amount > maxHealth ? maxHealth : health + amount);
+        int increment = (health + amount > maxHealth ? maxHealth - health : amount);
+        Interface.printMessage(this.name + " recuperou " + increment  + " de vida.", ColorEnum.yellow);
+        this.health += increment;
     }
 
     /**

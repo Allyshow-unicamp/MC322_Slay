@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import mc322_slay.EventEnum;
 import mc322_slay.entity.Entity;
 import mc322_slay.event.Battle;
+import mc322_slay.visitor.EffectVisitor;
 
 /**
  * Classe base para efeitos temporários aplicados a {@link Entity}.
@@ -88,6 +89,14 @@ public abstract class Effect {
         this.owner = owner;
     }
 
+    public void setStartPoints(int points) {
+        this.startPoints += points;
+    }
+
+    public void setPoints(int points) {
+        this.points += points;
+    }
+
     /**
      * Retorna representação textual amigável do efeito.
      *
@@ -124,4 +133,6 @@ public abstract class Effect {
      * @param effect outra instância do mesmo tipo lógico (ex.: maior cura, maior boost).
      */
     public abstract void merge(Effect effect);
+
+    public abstract void accept(EffectVisitor visitor);
 }

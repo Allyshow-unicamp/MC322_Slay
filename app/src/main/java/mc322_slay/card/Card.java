@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import mc322_slay.entity.Entity;
+import mc322_slay.visitor.Visitor;
 
 /**
  * Classe base para cartas jogáveis.
@@ -62,4 +63,6 @@ public abstract class Card {
     public String getDescription() {
         return this.cardDescription;
     }
+
+    public abstract void accept(Visitor visitor);
 }

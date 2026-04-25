@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import mc322_slay.EventEnum;
 import mc322_slay.event.Battle;
 import mc322_slay.serializer.ATFieldCorrosionSerializer;
+import mc322_slay.visitor.EffectVisitor;
 
 /**
  * Efeito que mantém o alvo vulnerável ao ignorar AT Field por alguns turnos.
@@ -92,4 +93,8 @@ public class ATFieldCorrosion extends Effect {
      */
     @Override 
     public void merge(Effect effect) {}
+
+    public void accept(EffectVisitor visitor) {
+        visitor.visit(this);
+    }
 }

@@ -11,6 +11,7 @@ import mc322_slay.effect.HealthRegeneration;
 import mc322_slay.effect.HighSyncRate;
 import mc322_slay.entity.Entity;
 import mc322_slay.serializer.EffectCardSerializer;
+import mc322_slay.visitor.Visitor;
 
 /**
  * Carta que aplica um efeito contínuo ao alvo.
@@ -77,5 +78,9 @@ public class EffectCard extends Card {
      */
     public EffectCard() {
         super();
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }
