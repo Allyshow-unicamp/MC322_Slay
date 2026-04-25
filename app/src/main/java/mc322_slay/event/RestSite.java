@@ -12,8 +12,16 @@ import mc322_slay.event.command.DeleteCommand;
 import mc322_slay.event.command.HealCommand;
 import mc322_slay.event.command.UpgradeCommand;
 
+/**
+ * Evento de descanso (fogueira/base) com comandos de cura, upgrade e deleção.
+ */
 public class RestSite extends Event {
-    
+    /** Scanner dedicado à interação textual deste evento. */
+    private Scanner scanner;
+
+    /**
+     * Executa o fluxo de descanso e aplica o comando selecionado.
+     */
     @Override
     public boolean init(Hero hero, CardStack possibleNewCards) {
         scanner = new Scanner(System.in);
@@ -67,11 +75,17 @@ public class RestSite extends Event {
         return true;
     }
 
+    /**
+     * @return descrição curta do evento para o mapa.
+     */
     @Override
     public String getDescription() {
         return "Base da NERV (fogueira)";
     }
 
+    /**
+     * Imprime marcador de fogueira usado na renderização do mapa.
+     */
     public void printChar() {
         Interface.printInline("f", ColorEnum.purple);
     }

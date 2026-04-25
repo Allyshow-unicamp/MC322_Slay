@@ -8,8 +8,16 @@ import mc322_slay.card.Card;
 import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
 
+/**
+ * Comando que remove uma carta do deck entre opções apresentadas.
+ */
 public class DeleteCommand extends Command {
 
+    /**
+     * Mostra cartas candidatas e remove a selecionada.
+     *
+     * @param hero herói dono do deck.
+     */
     @Override
     public void execute(Hero hero) {
         scanner = new Scanner(System.in);

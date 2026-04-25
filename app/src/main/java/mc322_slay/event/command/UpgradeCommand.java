@@ -9,8 +9,16 @@ import mc322_slay.card.CardStack;
 import mc322_slay.entity.Hero;
 import mc322_slay.visitor.UpgradeVisitor;
 
+/**
+ * Comando que melhora uma carta escolhida do deck.
+ */
 public class UpgradeCommand extends Command {
 
+    /**
+     * Exibe opções e aplica melhoria via visitor na carta selecionada.
+     *
+     * @param hero herói dono do deck.
+     */
     @Override
     public void execute(Hero hero) {
         scanner = new Scanner(System.in);
