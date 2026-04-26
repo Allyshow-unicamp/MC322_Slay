@@ -10,6 +10,7 @@ import mc322_slay.effect.HighSyncRate;
 import mc322_slay.effect.LowSyncRate;
 import mc322_slay.entity.Entity;
 import mc322_slay.serializer.DamageCardSerializer;
+import mc322_slay.visitor.Visitor;
 
 /**
  * Carta que causa dano direto ao alvo.
@@ -80,5 +81,9 @@ public class DamageCard extends Card {
      */
     public DamageCard() {
         super();
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

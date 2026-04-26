@@ -56,8 +56,6 @@ public class Battle extends Event {
     private CardStack discardPile;
     /** Efeitos ativos que recebem eventos do ciclo de batalha. */
     private ArrayList<Effect> subscribers;
-    /** Leitor de entrada de ações do jogador no terminal. */
-    private Scanner scanner;
     /** Mensagem textual com a intenção do inimigo no turno atual (exibida ao jogador). */
     private String enemyPlanning;
 
@@ -122,11 +120,6 @@ public class Battle extends Event {
         }
 
         boolean won = results(hero);
-
-        if (hero.isAlive()) {
-            Reward reward = new Reward();
-            reward.init(hero, possibleNewCards);
-        }
 
         return won;
     }
@@ -372,5 +365,9 @@ public class Battle extends Event {
     @Override
     public String getDescription() {
         return "Batalha";
+    }
+
+    public void printChar() {
+        Interface.printInline("o", ColorEnum.blue);
     }
 }

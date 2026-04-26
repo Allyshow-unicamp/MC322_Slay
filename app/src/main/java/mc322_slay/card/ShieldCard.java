@@ -8,6 +8,7 @@ import mc322_slay.ColorEnum;
 import mc322_slay.Interface;
 import mc322_slay.entity.Entity;
 import mc322_slay.serializer.ShieldCardSerializer;
+import mc322_slay.visitor.Visitor;
 
 /**
  * Carta que concede escudo (AT Field) ao alvo.
@@ -71,5 +72,9 @@ public class ShieldCard extends Card {
      */
     public ShieldCard() {
         super();
+    }
+
+    public void accept(Visitor v) {
+        v.visit(this);
     }
 }

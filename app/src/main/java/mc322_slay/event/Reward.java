@@ -12,10 +12,6 @@ import mc322_slay.entity.Hero;
  * Evento de recompensa pós-batalha para adicionar cartas ao deck do herói.
  */
 public class Reward extends Event {
-
-    /** Scanner dedicado à interação textual deste evento. */
-    Scanner scanner;
-
     /**
      * Exibe e processa as opções de recompensa disponíveis.
      */
@@ -23,8 +19,8 @@ public class Reward extends Event {
     public boolean init(Hero hero, CardStack possibleNewCards) {
         scanner = new Scanner(System.in);
 
-        Interface.printInline("\r\n== RECOMPENSA DE BATALHA ==\r\n", ColorEnum.purple);
-        Interface.printInline("Recompensas disponívies: \r\n", ColorEnum.purple);
+        Interface.printInline("\r\n== RECOMPENSA DE BATALHA ==\r\n\r\n", ColorEnum.purple);
+        Interface.printInline("Você travou uma luta difícil e merece uma recompensa. Recompensas disponíveis: \r\n", ColorEnum.purple);
 
         Interface.printInline("0) ", ColorEnum.yellow);
         System.out.println("Selecione 1 entre 3 cartas para adicionar ao seu baralho.");
@@ -36,11 +32,12 @@ public class Reward extends Event {
             try {
                 System.out.print(
                         "\r\nSelecione a recompensa que deseja obter (D para ver deck e vida, -1 para pular recompensa): ");
-                char response = scanner.next().charAt(0);
-                if (response == 'D') {
+                String response = scanner.next();
+                char opt = response.charAt(0);
+                if (opt == 'D') {
                     Interface.printHeroInfo(hero);
                 } else {
-                    option = Integer.parseInt(response + "");
+                    option = Integer.parseInt(response);
                     if (-1 <= option && option <= 0) {
                         if (option == -1)
                             break;
@@ -72,6 +69,8 @@ public class Reward extends Event {
     private void selectCard(Hero hero, CardStack possibleNewCards) {
         possibleNewCards.shuffle();
 
+        Interface.clearScreen();
+
         Interface.printInline("\r\n== SELEÇÃO DE CARTA ==\r\n", ColorEnum.yellow);
         for (int i = 0; i < 3; i++) {
             Interface.printCardInfo(possibleNewCards.getStack().get(i), i);
@@ -82,11 +81,13 @@ public class Reward extends Event {
         while (true) {
             try {
                 System.out.print(
-                        "\r\nSelecione uma carta para adicionar ao seu deck (D para ver deck e vida, -1 para pular): ");
-                char response = scanner.next().charAt(0);
-                if (response == 'D') {
+                        "\r\nSelecione uma das 3 cartas para adicionar ao seu deck (D para ver deck e vida, -1 para pular): ");
+                String response = scanner.next();
+                char opt = response.charAt(0);
+                if (opt == 'D') {
                     Interface.printHeroInfo(hero);
                 } else {
+                        option = Integer.parseInt(response);
                     option = Integer.parseInt(response + "");
                     if (-1 <= option && option < 3) {
                         if (option == -1)
@@ -121,4 +122,7 @@ public class Reward extends Event {
         return "Recompensa da batalha";
     }
 
+    public void printChar() {
+        Interface.printInline("r", ColorEnum.red);
+    }
 }

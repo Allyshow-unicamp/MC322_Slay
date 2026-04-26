@@ -6,15 +6,17 @@
 
 ### Temática
 
-O projeto é um jogo de cartas jogado **no terminal**, inspirado no universo de *Neon Genesis Evangelion*. O jogador enfrenta **anjos** em sequência através de um mapa. Após a abertura e a escolha do piloto, o programa carrega o mapa e os dados das lutas a partir de arquivos JSON, exibe o mapa com a posição atual, caminhos já vencidos e opções numeradas, e inicia cada combate quando o jogador escolhe um caminho. O objetivo da campanha é percorrer os nós até o fim da árvore mantendo o herói vivo; o **baralho** é o mesmo em todas as batalhas (pilhas de compra e descarte compartilhadas), enquanto **efeitos ativos no herói** são limpos entre uma luta e a outra.
+O projeto é um jogo de cartas jogado **no terminal**, inspirado no universo de *Neon Genesis Evangelion*. O jogador avança em uma árvore de **eventos** (batalha, escolha e descanso) carregada de JSON. Após a abertura e a escolha do piloto, o programa sorteia um mapa, carrega os eventos, exibe caminhos disponíveis e executa o evento do nó selecionado. O objetivo da campanha é chegar ao fim da árvore com o herói vivo; o **baralho** é persistido ao longo da campanha e os **efeitos ativos no herói** são limpos ao fim de batalhas vencidas.
 
 ### Personagens
 
-No início da partida o jogador escolhe controlar **Shinji Ikari**, **Rei Ayanami** ou **Asuka Langley Soryu** (piloto de EVA). A cada **turno do jogador** dentro de uma batalha, o herói recupera a **sincronização** (energia disponível para jogar cartas) e o **campo AT** (escudo) é **zerado** no começo de cada turno.
+No início da partida o jogador escolhe controlar **Shinji Ikari**, **Rei Ayanami** ou **Asuka Langley Soryu** (piloto de EVA), que definem qual será o baralho inicial do jogo. A cada **turno do jogador** dentro de uma batalha, o herói recupera a **sincronização** (energia disponível para jogar cartas) e o **campo AT** (escudo) é **zerado** no começo de cada turno.
 
 ### Mapa e progressão
 
-O mapa é uma matriz de caracteres (`data/map.json`) interpretada pelo `GameMap`: letras e símbolos representam nós e conexões. Os dados de cada nó (qual anjo, vida, dano, escudo, arquivo de arte) vêm de `data/battles.json`. Ao vencer uma luta, o jogador avança para o nó escolhido; ao perder, a campanha termina. Quando não há mais filhos no nó atual, a campanha chegou ao fim e o jogo exibe o resultado final.
+O mapa é uma matriz de caracteres (`data/map1.json` ... `data/map4.json`) interpretada por `GameMap`: letras e símbolos representam nós e conexões. Os dados dos nós são carregados de `data/events.json` em objetos `EventNode`, cada um contendo um `Event` polimórfico (`Battle`, `Choice` ou `RestSite`). Ao completar um evento com sucesso, o jogador avança para o nó escolhido; ao perder uma batalha, a campanha termina. Quando não há mais filhos no nó atual, a campanha chegou ao fim e o jogo exibe o resultado final.
+
+## Batalhas
 
 ### Compra e uso de cartas
 
@@ -46,7 +48,27 @@ Tanto o jogador (via cartas de efeito) quanto o inimigo podem aplicar efeitos so
 
 **Sobre duração e intensidade:** se a mesma entidade receber **o mesmo tipo de efeito** mais de uma vez, a **duração em turnos tende a se acumular**. Se houver **intensidades diferentes** para o mesmo tipo de efeito, prevalece a **maior intensidade** e o efeito permanece ativo pela **maior duração** entre as instâncias envolvidas (conforme a lógica em `Entity` e subclasses).
 
-### Fim do jogo
+## Escolhas
+
+O jogador pode se deparar com uma **Escolha** no mapa, que podem ter **consequências positivas ou negativas** dependendo da sua **sorte**. Os resultados possíveis incluem mudanças na **vida** e nas **cartas** do jogador.
+
+## Bases da NERV (Fogueiras)
+
+O jogador pode também descansar em uma **Base** (**Fogueira**), onde pode **recuperar 30% da vida**, **melhorar 1 carta entre 3** ou **deletar 1 carta entre 3** do baralho. No desenvolvimento desse sistema, foram empregados **padrões de design**, conforme descrito abaixo.
+
+### Padrões de design do @refactoring.guru utilizados
+
+### [Command (Action, Transaction)](https://refactoring.guru/design-patterns/command) adaptado
+
+Usado para implementar as diferentes funções da fogueira. O pacote `mc322_slay.event.command` contém a classe abstrata `Command` com o método abstrato `execute(Hero hero)`. Então, cada classe concreta que herda de `Command` é responsável pela lógica de execução de cada ação. A classe `RestSize` é responsável pela atribuição de cada comando às respectivas teclas do teclado no método `init(Hero hero, CardStack possibleNewCards)`, através de um `HashMap`.
+
+### [Visitor](https://refactoring.guru/design-patterns/visitor)
+
+No caso específico do `UpgradeCommand.java`, foi utilizado o padrão de design Visitor para fortalecer as cartas do jogador. O pacote `mc322_slay.visitor` contém a interface `Visitor`, que encapsula as sobrecargas dos métodos `visit` para cada tipo de carta. Então, a classe concreta `UpgradeVisitor` implementa os mesmos, fortalecendo atributos específicos dentro dos métodos para cada tipo de carta. No pacote `mc322_slay.card`, foi necessário criar na classe abstrata `Card` um método abstrato `accept(Visitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`, passando como parâmetro a própria classe. Desse modo, a classe não fica responsável por saber como ser melhorada, sendo esta responsabilidade delegada ao `Visitor`.
+
+Já em se tratando dos efeitos de cada `EffectCard`, para implementar a melhoria dessa carta na fogueira, foram criadas uma interface `EffectVisitor` e uma classe concreta `UpgradeEffectVisitor` que implementa a interface. Desse modo, analogamente ao que foi feito para as cartas, a classe abstrata `Effect` tem o método abstrato `accept(EffectVisitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`. 
+
+## Fim do jogo
 
 Dentro de cada batalha, o combate segue até a morte de **uma** das entidades. **Vence** quem deixar o oponente com vida zero. Se **ambos** morrerem no mesmo desfecho, o jogo ainda trata como **derrota do jogador**.
 
@@ -66,8 +88,8 @@ Na **campanha**, ao concluir o **último deslocamento** possível no mapa sem te
 
 | Arquivo / pasta | Função |
 |-----------------|--------|
-| `data/map.json` | Matriz de caracteres do mapa; posições e ligações entre nós de batalha. |
-| `data/battles.json` | Dicionário com dados das batalhas, contendo os nós `BattleNode`. |
+| `data/map1.json` ... `data/map4.json` | Matrizes de caracteres do mapa; posições e ligações entre nós de evento. |
+| `data/events.json` | Dicionário com nós de evento (`EventNode`) e payload polimórfico do `Event`. |
 | `data/deck.json` | Lista de cartas do baralho inicial. |
 | `assets/*.txt` | Arte ASCII e textos de interface (abertura, seleção de personagem, inimigos, vitória, derrota, etc.). |
 
@@ -93,10 +115,9 @@ Pastas principais:
 **Raiz `mc322_slay`**
 
 - `App` — configura saída **UTF-8**; instancia `GameManager`; é responsável pela tela inicial, seleção de piloto de EVA, montagem do baralho e mecânica do mapa e batalhas até o fim da campanha.
-- `GameManager` — representa o estado do jogo; possui herói, `Scanner`, `CardStack` do baralho e `GameMap`; é responsável pelo fluxo de telas, escolha de caminho no mapa, criação de `Battle`, limpeza de efeitos do herói entre lutas e tela de resultado.
-- `GameMap` — lê `map.json` e `battles.json`, monta a árvore de nós (usa `javax.swing.tree.DefaultMutableTreeNode`), mantém o nó atual do jogador e imprime o mapa com cores e legenda.
-- `BattleNode` — possui id do nó, referência ao `Enemy` daquela luta e se o nó já foi visitado.
-- `Battle` — representa o ciclo completo de **um** combate, sendo responsável pela compra de cartas, energia, mão, pilhas, ações do jogador e do inimigo e resultado da luta.
+- `GameManager` — representa o estado da campanha; possui herói, `Scanner`, cartas de recompensa e `GameMap`; coordena telas, seleção de caminho, execução de eventos e tela final.
+- `GameMap` — lê o mapa e os eventos, monta a árvore com `DefaultMutableTreeNode`, mantém o nó atual do jogador e imprime mapa/legenda com estados.
+- `EventNode` — nó da árvore com id, `Event` associado e estado de visita.
 - `Interface` — cores (`ColorEnum`), mensagens e leitura de arquivos em `assets/` via `Files` / `Path`.
 - `ColorEnum` — cores disponíveis no terminal.
 - `EventEnum` — tipos de evento notificados aos efeitos durante o turno.
@@ -122,6 +143,23 @@ Pastas principais:
 - `HealthRegeneration` — regeneração por turno.
 - `ATFieldCorrosion` — corrosão do campo AT.
 - `HighSyncRate` / `LowSyncRate` — modificadores de dano em contexto de cartas de dano, conforme documentado acima.
+
+**Pacote `mc322_slay.event`**
+
+- `Event` — base polimórfica dos eventos do mapa.
+- `Battle` — ciclo completo de um combate por turnos.
+- `Choice` — evento de risco/recompensa com sorteio para mexer no deck/vida.
+- `RestSite` — evento de descanso com comandos de cura, upgrade e deleção.
+- `Reward` — evento auxiliar usado após vitória em batalha para selecionar nova carta.
+- `EventNode` — estrutura serializável de nó do mapa.
+
+**Pacote `mc322_slay.event.command`**
+
+- `Command`, `HealCommand`, `UpgradeCommand`, `DeleteCommand` — encapsulam ações disponíveis no descanso.
+
+**Pacote `mc322_slay.visitor`**
+
+- `Visitor` / `UpgradeVisitor` e `EffectVisitor` / `UpgradeEffectVisitor` — aplicam melhorias em cartas e efeitos usando o padrão Visitor
 
 **Pacote `mc322_slay.serializer`**
 
@@ -174,3 +212,9 @@ Executar o jogo:
 ## Contribuição de IA generativa
 
 A documentação **Javadoc** dos arquivos Java, trechos de texto deste **README** e descrições detalhadas de efeitos foram elaborados com auxílio de **inteligências artificiais generativas** (por exemplo **Gemini**, Google DeepMind, e **Cursor AI**, Anysphere, Inc.). Esses modelos também apoiaram o uso das bibliotecas **`Files`**, **`Path`** e **`Paths`** para impressão de arquivos `.txt`, parte dos **testes unitários com JUnit 5**, e a integração com **Jackson** (leitura de JSON e serializers) para mapa, batalhas e baralho.
+
+## Referências
+
+https://refactoring.guru/design-patterns/command
+
+https://refactoring.guru/design-patterns/visitor

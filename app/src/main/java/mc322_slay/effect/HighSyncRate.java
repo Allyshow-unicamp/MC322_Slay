@@ -9,6 +9,7 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.event.Battle;
 import mc322_slay.serializer.HighSyncRateSerializer;
+import mc322_slay.visitor.EffectVisitor;
 
 /**
  * Efeito que aumenta temporariamente o multiplicador de dano das cartas de dano
@@ -127,5 +128,9 @@ public class HighSyncRate extends Effect {
     public void merge(Effect effect) {
         HighSyncRate hE = (HighSyncRate) effect;
         this.setBoost(Math.max(hE.getBoost(), this.getBoost()));
+    }
+
+    public void accept(EffectVisitor visitor) {
+        visitor.visit(this);
     }
 }

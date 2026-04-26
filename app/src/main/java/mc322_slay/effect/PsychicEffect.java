@@ -11,6 +11,7 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.event.Battle;
 import mc322_slay.serializer.PsychicEffectSerializer;
+import mc322_slay.visitor.EffectVisitor;
 
 /**
  * Representa um efeito de dano psicológico aplicado a uma entidade.
@@ -134,5 +135,9 @@ public class PsychicEffect extends Effect {
     public void merge(Effect effect) {
         PsychicEffect tE = (PsychicEffect) effect;
         this.setDamage(Math.max(tE.getDamage(), this.getDamage()));
+    }
+    
+    public void accept(EffectVisitor visitor) {
+        visitor.visit(this);
     }
 }

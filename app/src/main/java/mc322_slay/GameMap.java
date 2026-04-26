@@ -11,10 +11,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import mc322_slay.event.Battle;
 import mc322_slay.event.Choice;
 import mc322_slay.event.Event;
 import mc322_slay.event.EventNode;
+import mc322_slay.event.RestSite;
 
 /**
  * Constrói e renderiza o mapa de progressão entre batalhas.
@@ -163,16 +163,14 @@ public class GameMap {
      */
     public EventNode generateRandomEvent() {
         Random random = new Random();
-        int n = random.nextInt(3);
+        int n = random.nextInt(2);
 
         Event event = new Choice();
         if (n == 0) {
-            // loja
+            event = new Choice();
         } else if (n == 1) {
-            // fogueira
-        } else if (n == 2) {
-            // escolha
-        }
+            event = new RestSite();
+        } 
 
         EventNode node = new EventNode(cur_random_id, event, false);
         cur_random_id++;
@@ -215,14 +213,7 @@ public class GameMap {
                             }
                         }
                         if (!nextOption) {
-                            if (nodeX.getEvent() instanceof Battle) {
-                                c = 'o';
-                                Interface.printInline(c + "", ColorEnum.blue);
-                            } else if (nodeX.getEvent() instanceof Choice) {
-                                c = 'c';
-                                Interface.printInline(c + "", ColorEnum.green);
-                            }
-                            // outros eventos
+                            nodeX.getEvent().printChar();
                         }
                     }
                 }
@@ -237,12 +228,10 @@ public class GameMap {
         System.out.println(": Sua posição (player)");
         Interface.printInline("o", ColorEnum.blue);
         System.out.println(": Batalhas ainda não travadas");
-        Interface.printInline("s", ColorEnum.purple);
-        System.out.println(": NERV HQ (loja)");
-        Interface.printInline("f", ColorEnum.yellow);
+        Interface.printInline("f", ColorEnum.purple);
         System.out.println(": Divisões da NERV (fogueiras)");
         Interface.printInline("c", ColorEnum.green);
-        System.out.println(": Escolhas");
+        System.out.println(": Escolhas a serem feitas");
         Interface.printInline("x", ColorEnum.red);
         System.out.println(": Salas já visitadas");
 

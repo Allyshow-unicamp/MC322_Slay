@@ -11,6 +11,7 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
 import mc322_slay.event.Battle;
 import mc322_slay.serializer.HealthRegenerationSerializer;
+import mc322_slay.visitor.EffectVisitor;
 
 /**
  * Efeito que restaura vida do alvo no início do turno.
@@ -68,8 +69,7 @@ public class HealthRegeneration extends Effect {
         if (event == EventEnum.playerStartOfTurn && owner.getClass() == Hero.class ||
                 event == EventEnum.enemyStartOfTurn && owner.getClass() == Enemy.class) {
             this.points -= 1;
-            Interface.printMessage(owner.getName() + " recupera " + health + " de vida, devido a " + name + ".",
-                    ColorEnum.yellow);
+            Interface.printInline(this.name + ": ", ColorEnum.yellow);
             owner.gainHealth(health);
 
             if (this.points == 0) {
@@ -128,5 +128,9 @@ public class HealthRegeneration extends Effect {
     public void merge(Effect effect) {
         HealthRegeneration hE = (HealthRegeneration) effect;
         this.setHealth(Math.max(hE.getHealth(), this.getHealth()));
+    }
+
+    public void accept(EffectVisitor visitor) {
+        visitor.visit(this);
     }
 }
