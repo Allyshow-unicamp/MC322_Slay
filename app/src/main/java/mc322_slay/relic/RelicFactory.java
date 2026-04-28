@@ -29,10 +29,10 @@ public class RelicFactory {
 
     static public boolean worthyOfRelic(int enemyDifficulty) {
         // --- LÓGICA DE DROP DE RELÍQUIA ---
-        double prob = rand.nextDouble(0.136,0.24);
-        double thisprob = 50/enemyDifficulty; 
+        int prob = rand.nextInt(299, 400); // Representando a probabilidade como um inteiro
+        int thisprob = enemyDifficulty;
         // quanto maior a dificuldade do inimigo maiores as chances de drop de uma relíquia.
-        if (thisprob <= prob) {
+        if (thisprob >= prob) {
             Interface.printMessage("\nO inimigo era formidável! Ele deixou um artefato para trás...", ColorEnum.purple);
             
             return true;

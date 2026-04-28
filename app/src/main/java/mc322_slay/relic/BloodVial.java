@@ -18,7 +18,7 @@ public class BloodVial extends Relic {
     public void update(EventEnum event, Battle battle, Hero hero) {
         // A relíquia filtra o evento que importa para ela
         if (event == EventEnum.playerStartOfTurn) {
-            Interface.printMessage("A relíquia [" + name + "] brilhou! Você recupera " + value +" de HP.", ColorEnum.green);
+            Interface.printMessage("A relíquia [" + name + "] brilhou! Você recupera HP.", ColorEnum.green);
             hero.gainHealth(10);
         }
     }

@@ -19,7 +19,7 @@ public class AngelNucleus extends Relic {
         if (event == EventEnum.playerEndOfTurn) {
             // Verifica se o herói tem mais de 1 de vida para evitar que a relíquia o mate acidentalmente
             if (hero.getHealth() > value) {
-                Interface.printMessage("O [" + name + "] pulsa de forma sinistra... Consome 1 de HP para gerar 5 de AT Field!", ColorEnum.purple);
+                Interface.printMessage("O [" + name + "] pulsa de forma sinistra... e consome HP para gerar AT Field!", ColorEnum.purple);
                 
                 // Aplica o dano e o escudo
                 hero.takeDamage(value); 
