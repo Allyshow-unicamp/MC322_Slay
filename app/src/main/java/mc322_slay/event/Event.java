@@ -12,7 +12,10 @@ import mc322_slay.entity.Hero;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Battle.class, name = "battle")
+    @JsonSubTypes.Type(value = Battle.class, name = "battle"),
+    @JsonSubTypes.Type(value = Choice.class, name = "choice"),
+    @JsonSubTypes.Type(value = Reward.class, name = "reward")
+    // @JsonSubTypes.Type(value = RestSite.class, name = "rest" ) -> Adicionar o do Marcos depois!
 })
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 /**

@@ -18,13 +18,14 @@ public class Reward extends Event {
     @Override
     public boolean init(Hero hero, CardStack possibleNewCards) {
         scanner = new Scanner(System.in);
-
+        int nOptions = 0;
         Interface.printInline("\r\n== RECOMPENSA DE BATALHA ==\r\n\r\n", ColorEnum.purple);
         Interface.printInline("Você travou uma luta difícil e merece uma recompensa. Recompensas disponíveis: \r\n", ColorEnum.purple);
 
-        Interface.printInline("0) ", ColorEnum.yellow);
+        Interface.printInline(nOptions+") ", ColorEnum.yellow); 
+        nOptions++;
         System.out.println("Selecione 1 entre 3 cartas para adicionar ao seu baralho.");
-        // outras oções
+        // outras ações
         Interface.printInline("===========================\r\n", ColorEnum.purple);
 
         int option = 0;

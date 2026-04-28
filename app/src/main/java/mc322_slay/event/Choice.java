@@ -48,7 +48,7 @@ public class Choice extends Event {
         Interface.printInline(" de chance de perder " + (int) (health * 100) + "% da sua vida máxima.\r\n",
                 ColorEnum.reset);
 
-        // outras oções
+        // outras oções.
 
         Interface.printInline("=============\r\n", ColorEnum.purple);
 

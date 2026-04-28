@@ -1,6 +1,6 @@
 # Jogo de cartas com temática de Neon Genesis Evangelion
 
-<img src="assets/image.png" width="150" height="250" alt="Capa">
+<img src="assets/image.png" width="" height="750" alt="Capa">
 
 ## O jogo
 
@@ -96,6 +96,13 @@ Na **campanha**, ao concluir o **último deslocamento** possível no mapa sem te
 A leitura dos JSON usa **Jackson** (`jackson-databind`). Tipos polimórficos (por exemplo cartas com campo `type`, inimigos, efeitos dentro de cartas de efeito) são desserializados com **serializers** em `mc322_slay.serializer`.
 
 ---
+## Padrão de Design
+Padrão de Design Escolhido: 
+
+    - Reliquias : Padrões Comportamentais > Observer
+    - Construtor das Reliquias: Padrões de Criação > Factory Method
+
+`Fonte` : https://refactoring.guru/design-patterns/catalog
 
 ## Estrutura do projeto
 

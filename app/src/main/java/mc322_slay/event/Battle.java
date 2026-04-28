@@ -20,6 +20,7 @@ import mc322_slay.entity.Enemy;
 import mc322_slay.entity.EnemyActions;
 import mc322_slay.entity.Hero;
 import mc322_slay.serializer.BattleSerializer;
+import mc322_slay.relic.*;
 
 /**
  * Representa um combate por turnos entre o herói e um anjo.
@@ -58,6 +59,8 @@ public class Battle extends Event {
     private ArrayList<Effect> subscribers;
     /** Mensagem textual com a intenção do inimigo no turno atual (exibida ao jogador). */
     private String enemyPlanning;
+    /* */
+    private int enemyDifficulty;
 
     /**
      * Cria uma batalha com o inimigo especificado.
@@ -89,6 +92,8 @@ public class Battle extends Event {
         hero.getDeck().shuffle();
         this.buyPile = new CardStack(hero.getDeck());
         this.discardPile = new CardStack();
+        // CAPTURA A DIFICULDADE ANTES DA LUTA COMEÇAR
+        this.enemyDifficulty = angel.getMaxHealth() + angel.getShield();
 
         Interface.clearScreen();
 
@@ -96,6 +101,7 @@ public class Battle extends Event {
         Interface.printMessage(hero.getName() + " x " + this.angel.getName(), ColorEnum.purple);
 
         while (isRunning(hero)) {
+            notifyRelics(EventEnum.playerStartOfTurn, hero);
             notifySubscribers(EventEnum.playerStartOfTurn, hero);
             Interface.printMessage("\r\n=== TURNO DO JOGADOR ===\r\n", ColorEnum.reset);
 
@@ -108,6 +114,7 @@ public class Battle extends Event {
                 playerAction(option, hero);
             }
             notifySubscribers(EventEnum.playerEndOfTurn, hero);
+            notifyRelics(EventEnum.playerEndOfTurn, hero);
 
             if (isRunning(hero)) {
                 discardCards();
@@ -159,6 +166,17 @@ public class Battle extends Event {
             // remove effects that are no longer active
             for (Effect e : effectsToBeRemoved) {
                 unsubscribe(e);
+            }
+        }
+    }
+
+    /**
+     * Padrão Observer: Notifica todas as relíquias do herói sobre um evento da batalha.
+     */
+    private void notifyRelics(EventEnum event, Hero hero) {
+        if (hero.getRelics() != null) {
+            for (int i = 0; i < hero.getRelics().size(); i++) {
+                hero.getRelics().get(i).update(event, this, hero);
             }
         }
     }
@@ -348,13 +366,30 @@ public class Battle extends Event {
      */
     private boolean results(Hero hero) {
         Interface.printTurnInfo(hero, angel);
-
         Interface.clearScreen();
-
         System.out.print("\r\n\r\n");
 
         if (hero.isAlive()) {
             Interface.printFile("victory.txt", ColorEnum.green);
+
+            if(RelicFactory.worthyOfRelic(enemyDifficulty)) {
+                
+                Relic newRelic = RelicFactory.createRandomRelic();
+                for (Relic r : hero.getRelics()) {
+                    if (r.getName().equals(newRelic.getName())) {
+                        Interface.printMessage("Você já possui a relíquia " + newRelic.getName() + 
+                            " e não pode obter outra igual!", ColorEnum.yellow);
+                        if (r.getValue() < newRelic.getValue()) {
+                            hero.replaceRelic(hero.getRelics().indexOf(r), newRelic);
+                            Interface.printMessage("Porém a nova é mais poderosa! Você substitui a relíquia antiga.", ColorEnum.green);
+                        } else {
+                            Interface.printMessage("A relíquia que você já possui é mais poderosa. Você mantém a antiga.", ColorEnum.green);
+                        }
+                        return true;
+                    }
+                }
+                hero.addRelic(newRelic);
+            }
 
             return true;
         } else {
