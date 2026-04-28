@@ -79,6 +79,9 @@ public abstract class Entity {
      */
     public void gainHealth(int amount) {
         int increment = (health + amount > maxHealth ? maxHealth - health : amount);
+        if (increment <= 0) {
+            return;
+        }
         Interface.printMessage(this.name + " recuperou " + increment  + " de vida.", ColorEnum.yellow);
         this.health += increment;
     }
@@ -178,6 +181,9 @@ public abstract class Entity {
      * @param amount A quantidade de escudo a ser ganha.
      */
     public void gainATField(int amount) {
+        if (amount <= 0) {
+            return;
+        }
         Interface.printMessage(this.getName() + " recuperou " + amount + " de campo AT.", ColorEnum.yellow);
         this.ATField = ATField + amount;
     }

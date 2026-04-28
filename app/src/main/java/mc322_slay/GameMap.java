@@ -11,7 +11,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import mc322_slay.event.Battle;
 import mc322_slay.event.Choice;
 import mc322_slay.event.Event;
 import mc322_slay.event.EventNode;
@@ -90,7 +89,8 @@ public class GameMap {
                     char value = map[i][j];
                     if (value != ' ' && value != '|' && value != '\\' && value != '/' && value != 'R') {
                         mapCoords.put(value, new pos(j, i));
-                    } else if (value == 'R') {
+                    }
+                    else if (value == 'R') {
                         EventNode eventNode = generateRandomEvent();
                         map[i][j] = eventNode.getId();
                         events.put(eventNode.getId(), eventNode);
@@ -163,15 +163,14 @@ public class GameMap {
      */
     public EventNode generateRandomEvent() {
         Random random = new Random();
-
         int n = random.nextInt(2);
 
-        Event event;
+        Event event = new Choice();
         if (n == 0) {
             event = new Choice();
-        } else {
+        } else if (n == 1) {
             event = new RestSite();
-        }
+        } 
 
         EventNode node = new EventNode(cur_random_id, event, false);
         cur_random_id++;
@@ -215,14 +214,6 @@ public class GameMap {
                         }
                         if (!nextOption) {
                             nodeX.getEvent().printChar();
-                            if (nodeX.getEvent() instanceof Battle) {
-                                c = 'o';
-                                Interface.printInline(c + "", ColorEnum.blue);
-                            } else if (nodeX.getEvent() instanceof Choice) {
-                                c = 'c';
-                                Interface.printInline(c + "", ColorEnum.green);
-                            }
-                            // outros eventos.
                         }
                     }
                 }
