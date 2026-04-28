@@ -1,6 +1,6 @@
 # Jogo de cartas com temática de Neon Genesis Evangelion
 
-<img src="assets/image.png" width="150" height="250" alt="Capa">
+<img src="assets/image.png" width="" height="750" alt="Capa">
 
 ## O jogo
 
@@ -56,6 +56,30 @@ O jogador pode se deparar com uma **Escolha** no mapa, que podem ter **consequê
 
 O jogador pode também descansar em uma **Base** (**Fogueira**), onde pode **recuperar 30% da vida**, **melhorar 1 carta entre 3** ou **deletar 1 carta entre 3** do baralho. No desenvolvimento desse sistema, foram empregados **padrões de design**, conforme descrito abaixo.
 
+## Relíquias
+
+As **Relíquias** são artefatos passivos recebidos como recompensa aleatoriamente em combate difíceis e aplicam efeitos automáticos durante a batalha. A implementação usa o pacote `relic`.
+
+### Funcionamento no jogo
+
+- Após a vitória, o jogo avalia chance de drop com `RelicFactory.worthyOfRelic(int enemyDifficulty)`.
+- Quando há drop, uma relíquia aleatória é criada por `RelicFactory.createRandomRelic()`.
+- Cada relíquia concreta (`BloodVial`, `MotorS2`, `SDATPlayer`, `AngelNucleus`) estende `Relic`.
+- A classe base `Relic` define `update(EventEnum event, Battle battle, Hero hero)`, acionado pelo ciclo da batalha.
+- Os gatilhos principais são `playerStartOfTurn` e `playerEndOfTurn`.
+
+### Efeitos das relíquias implementadas
+
+- **Frasco de Sangue (`BloodVial`)**: no início do turno do jogador, recupera vida.
+- **Motor S2 (`MotorS2`)**: no início do turno, recupera vida e também ganha AT Field.
+- **Toca-Fitas SDAT (`SDATPlayer`)**: no final do turno, se estiver sem escudo, ganha AT Field.
+- **Núcleo de Anjo (`AngelNucleus`)**: no final do turno, converte vida em AT Field (sacrifício de HP para ganhar escudo).
+
+### Referências de padrão de design
+
+- [Observer](https://refactoring.guru/design-patterns/observer): relíquias observam eventos da batalha e reagem quando notificadas.
+- [Factory Method](https://refactoring.guru/design-patterns/factory-method): a criação aleatória e encapsulada das relíquias é centralizada em `RelicFactory`.
+
 ### Padrões de design do @refactoring.guru utilizados
 
 ### [Command (Action, Transaction)](https://refactoring.guru/design-patterns/command) adaptado
@@ -96,6 +120,16 @@ Na **campanha**, ao concluir o **último deslocamento** possível no mapa sem te
 A leitura dos JSON usa **Jackson** (`jackson-databind`). Tipos polimórficos (por exemplo cartas com campo `type`, inimigos, efeitos dentro de cartas de efeito) são desserializados com **serializers** em `mc322_slay.serializer`.
 
 ---
+## Padrão de Design
+Padrão de Design Escolhido: 
+
+    - Reliquias : Padrões Comportamentais > Observer
+      - Justificativa: as relíquias precisam reagir a eventos do jogo (início de turno, fim de combate, dano recebido) sem acoplar sua lógica às classes centrais. Com Observer, cada relíquia se inscreve nos eventos relevantes e aplica seu efeito quando notificada, facilitando adicionar novas relíquias sem alterar o fluxo principal.
+
+    - Construtor das Reliquias: Padrões de Criação > Factory Method
+      - Justificativa: a criação de relíquias varia por tipo e origem de dados (id, raridade, descrição, comportamento). O Factory Method centraliza essa instância, encapsula a seleção da classe concreta e evita espalhar `new` pelo código, deixando a expansão de novos tipos mais segura e organizada.
+
+`Fonte` : https://refactoring.guru/design-patterns/catalog
 
 ## Estrutura do projeto
 

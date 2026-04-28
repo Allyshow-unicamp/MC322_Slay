@@ -13,6 +13,7 @@ import mc322_slay.card.ShieldCard;
 import mc322_slay.effect.Effect;
 import mc322_slay.entity.Enemy;
 import mc322_slay.entity.Hero;
+import mc322_slay.relic.Relic;
 
 /**
  * Camada de apresentação textual do jogo no terminal: cores ANSI, leitura de arte em
@@ -141,6 +142,14 @@ public class Interface {
 
         String result = "\r\n";
 
+        if (!hero.getRelics().isEmpty()) {
+            result += ColorEnum.yellow.getColor() + "Relíquias de " + ColorEnum.blue.getColor() + hero.getName()
+                    + ColorEnum.reset.getColor() + ": ";
+            for (Relic relic : hero.getRelics())
+                result += "\r\n   " + ColorEnum.purple.getColor() + relic.getName() + ColorEnum.reset.getColor() +
+                ": " + ColorEnum.yellow.getColor() + relic.getDescription() + ColorEnum.reset.getColor();
+            result += "\r\n\r\n";
+        }
         if (!hero.getEffects().isEmpty()) {
             result += ColorEnum.yellow.getColor() + "Efeitos de " + ColorEnum.blue.getColor() + hero.getName()
                     + ColorEnum.reset.getColor() + ": ";
