@@ -229,4 +229,22 @@ public class GameManager {
         else
             Interface.printFile("gameOver.txt", ColorEnum.red);
     }
+
+    /**
+     * Retorna o herói controlado pelo jogador.
+     *
+     * @return herói atual da partida.
+     */
+    public Hero getHero() {
+        return hero;
+    }
+
+    /**
+     * Retorna o mapa de progressão atual.
+     *
+     * @return mapa do jogo.
+     */
+    public GameMap getMap() {
+        return map;
+    }
 }

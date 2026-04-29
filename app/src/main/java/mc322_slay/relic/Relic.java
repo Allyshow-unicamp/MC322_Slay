@@ -28,14 +28,30 @@ public abstract class Relic {
     protected String description;
     protected int value;
 
+    /**
+     * Retorna o nome da relíquia.
+     *
+     * @return nome da relíquia.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retorna a descrição funcional da relíquia.
+     *
+     * @return texto descritivo do efeito da relíquia.
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Retorna o valor numérico associado à relíquia.
+     * O significado específico depende do tipo de relíquia (ex: quantidade de cura, escudo gerado, etc.).
+     *
+     * @return valor numérico da relíquia.
+     */
     public int getValue() {
         return value;
     }
@@ -43,7 +59,8 @@ public abstract class Relic {
     /**
      * Método central do Padrão Observer.
      * É chamado pelo Subject (Batalha) sempre que um evento de turno ocorre.
-     * * @param event O evento que acabou de acontecer (ex: playerStartOfTurn)
+     *
+     * @param event O evento que acabou de acontecer (ex: playerStartOfTurn)
      * @param battle A instância da batalha atual
      * @param hero O herói que possui a relíquia
      */

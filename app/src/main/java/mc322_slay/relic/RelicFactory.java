@@ -29,7 +29,7 @@ public class RelicFactory {
 
     static public boolean worthyOfRelic(int enemyDifficulty) {
         // --- LÓGICA DE DROP DE RELÍQUIA ---
-        int prob = rand.nextInt(299, 400); // Representando a probabilidade como um inteiro
+        int prob = rand.nextInt(225, 350); // Representando a probabilidade como um inteiro
         int thisprob = enemyDifficulty;
         // quanto maior a dificuldade do inimigo maiores as chances de drop de uma relíquia.
         if (thisprob >= prob) {

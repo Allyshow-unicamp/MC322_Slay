@@ -1,6 +1,6 @@
 # Jogo de cartas com temática de Neon Genesis Evangelion
 
-<img src="assets/image.png" width="" height="750" alt="Capa">
+<img src="assets/image.png" width="" height="500" alt="Capa">
 
 ## O jogo
 
@@ -56,6 +56,26 @@ O jogador pode se deparar com uma **Escolha** no mapa, que podem ter **consequê
 
 O jogador pode também descansar em uma **Base** (**Fogueira**), onde pode **recuperar 30% da vida**, **melhorar 1 carta entre 3** ou **deletar 1 carta entre 3** do baralho. No desenvolvimento desse sistema, foram empregados **padrões de design**, conforme descrito abaixo.
 
+
+### Padrões de design do @refactoring.guru utilizados
+
+### [Command (Action, Transaction)](https://refactoring.guru/design-patterns/command) adaptado
+
+Usado para implementar as diferentes funções da fogueira. O pacote `mc322_slay.event.command` contém a classe abstrata `Command` com o método abstrato `execute(Hero hero)`. Então, cada classe concreta que herda de `Command` é responsável pela lógica de execução de cada ação. A classe `RestSize` é responsável pela atribuição de cada comando às respectivas teclas do teclado no método `init(Hero hero, CardStack possibleNewCards)`, através de um `HashMap`.
+
+### [Visitor](https://refactoring.guru/design-patterns/visitor)
+
+No caso específico do `UpgradeCommand.java`, foi utilizado o padrão de design Visitor para fortalecer as cartas do jogador. O pacote `mc322_slay.visitor` contém a interface `Visitor`, que encapsula as sobrecargas dos métodos `visit` para cada tipo de carta. Então, a classe concreta `UpgradeVisitor` implementa os mesmos, fortalecendo atributos específicos dentro dos métodos para cada tipo de carta. No pacote `mc322_slay.card`, foi necessário criar na classe abstrata `Card` um método abstrato `accept(Visitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`, passando como parâmetro a própria classe. Desse modo, a classe não fica responsável por saber como ser melhorada, sendo esta responsabilidade delegada ao `Visitor`.
+
+Já em se tratando dos efeitos de cada `EffectCard`, para implementar a melhoria dessa carta na fogueira, foram criadas uma interface `EffectVisitor` e uma classe concreta `UpgradeEffectVisitor` que implementa a interface. Desse modo, analogamente ao que foi feito para as cartas, a classe abstrata `Effect` tem o método abstrato `accept(EffectVisitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`. 
+
+Fontes:
+- https://refactoring.guru/design-patterns/command
+
+- https://refactoring.guru/design-patterns/visitor
+
+<img src="assets/visitorDesign.png" width="900" height="" alt="visitorDesign">
+
 ## Relíquias
 
 As **Relíquias** são artefatos passivos recebidos como recompensa aleatoriamente em combate difíceis e aplicam efeitos automáticos durante a batalha. A implementação usa o pacote `relic`.
@@ -75,22 +95,21 @@ As **Relíquias** são artefatos passivos recebidos como recompensa aleatoriamen
 - **Toca-Fitas SDAT (`SDATPlayer`)**: no final do turno, se estiver sem escudo, ganha AT Field.
 - **Núcleo de Anjo (`AngelNucleus`)**: no final do turno, converte vida em AT Field (sacrifício de HP para ganhar escudo).
 
+### Padrão de Design
+Padrão de Design Escolhido: 
+
+    - Reliquias : Padrões Comportamentais > Observer
+      - Justificativa: as relíquias precisam reagir a eventos do jogo (início de turno, fim de combate, dano recebido) sem acoplar sua lógica às classes centrais. Com Observer, cada relíquia se inscreve nos eventos relevantes e aplica seu efeito quando notificada, facilitando adicionar novas relíquias sem alterar o fluxo principal.
+
+    - Construtor das Reliquias: Padrões de Criação > Factory Method
+      - Justificativa: a criação de relíquias varia por tipo e origem de dados (id, raridade, descrição, comportamento). O Factory Method centraliza essa instância, encapsula a seleção da classe concreta e evita espalhar `new` pelo código, deixando a expansão de novos tipos mais segura e organizada.
+
 ### Referências de padrão de design
 
 - [Observer](https://refactoring.guru/design-patterns/observer): relíquias observam eventos da batalha e reagem quando notificadas.
+  - Link: https://refactoring.guru/design-patterns/observer 
 - [Factory Method](https://refactoring.guru/design-patterns/factory-method): a criação aleatória e encapsulada das relíquias é centralizada em `RelicFactory`.
-
-### Padrões de design do @refactoring.guru utilizados
-
-### [Command (Action, Transaction)](https://refactoring.guru/design-patterns/command) adaptado
-
-Usado para implementar as diferentes funções da fogueira. O pacote `mc322_slay.event.command` contém a classe abstrata `Command` com o método abstrato `execute(Hero hero)`. Então, cada classe concreta que herda de `Command` é responsável pela lógica de execução de cada ação. A classe `RestSize` é responsável pela atribuição de cada comando às respectivas teclas do teclado no método `init(Hero hero, CardStack possibleNewCards)`, através de um `HashMap`.
-
-### [Visitor](https://refactoring.guru/design-patterns/visitor)
-
-No caso específico do `UpgradeCommand.java`, foi utilizado o padrão de design Visitor para fortalecer as cartas do jogador. O pacote `mc322_slay.visitor` contém a interface `Visitor`, que encapsula as sobrecargas dos métodos `visit` para cada tipo de carta. Então, a classe concreta `UpgradeVisitor` implementa os mesmos, fortalecendo atributos específicos dentro dos métodos para cada tipo de carta. No pacote `mc322_slay.card`, foi necessário criar na classe abstrata `Card` um método abstrato `accept(Visitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`, passando como parâmetro a própria classe. Desse modo, a classe não fica responsável por saber como ser melhorada, sendo esta responsabilidade delegada ao `Visitor`.
-
-Já em se tratando dos efeitos de cada `EffectCard`, para implementar a melhoria dessa carta na fogueira, foram criadas uma interface `EffectVisitor` e uma classe concreta `UpgradeEffectVisitor` que implementa a interface. Desse modo, analogamente ao que foi feito para as cartas, a classe abstrata `Effect` tem o método abstrato `accept(EffectVisitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`. 
+  - Link: https://refactoring.guru/design-patterns/factory-method
 
 ## Fim do jogo
 
@@ -102,9 +121,9 @@ Na **campanha**, ao concluir o **último deslocamento** possível no mapa sem te
 
 ## Requisitos para desenvolver e executar
 
-- **Java 25**: o `app/build.gradle` fixa a toolchain; o Gradle pode baixar o JDK compatível conforme plugins e ambiente.
-- **Gradle** via wrapper (`gradlew` / `gradlew.bat`) já versionado no repositório.
-- **Internet** na primeira execução, para baixar dependências (Maven Central): Jackson, Guava, JUnit 5, etc.
+- **Java 17+**: o `app/build.gradle` configura a toolchain; o Gradle pode baixar o JDK compatível conforme plugins e ambiente.
+- **Gradle 8.0+** via wrapper (`gradlew` / `gradlew.bat`) já versionado no repositório.
+- **Internet** na primeira execução, para baixar dependências (Maven Central): Jackson, JUnit 5, etc.
 
 ---
 
@@ -114,23 +133,14 @@ Na **campanha**, ao concluir o **último deslocamento** possível no mapa sem te
 |-----------------|--------|
 | `data/map1.json` ... `data/map4.json` | Matrizes de caracteres do mapa; posições e ligações entre nós de evento. |
 | `data/events.json` | Dicionário com nós de evento (`EventNode`) e payload polimórfico do `Event`. |
-| `data/deck.json` | Lista de cartas do baralho inicial. |
+| `data/battles.json` | Configurações dos inimigos (anjos) com estatísticas e arte ASCII. |
+| `data/deck.json` ... `data/deck3.json` | Listas de cartas dos baralhos iniciais para cada personagem. |
+| `data/cards.json` | Cartas disponíveis como recompensa após vitórias. |
 | `assets/*.txt` | Arte ASCII e textos de interface (abertura, seleção de personagem, inimigos, vitória, derrota, etc.). |
 
 A leitura dos JSON usa **Jackson** (`jackson-databind`). Tipos polimórficos (por exemplo cartas com campo `type`, inimigos, efeitos dentro de cartas de efeito) são desserializados com **serializers** em `mc322_slay.serializer`.
 
 ---
-## Padrão de Design
-Padrão de Design Escolhido: 
-
-    - Reliquias : Padrões Comportamentais > Observer
-      - Justificativa: as relíquias precisam reagir a eventos do jogo (início de turno, fim de combate, dano recebido) sem acoplar sua lógica às classes centrais. Com Observer, cada relíquia se inscreve nos eventos relevantes e aplica seu efeito quando notificada, facilitando adicionar novas relíquias sem alterar o fluxo principal.
-
-    - Construtor das Reliquias: Padrões de Criação > Factory Method
-      - Justificativa: a criação de relíquias varia por tipo e origem de dados (id, raridade, descrição, comportamento). O Factory Method centraliza essa instância, encapsula a seleção da classe concreta e evita espalhar `new` pelo código, deixando a expansão de novos tipos mais segura e organizada.
-
-`Fonte` : https://refactoring.guru/design-patterns/catalog
-
 ## Estrutura do projeto
 
 O código é **Java**, organizado com **Gradle** no `app`. Testes usam **JUnit 5** (Jupiter). O plugin **JaCoCo** mede cobertura; a tarefa `check` falha se a cobertura ficar **abaixo de 40%**.
@@ -211,11 +221,41 @@ Certifique-se que está na **raiz do repositório** (onde está `settings.gradle
 ./gradlew test
 ```
 
+**Windows**
+
+```bash
+gradlew.bat test
+```
+
 Para rodar também a verificação de cobertura (e falhar se estiver abaixo de 40%):
+
+**Linux / macOS**
 
 ```bash
 ./gradlew check
 ```
+
+**Windows**
+
+```bash
+gradlew.bat check
+```
+
+### Cobertura de testes
+
+O projeto possui uma suíte abrangente de testes unitários que cobrem:
+
+- **Entidades**: `HeroTest`, `EnemyTest` - validação de combate, efeitos e multiplicadores
+- **Cartas**: `PlayerHandTest`, `CardTest` - mecânicas de compra, uso e descarte
+- **Efeitos**: `ATFieldCorrosionTest`, `HealthRegenerationTest`, `HighSyncRateTest`, `LowSyncRateTest`, `PsychicEffectTest` - comportamento de efeitos temporários
+- **Mapa**: `GameMapTest`, `GameMapExtendedTest` - construção e navegação do mapa
+- **Relíquias**: `RelicObserverTest`, `RelicTest` - padrão Observer e efeitos passivos
+- **Eventos**: `EventTest` - batalhas, escolhas e descanso
+- **Serialização**: `SerializerTest` - desserialização JSON com Jackson
+- **Padrões**: `VisitorTest`, `CommandTest` - padrões Visitor e Command
+- **Gerenciamento**: `GameManagerTest` - ciclo de vida do jogo
+
+A cobertura atual é monitorada pelo plugin JaCoCo e mantida acima do threshold mínimo.
 
 ---
 
@@ -246,9 +286,3 @@ Executar o jogo:
 ## Contribuição de IA generativa
 
 A documentação **Javadoc** dos arquivos Java, trechos de texto deste **README** e descrições detalhadas de efeitos foram elaborados com auxílio de **inteligências artificiais generativas** (por exemplo **Gemini**, Google DeepMind, e **Cursor AI**, Anysphere, Inc.). Esses modelos também apoiaram o uso das bibliotecas **`Files`**, **`Path`** e **`Paths`** para impressão de arquivos `.txt`, parte dos **testes unitários com JUnit 5**, e a integração com **Jackson** (leitura de JSON e serializers) para mapa, batalhas e baralho.
-
-## Referências
-
-https://refactoring.guru/design-patterns/command
-
-https://refactoring.guru/design-patterns/visitor
