@@ -63,6 +63,11 @@ O jogador pode também descansar em uma **Base** (**Fogueira**), onde pode **rec
 
 Usado para implementar as diferentes funções da fogueira. O pacote `mc322_slay.event.command` contém a classe abstrata `Command` com o método abstrato `execute(Hero hero)`. Então, cada classe concreta que herda de `Command` é responsável pela lógica de execução de cada ação. A classe `RestSize` é responsável pela atribuição de cada comando às respectivas teclas do teclado no método `init(Hero hero, CardStack possibleNewCards)`, através de um `HashMap`.
 
+- Fontes:
+- https://refactoring.guru/design-patterns/command
+
+<img src="assets/commandDesign.png" width="450" height="" alt="visitorDesign">
+
 ### [Visitor](https://refactoring.guru/design-patterns/visitor)
 
 No caso específico do `UpgradeCommand.java`, foi utilizado o padrão de design Visitor para fortalecer as cartas do jogador. O pacote `mc322_slay.visitor` contém a interface `Visitor`, que encapsula as sobrecargas dos métodos `visit` para cada tipo de carta. Então, a classe concreta `UpgradeVisitor` implementa os mesmos, fortalecendo atributos específicos dentro dos métodos para cada tipo de carta. No pacote `mc322_slay.card`, foi necessário criar na classe abstrata `Card` um método abstrato `accept(Visitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`, passando como parâmetro a própria classe. Desse modo, a classe não fica responsável por saber como ser melhorada, sendo esta responsabilidade delegada ao `Visitor`.
@@ -70,11 +75,9 @@ No caso específico do `UpgradeCommand.java`, foi utilizado o padrão de design 
 Já em se tratando dos efeitos de cada `EffectCard`, para implementar a melhoria dessa carta na fogueira, foram criadas uma interface `EffectVisitor` e uma classe concreta `UpgradeEffectVisitor` que implementa a interface. Desse modo, analogamente ao que foi feito para as cartas, a classe abstrata `Effect` tem o método abstrato `accept(EffectVisitor visitor)`, que é implementado em cada classe concreta de modo a chamar o método `visit`. 
 
 Fontes:
-- https://refactoring.guru/design-patterns/command
-
 - https://refactoring.guru/design-patterns/visitor
 
-<img src="assets/visitorDesign.png" width="900" height="" alt="visitorDesign">
+<img src="assets/visitorDesign.png" width="1200" height="" alt="visitorDesign">
 
 ## Relíquias
 
